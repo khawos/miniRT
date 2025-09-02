@@ -5,23 +5,7 @@ LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
-		free.c \
-		maps_utils.c \
-		transform.c \
-		map_fill.c \
-		map_init.c \
-		draw.c \
-		render.c \
-		struct_init.c \
-		handle_event.c \
-		center.c \
-		translate.c \
-		rotate.c \
-		find_center.c \
-		color.c \
-		ft_atoi_base.c \
-		color_utils.c \
-		color_utils_.c \
+		window.c
 		
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
