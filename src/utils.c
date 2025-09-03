@@ -27,3 +27,13 @@ double	atoi_double(char *str)
 	}
 	return ((integer_part + float_part) * neg);
 }
+
+void	free_double_array(char **dest)
+{
+	int	i;
+
+	i = 0;
+	while (dest[i])
+		free(dest[i++]);
+	free(dest);
+}

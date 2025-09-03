@@ -9,17 +9,12 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
+# include <stdio.h>
 # include "libft/include/get_next_line.h"
 # include "libft/include/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
-
-typedef enum s_boolean
-{
-	true,
-	false,
-}			t_boolean;
 
 typedef enum s_type
 {
@@ -48,11 +43,6 @@ typedef struct	s_mlx
 
 }				t_mlx;
 
-typedef struct	s_mini
-{
-	t_mlx	display;
-	t_scene scene;
-}				t_mini;
 
 // OBJECT AND CAMERA PROPERTIES
 
@@ -69,6 +59,7 @@ typedef struct	s_objet
 	unsigned char	id;
 }				t_objet;
 
+
 typedef struct	s_camera
 {
 	char			*name;
@@ -77,6 +68,7 @@ typedef struct	s_camera
 	unsigned char	id;
 	unsigned char	fov;
 }				t_cam;
+
 
 typedef struct	s_scene
 {
@@ -88,14 +80,33 @@ typedef struct	s_scene
 }				t_scene;
 
 
+typedef struct	s_mini
+{
+	t_mlx	display;
+	t_scene scene;
+}				t_mini;
+
+
+
+
 // WINDOW
 
 t_boolean	open_window(t_mini *mini);
 int			close_window(t_mini *mini);
 
 // UTILS
-
 double		atoi_double(char *str);
+void	free_double_array(char **dest);
+
+
+// PARSER
+
+t_boolean	parser(t_mini *mini, char **av);
+
+// PARSER_CHECKER
+
+t_boolean checker(char *file);
+t_boolean	count_line(t_mini *mini, char *file);
 
 
 #endif
