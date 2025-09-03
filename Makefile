@@ -5,7 +5,12 @@ LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
-		window.c
+		window.c \
+		free.c \
+		parser.c \
+		parser_buffer.c \
+		parser_fill_mini.c \
+		utils.c \
 		
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

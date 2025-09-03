@@ -24,8 +24,8 @@ typedef struct s_list
 
 typedef enum s_boolean
 {
-	true,
 	false,
+	true,
 }			t_boolean;
 
 t_list	*ft_lstnew(void *content);
