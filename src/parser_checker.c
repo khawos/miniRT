@@ -30,6 +30,8 @@ static t_boolean	is_a_rgb_value(char *word)
 
 	i = 0;
 	words = ft_split(word, ',');
+	if (!words)
+		return (false);
 	while (words[i])
 	{
 		if (!(ft_atoi(words[i]) >= 0 && ft_atoi(words[i]) <= 255)) // check if the rgb value is between 0 ans 255
@@ -39,28 +41,185 @@ static t_boolean	is_a_rgb_value(char *word)
 	return (free_double_array(words), true);
 }
 
+static	t_boolean	is_a_xyz_value(char	*word)
+{
+	char	**words;
+	int		i;
+
+	i = 0;
+	words = ft_split(word, ',');
+	if (!words)
+		return (false);
+	while (words[i])
+	{
+		if (!(atoi_double(words[i]) >= INT_MIN && atoi_double(words[i]) <= INT_MAX)) // A CHANGER pour les doubles
+			return (free_double_array(words), false);
+		i++;
+	}
+	return (free_double_array(words), true);
+}
+
+static	t_boolean	is_a_xyz_normalize_value(char	*word)
+{
+	char	**words;
+	int		i;
+
+	i = 0;
+	words = ft_split(word, ',');
+	if (!words)
+		return (false);
+	while (words[i])
+	{
+		if (!(atoi_double(words[i]) >= -1 && atoi_double(words[i]) <= 1))
+			return (free_double_array(words), false);
+		i++;
+	}
+	return (free_double_array(words), true);
+}
+
+static	t_boolean	is_a_ratio(char	*word)
+{
+	if (!(atoi_double(word) >= 0 && atoi_double(word) <= 1))
+		return (false);
+	return (true);
+}
+
 static t_boolean	args_checker_a(char *line)
 {
-	char **words;
+	char	**words;
 
 	words = ft_split(line, ' ');
 	if (!words)
 		return (false);
-	if (!(atoi_double(words[1]) >= 0 && atoi_double(words[1]) <= 1))
-		return (free_double_array(words), false);
+	if (!is_a_ratio(words[1]))
+		return (write(2, "Error: Wrong ambient light brightness ratio\n", 37), free_double_array(words), false);
 	if (!is_a_rgb_value(words[2]))
-		return (free_double_array(words), false);
+		return (write(2, "Error: Wrong ambient RGB value\n", 24), free_double_array(words), false);
 	
 	return (free_double_array(words), true);
 }
+
+static	t_boolean	is_a_fov_value(char	*word)
+{
+	if (!(atoi_double(word) >= 0 && atoi_double(word) <= 180))
+		return (false);
+	return (true);
+}
+
+static t_boolean	args_checker_c(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2, "Error: Wrong camera coordinates\n", 26), free_double_array(words), false);
+	if (!is_a_xyz_normalize_value(words[2]))
+		return (write(2, "Error: Wrong camera normalized orientation vector\n", 44), free_double_array(words), false);
+	if (!is_a_fov_value(words[3]))
+		return (write(2, "Error: Wrong camera FOV\n", 25), free_double_array(words), false);
+	return (true);
+}
+
+static t_boolean	args_checker_l(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2, "Error: Wrong light coordinates\n", 26), free_double_array(words), false);
+	if (!is_a_ratio(words[2]))
+		return (write(2, "Error: Wrong light brightness ratio\n", 37), free_double_array(words), false);
+	if (!is_a_rgb_value(words[3]))
+		return (write(2, "Error: Wrong light RGB value\n", 24), free_double_array(words), false);
+	return (true);
+}
+
+static	t_boolean	is_a_strictly_positive_number(char *word)
+{
+	if (atoi_double(word) > 0 && atoi_double(word) <= INT_MAX)
+		return (true);
+	return (false);
+}
+
+static	t_boolean	args_checker_sp(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2, "Error: Wrong sphere coordinates\n", 26), free_double_array(words), false);
+	if (!is_a_strictly_positive_number(words[2]))
+		return (write(2, "Error: Wrong sphere diameter\n", 30), free_double_array(words), false);
+	if (!is_a_rgb_value(words[3]))
+		return (write(2, "Error: Wrong sphere RGB value\n", 24), free_double_array(words), false);
+	return (true);
+}
+
+static	t_boolean	args_checker_pl(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2, "Error: Wrong plane coordinates\n", 26), free_double_array(words), false);
+	if (!is_a_xyz_normalize_value(words[2]))
+		return (write(2, "Error: Wrong plane normalized orientation vector\n", 44), free_double_array(words), false);
+	if (!is_a_rgb_value(words[3]))
+		return (write(2, "Error: Wrong plane RGB value\n", 24), free_double_array(words), false);
+	return (true);
+}
+
+static	t_boolean	args_checker_cy(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2, "Error: Wrong coordinates\n", 26), free_double_array(words), false);
+	if (!is_a_xyz_normalize_value(words[2]))
+		return (write(2, "Error: Wrong normalized orientation vector\n", 44), free_double_array(words), false);
+	if (!is_a_strictly_positive_number(words[3]))
+		return (write(2, "Error: Wrong cylender diameter\n", 32), free_double_array(words), false);
+	if (!is_a_strictly_positive_number(words[4]))
+		return (write(2, "Error: Wrong cylender height\n", 30), free_double_array(words), false);
+	if (!is_a_rgb_value(words[5]))
+		return (write(2, "Error: Wrong RGB value\n", 24), free_double_array(words), false);
+	return (true);
+}
+
+
 
 static t_boolean	args_type_checker(char *type, char *line)
 {
 	if (ft_strncmp(type, "A", 1) == 0)
 		if (!args_checker_a(line))
 			return (false);
-	printf("JE SUIS LA\n");
-	(void)line;
+	if (ft_strncmp(type, "C", 1) == 0)
+		if (!args_checker_c(line))
+			return (false);
+	if (ft_strncmp(type, "L", 1) == 0)
+		if (!args_checker_l(line))
+			return (false);
+	if (ft_strncmp(type, "sp", 2) == 0)
+		if (!args_checker_sp(line))
+			return (false);
+	if (ft_strncmp(type, "pl", 2) == 0)
+		if (!args_checker_pl(line))
+			return (false);
+	if (ft_strncmp(type, "cy", 2) == 0)
+		if (args_checker_cy(line) == 0)
+			return (false);
+
 	return (true);		
 }
 
@@ -71,16 +230,13 @@ static t_boolean check_object_type(char *line)
 	type = get_first_word(line);
 	if (!type)
 		return (false);
-	printf("%s\n", type);
-	
-
-	if (!(ft_strncmp(type, "A", 1) != 0 ||
+	if ((ft_strncmp(type, "A", 1) != 0 ||
 		ft_strncmp(type, "C", 1) != 0 ||
 		ft_strncmp(type, "L", 1) != 0 ||
 		ft_strncmp(type, "pl", 2) != 0 ||
 		ft_strncmp(type, "cy", 2) != 0 ||
 		ft_strncmp(type, "sp", 2) != 0))
-		return (free(type), false);
+		return (write(2, "error: identifier\n", 19), free(type), false);
 	if (!args_type_checker(type, line))
 		return (free(type), false);
 	return (free(type), true);
@@ -91,20 +247,15 @@ t_boolean checker(char *file)
 	int 	fd;
 	char	*buffer;
 
+	(void)check_object_type;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (false);
-
-	buffer = get_next_line(fd);
-	if (buffer == NULL)
-		return (false);
-	while (buffer)
+	while ((buffer = get_next_line(fd)))
 	{
 		if (!check_object_type(buffer))
 			return (false);
-		printf("JE SUIS ICI\n");
 		free(buffer);
-		buffer = get_next_line(fd);
 	}
 	close(fd);
 	return (true);

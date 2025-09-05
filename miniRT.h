@@ -15,6 +15,8 @@
 # include "../minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <float.h>
+# include <limits.h>
 
 typedef enum s_type
 {

@@ -23,7 +23,6 @@ t_boolean	parser(t_mini *mini, char **av)
 		return (false);
 	if (!checker(av[1]))
 		return (false);
-	printf("HAAAAAAAAAAAAAAAAAAAAAAA\n");
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (false);
