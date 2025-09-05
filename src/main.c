@@ -2,6 +2,13 @@
 
 t_boolean	init(t_mini *mini, char **av)
 {
+	mini->n_a = 0;
+	mini->n_l = 0;
+	mini->n_cam = 0;
+	mini->n_pl = 0;
+	mini->n_sp = 0;
+	mini->n_cy = 0;
+	mini->N_OBJ = 0;
 	if (!parser(mini, av))
 		return (false);
 	if (!open_window(mini))

@@ -36,7 +36,7 @@ t_boolean	fill_mini_decrypt(t_mini *mini, char *buffer)
 	i = 0;
 	if (*buffer == '\n')
 		return (true);
-	while ((*buffer <= 13 && *buffer >= 9) || *buffer == 32)
+	while (ft_isalpha(*buffer))
 	{
 		i++;
 		buffer++;
@@ -60,7 +60,7 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 	while (buffer)
 	{
 		tmp = buffer;
-		fill_mini_dispatch(buffer, mini);
+		fill_mini_decrypt(mini, buffer);
 		free(tmp);
 		buffer = get_next_line(fd);
 	}

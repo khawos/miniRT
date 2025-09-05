@@ -8,6 +8,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <math.h>
 # include "libft/include/get_next_line.h"
 # include "libft/include/libft.h"
@@ -55,7 +56,7 @@ typedef struct	s_camera
 	char			*name;
 	double			pos[3];
 	double			vec_dir[3];
-	unsigned char	id;
+	int				id;
 	unsigned char	fov;
 }				t_cam;
 
@@ -82,6 +83,14 @@ typedef struct	s_mini
 {
 	t_mlx	display;
 	t_scene scene;
+	int		n_cam;
+	int		n_cy;
+	int		n_pl;
+	int		n_sp;
+	int		n_a;
+	int		n_l;
+	int		N_OBJ;
+	
 }				t_mini;
 
 
@@ -96,17 +105,12 @@ int			close_window(t_mini *mini);
 double		atoi_double(char *str);
 double		__atoi_double(char **str);
 
-
-
 // FREE
 
 void free_mini(t_mini *mini);
 
 
-
-
 // -------- PARSING -------- 
-
 
 t_boolean	parser(t_mini *mini, char **av);
 t_boolean	count_line(t_mini *mini, char *file);
@@ -125,5 +129,8 @@ void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
 
+// DEBUG
+
+void	printAllObject(t_mini *mini);
 
 #endif

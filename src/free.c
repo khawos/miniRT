@@ -12,16 +12,21 @@
 
 #include "miniRT.h"
 
-void free_mini(t_mini *mini){
+void	free_mini(t_mini *mini)
+{
+	int i;
 
-    int i;
-
-    i = -1;
-    while (i++ < mini->scene.nb_cam)
-        free(mini->scene.cam[i].name);
-    free(mini->scene.cam);
-    i = -1;
-    while (i++ < mini->scene.nb_objet)
-        free(mini->scene.objet[i].name);
-    free(mini->scene.objet);
+	i = 0;
+	while (i < mini->scene.nb_cam)
+	{
+		free(mini->scene.cam[i].name);
+		i++;
+	}
+	free(mini->scene.cam);
+	i = 0;
+	while (i < mini->scene.nb_objet){
+		free(mini->scene.objet[i].name);
+		i++;
+	}
+	free(mini->scene.objet);
 }

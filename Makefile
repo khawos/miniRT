@@ -11,6 +11,7 @@ SRC =	main.c \
 		parser_buffer.c \
 		parser_fill_mini.c \
 		utils.c \
+		debug.c \
 		
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

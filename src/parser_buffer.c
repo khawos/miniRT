@@ -14,131 +14,131 @@
 
 void	parse_cam(t_mini *mini, char *buffer)
 {
-	static int	nb;
-
-	mini->scene.cam[nb].id = nb;
+	mini->scene.cam[mini->n_cam].id = mini->n_cam;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.cam[nb].pos[0] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].pos[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.cam[nb].pos[1] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].pos[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.cam[nb].pos[2] = __atoi_double(&buffer);
-	mini->scene.cam[nb].vec_dir[0] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].pos[2] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].vec_dir[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.cam[nb].vec_dir[1] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].vec_dir[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.cam[nb].vec_dir[2] = __atoi_double(&buffer);
-	mini->scene.cam[nb].fov = __atoi_double(&buffer);
-	nb++;
+	mini->scene.cam[mini->n_cam].vec_dir[2] = __atoi_double(&buffer);
+	mini->scene.cam[mini->n_cam].fov = __atoi_double(&buffer);
+	mini->n_cam++;
 }
 
 void	parse_a(t_mini	*mini, char	*buffer)
 {
-	static int	nb;
 
-	mini->scene.objet[nb].id = nb;
-	mini->scene.objet[nb].type = A;
+	mini->scene.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->scene.objet[mini->N_OBJ].type = A;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.objet[nb].ratio =__atoi_double(&buffer);
-	mini->scene.objet[nb].color[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].ratio =__atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->n_a++;
+	mini->N_OBJ++;
 }
 
 void	parse_l(t_mini	*mini, char	*buffer)
 {
-	static int	nb;
-
-	mini->scene.objet[nb].id = nb;
-	mini->scene.objet[nb].type = L;
+	mini->scene.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->scene.objet[mini->N_OBJ].type = L;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.objet[nb].pos[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[2] = __atoi_double(&buffer);	
-	mini->scene.objet[nb].ratio = __atoi_double(&buffer);
-	mini->scene.objet[nb].color[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[2] = __atoi_double(&buffer);	
+	mini->scene.objet[mini->N_OBJ].ratio = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->n_l++;
+	mini->N_OBJ++;
 }
 
 void	parse_sp(t_mini *mini, char *buffer)
 {
-	static int	nb;
-
-	mini->scene.objet[nb].id = nb;
-	mini->scene.objet[nb].type = sp;
+	mini->scene.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->scene.objet[mini->N_OBJ].type = sp;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.objet[nb].pos[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[1] =__atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[1] =__atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[2] = __atoi_double(&buffer);	
-	mini->scene.objet[nb].diameter = __atoi_double(&buffer);
-	mini->scene.objet[nb].color[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[2] = __atoi_double(&buffer);	
+	mini->scene.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->n_sp++;
+	mini->N_OBJ++;
 }
 
 void	parse_pl(t_mini *mini, char *buffer)
 {
-	static int	nb;
-
-	mini->scene.objet[nb].id = nb;
-	mini->scene.objet[nb].type = pl;
+	mini->scene.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->scene.objet[mini->N_OBJ].type = pl;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.objet[nb].pos[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[2] = __atoi_double(&buffer);	
-	mini->scene.objet[nb].vec_dir[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[2] = __atoi_double(&buffer);	
+	mini->scene.objet[mini->N_OBJ].vec_dir[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].vec_dir[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].vec_dir[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].vec_dir[2] = __atoi_double(&buffer);
-	mini->scene.objet[nb].color[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].vec_dir[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->n_pl++;
+	mini->N_OBJ++;
 }
 
 void	parse_cy(t_mini *mini, char *buffer)
 {
-	static int	nb;
 
-	mini->scene.objet[nb].id = nb;
-	mini->scene.objet[nb].type = cy;
+	mini->scene.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->scene.objet[mini->N_OBJ].type = cy;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->scene.objet[nb].pos[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].pos[2] = __atoi_double(&buffer);	
-	mini->scene.objet[nb].vec_dir[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].pos[2] = __atoi_double(&buffer);	
+	mini->scene.objet[mini->N_OBJ].vec_dir[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].vec_dir[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].vec_dir[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].vec_dir[2] = __atoi_double(&buffer);
-	mini->scene.objet[nb].diameter = __atoi_double(&buffer);
-	mini->scene.objet[nb].height = __atoi_double(&buffer);
-	mini->scene.objet[nb].color[0] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].vec_dir[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].height = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[1] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
 	buffer++;
-	mini->scene.objet[nb].color[2] = __atoi_double(&buffer);
+	mini->scene.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->n_cy++;
+	mini->N_OBJ++;
 }
