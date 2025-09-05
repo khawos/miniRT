@@ -291,6 +291,7 @@ static t_boolean	nb_data_problem(char *line , char *type)
 			return (false);
 	return (true);
 }
+
 static t_boolean	basic_line_checks(char *line, char *type)
 {
 	if (!alpha_problem(line))
