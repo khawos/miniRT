@@ -247,26 +247,85 @@ static t_boolean	args_type_checker(char *type, char *line)
 	return (true);		
 }
 
-static t_boolean check_object_type(char *line)
+static t_boolean	alpha_problem(char *line)
+{
+	if (*line == '\n')
+		return (true);
+	line += 2;
+	while (*line)
+	{
+		if (*line != ' ' &&  *line != '.' && *line != ',' && !ft_isdigit(*line)
+			&& *line != '-' && *line != '\n')
+			return (write(2, "error: '", 9), write(2, line, 1),
+				write(2, "' : wrong input\n", 17), false);
+		line++;
+	}
+	return (true);
+}
+
+static int	count_coma(char *line)
+{
+	int i;
+
+	i = 0;
+	while (*line)
+	{
+		if (*line == ',')
+			i++;
+		line++;
+	}
+	return (i);
+}
+
+static t_boolean	nb_data_problem(char *line , char *type)
+{
+	if (ft_strncmp(type, "A", 1) == 0)
+		if (count_coma(line) != 2)
+			return (false);
+	if (ft_strncmp(type, "C", 1) == 0 || ft_strncmp(type, "L", 1) == 0 
+		|| ft_strncmp(type, "sp", 2) == 0)
+		if (count_coma(line) != 4)
+			return (false);
+	if (ft_strncmp(type, "pl", 2) == 0 || ft_strncmp(type, "cy", 2) == 0)
+		if (count_coma(line) != 6)
+			return (false);
+	return (true);
+}
+static t_boolean	basic_line_checks(char *line, char *type)
+{
+	if (!alpha_problem(line))
+		return (false);
+	if (!nb_data_problem(line, type))
+		return (write(2, "error : too much data on one line", 34), false);
+	return (true);
+}	
+
+static t_boolean	check_object_type(char *line)
 {
 	char	*type;
 
 	type = get_first_word(line);
 	if (!type)
 		return (false);
+	if (ft_strlen(type) > 2)
+		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)), 
+			write(2, "' : identifier\n", 16), free(type), false);
 	if (!(ft_strncmp(type, "A", 1) != 0 ||
 		ft_strncmp(type, "C", 1) != 0 ||
 		ft_strncmp(type, "L", 1) != 0 ||
 		ft_strncmp(type, "pl", 2) != 0 ||
 		ft_strncmp(type, "cy", 2) != 0 ||
 		ft_strncmp(type, "sp", 2) != 0))
-		return (write(2, "error: identifier\n", 19), free(type), false);
+		return (write(2, "error: '", 19), write(2, type, ft_strlen(type)), 
+			write(2, "' : identifier\n", 16), free(type), false);
+	if (!basic_line_checks(line, type))
+		return (free(type), false);
 	if (!args_type_checker(type, line))
 		return (free(type), false);
 	return (free(type), true);
 }
 
-t_boolean checker(char *file)
+t_boolean	checker(char *file)
 {
 	int 	fd;
 	char	*buffer;

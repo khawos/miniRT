@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"keysym.h": "c",
-		"minirt.h": "c"
+		"minirt.h": "c",
+		"compare": "c",
+		"type_traits": "c"
 	}
 }
