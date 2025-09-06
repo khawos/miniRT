@@ -98,7 +98,7 @@ int			close_window(t_mini *mini);
 
 // UTILS
 double		atoi_double(char *str);
-void	free_double_array(char **dest);
+void		free_double_array(char **dest);
 
 
 // PARSER
@@ -107,8 +107,30 @@ t_boolean	parser(t_mini *mini, char **av);
 
 // PARSER_CHECKER
 
-t_boolean checker(char *file);
+t_boolean	checker(char *file);
 t_boolean	count_line(t_mini *mini, char *file);
 
+// PARSER CHECKER UTILS
+
+int			count_double_array(char **str);
+t_boolean	is_a_rgb_value(char *word);
+t_boolean	is_a_ratio(char	*word);
+t_boolean	is_a_xyz_normalize_value(char *word);
+t_boolean	is_a_xyz_value(char	*word);
+t_boolean	is_a_fov_value(char	*word);
+t_boolean	is_a_strictly_positive_number(char *word);
+int			count_coma(char *line);
+t_boolean	alpha_problem(char *line);
+t_boolean	nb_data_problem(char *line , char *type);
+
+// ARGS CHECKER
+
+t_boolean	args_checker_pl(char *line);
+t_boolean	args_checker_sp(char *line);
+t_boolean	args_checker_cy(char *line);
+t_boolean	args_checker_c(char *line);
+t_boolean	args_checker_a(char *line);
+t_boolean	args_checker_l(char *line);
+t_boolean	args_type_checker(char *type, char *line);
 
 #endif

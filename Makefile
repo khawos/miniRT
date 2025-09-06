@@ -7,16 +7,20 @@ SRC_DIR = src
 SRC =	main.c \
 		window.c \
 		parser.c \
-		parser_checker.c \
 		utils.c \
-		
+		checker/arg_checker.c \
+		checker/arg_checker2.c \
+		checker/parser_checker.c \
+		checker/parser_checker_utils.c \
+		checker/parser_checker_utils2.c \
+
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
 all : $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
 $(NAME) : $(OBJS)
