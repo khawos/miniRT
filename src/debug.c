@@ -1,5 +1,23 @@
 #include "miniRT.h"
 
+void	printAllCam(t_mini *mini){
+
+	for (int i = 0; i < mini->scene.nb_cam; i++){
+
+		printf("Camera ID : %d\n", mini->scene.cam[i].id);
+		printf("position : x = %f, y = %f, z = %f\n",
+			mini->scene.cam[i].pos[0],
+			mini->scene.cam[i].pos[1],
+			mini->scene.cam[i].pos[2]);
+		printf("vecteur directon : x = %f, y = %f, z = %f\n",
+			mini->scene.cam[i].vec_dir[0],
+			mini->scene.cam[i].vec_dir[1],
+			mini->scene.cam[i].vec_dir[2]);
+		printf("fov : %d\n", mini->scene.cam[i].fov);
+		printf("\n");
+	}
+}
+
 void	printAllObject(t_mini *mini){
 
 	for (int i = 0; i < mini->scene.nb_cam; i++){

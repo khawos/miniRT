@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 500
+# define WIDTH 500
 # define OBJ_MAX 20
 # include <unistd.h>
 # include <fcntl.h>
@@ -26,6 +26,13 @@ typedef enum s_type
 	cy,
 }				t_type;				
 
+typedef struct	s_vec3
+{
+	double	x;
+	double	y;
+	double	z;
+}				t_vec3;
+
 typedef struct	s_data {
 	
 	void	*img;
@@ -42,8 +49,8 @@ typedef struct	s_objet
 {
 	t_type			type;
 	char			*name;
-	double			pos[3];
-	double			vec_dir[3];
+	t_vec3			pos;
+	t_vec3			vec_dir;
 	unsigned char	color[3];
 	double			ratio;
 	double			diameter;
@@ -54,10 +61,15 @@ typedef struct	s_objet
 typedef struct	s_camera
 {
 	char			*name;
-	double			pos[3];
-	double			vec_dir[3];
+	t_vec3			pos;
+	t_vec3			vec_dir;
+	t_vec3			up;
+	t_vec3			right;
+	int				aspect_ratio;	
 	int				id;
-	unsigned char	fov;
+	int				fov;
+	double			h;
+	double			w;
 }				t_cam;
 
 typedef struct	s_scene
@@ -83,6 +95,7 @@ typedef struct	s_mini
 {
 	t_mlx	display;
 	t_scene scene;
+	int		cam_lock;
 	int		n_cam;
 	int		n_cy;
 	int		n_pl;
@@ -93,6 +106,9 @@ typedef struct	s_mini
 	
 }				t_mini;
 
+// MLX
+
+int	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 
 // WINDOW
@@ -130,7 +146,19 @@ void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
 
 // DEBUG
-
+void	printAllCam(t_mini *mini);
 void	printAllObject(t_mini *mini);
 
+//RAY 
+
+void	set_up_cam(t_mini *mini);
+t_boolean	trace(t_mini *mini);
+
+// MATRIX MATH
+
+t_vec3 		vec_cross(t_vec3 i, t_vec3 j);
+double		vec_cross_x(t_vec3 i, t_vec3 j);
+double		vec_cross_y(t_vec3 i, t_vec3 j);
+double		vec_cross_z(t_vec3 i, t_vec3 j);
+double 		vec_normalize(t_vec3 i);
 #endif

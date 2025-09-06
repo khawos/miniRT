@@ -2,7 +2,7 @@
 
 t_boolean	open_window_2(t_mini *mini)
 {
-	mini->display.img.img = mlx_new_image(mini->display.mlx, HEIGHT, WIDTH);
+	mini->display.img.img = mlx_new_image(mini->display.mlx, WIDTH, HEIGHT);
 	if (!mini->display.img.img)
 		return (mlx_destroy_window(mini->display.mlx, mini->display.mlx_win),
 			mlx_destroy_display(mini->display.mlx),
@@ -27,7 +27,7 @@ t_boolean	open_window(t_mini *mini)
 	if (!mini->display.mlx)
 		return (false);
 	mini->display.mlx_win = mlx_new_window(mini->display.mlx,
-			HEIGHT, WIDTH, "miniRT");
+			WIDTH, HEIGHT, "miniRT");
 	if (!mini->display.mlx_win)
 		return (mlx_destroy_display(mini->display.mlx),
 			free(mini->display.mlx), false);

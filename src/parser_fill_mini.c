@@ -67,3 +67,4 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 	close(fd);
 	return (true);
 }
+

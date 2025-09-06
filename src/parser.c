@@ -26,7 +26,6 @@ t_boolean	parser(t_mini *mini, char **av)
 	(void)mini;
 	count_line(mini, av[1]);
 	fill_mini(mini, av[1]);
-	printAllObject(mini);
 	return (true);
 }
 

@@ -9,12 +9,15 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->n_sp = 0;
 	mini->n_cy = 0;
 	mini->N_OBJ = 0;
+	mini->cam_lock = 0;
 	if (!parser(mini, av))
 		return (false);
 	if (!open_window(mini))
 		return (false);
 	return (true);
 }
+
+
 
 int	main(int ac, char **av)
 {
@@ -24,8 +27,11 @@ int	main(int ac, char **av)
 		return (1);
 	if (!init(&mini, av))
 		return (1);
+	set_up_cam(&mini);
+	trace(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
-		StructureNotifyMask, &close_window, &mini);
+	StructureNotifyMask, &close_window, &mini);
+//	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win, mini.display.img.img, 0, 0);
 	mlx_loop(mini.display.mlx);
 	return (0);
 }
