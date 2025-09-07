@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/07 20:18:26 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/07 21:49:07 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,12 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	while (i < mini->N_OBJ)
 	{
 		k = intersect(mini, ray_direction, mini->scene.objet[i]);
-		if (k == 0)
-			printf("%d\n", k);
-		
+		if (k == out)
+			my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
 		if (k == in)
 			my_mlx_pixel_put(mini, x, y, color_shift(mini->scene.objet[i].color));			
 		else if (k == edge)
 			my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);			
-		else
-			my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
 		i++;
 	}
 }
@@ -116,6 +113,7 @@ t_boolean	trace(t_mini *mini)
 			var.delta_u = ((var.j + 0.5 / WIDTH) - 0.5)
 				* mini->scene.cam[mini->cam_lock].w;
 			get_ray(mini, var.delta_u, var.delta_v, &ray_direction);
+			printVec(ray_direction);
 			clash_of_clan(mini, ray_direction, var.j, var.i);
 			var.j++;
 		}
