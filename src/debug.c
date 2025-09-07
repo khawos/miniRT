@@ -72,3 +72,8 @@ void	printAllObject(t_mini *mini){
 
 	}
 }
+
+void	printVec(t_vec3	Ray)
+{
+	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);
+}

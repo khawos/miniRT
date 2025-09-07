@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   M_math.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-06 17:45:58 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-06 17:45:58 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/06 17:45:58 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/07 20:18:18 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ double  vec_normalize(t_vec3 i)
 	double	result;
 
     result = sqrtf(powf(i.x, 2) + powf(i.y, 2) + powf(i.z, 2));
+	printf("result Norm : %f\n", result);
     return (result);
 }

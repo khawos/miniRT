@@ -16,6 +16,14 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+typedef	enum	s_inter
+{
+	in,
+	out,
+	edge,
+}				t_inter;
+
+
 typedef enum s_type
 {
 	A,
@@ -116,10 +124,10 @@ typedef struct	s_mini
 	
 }				t_mini;
 
-// MLX
+// DRAW BASIC
 
-int			my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
-
+int			my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
+unsigned int	color_shift(unsigned char rgb[3]);
 
 // WINDOW
 
@@ -154,10 +162,10 @@ void		parse_pl(t_mini *mini, char *buffer);
 void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
-
 // DEBUG
 void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
+void		printVec(t_vec3	Ray);
 
 //RAY 
 
@@ -171,6 +179,11 @@ double		vec_cross_x(t_vec3 i, t_vec3 j);
 double		vec_cross_y(t_vec3 i, t_vec3 j);
 double		vec_cross_z(t_vec3 i, t_vec3 j);
 double 		vec_normalize(t_vec3 i);
+
+// MATRIX MATH2
+
+double	vec_dot(t_vec3 i, t_vec3 j);
+t_vec3	vec_substact(t_vec3 i, t_vec3 j);
 
 // TRACE
 
@@ -199,5 +212,12 @@ void	get_pixel_in_space(t_vec3 *P, double d_u, double d_v, t_mini *mini);
  * 
  */
 void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
+
+void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
+// INTERSEC
+
+t_inter	intersect(t_mini *mini, t_vec3 ray_direction, t_objet object);
+t_inter	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet object);
+
 
 #endif

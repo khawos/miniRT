@@ -28,10 +28,11 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	set_up_cam(&mini);
-	trace(&mini);
+	//trace(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 	StructureNotifyMask, &close_window, &mini);
-//	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win, mini.display.img.img, 0, 0);
+	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win, mini.display.img.img, 0, 0);
+	printf("FLOP");
 	mlx_loop(mini.display.mlx);
 	return (0);
 }

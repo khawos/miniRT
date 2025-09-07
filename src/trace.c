@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-06 14:22:31 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/07 20:18:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
  */ 
 void	get_pixel_in_space(t_vec3 *P, double d_u, double d_v, t_mini *mini)
 {
+	//printf(" x : %f, y : %f, z : %f\n", mini->scene.cam[mini->cam_lock].pos.x, mini->scene.cam[mini->cam_lock].pos.y, mini->scene.cam[mini->cam_lock].pos.z);
+	
 	P->x = mini->scene.cam[mini->cam_lock].pos.x + 
 		mini->scene.cam[mini->cam_lock].vec_dir.x + 
 			(mini->scene.cam[mini->cam_lock].right.x * d_u) + 
@@ -37,6 +39,8 @@ void	get_pixel_in_space(t_vec3 *P, double d_u, double d_v, t_mini *mini)
 		mini->scene.cam[mini->cam_lock].vec_dir.z + 
 			(mini->scene.cam[mini->cam_lock].right.z * d_u) + 
 				(mini->scene.cam[mini->cam_lock].up.z * d_v);
+	//printf("Pixel in space \n x : %f, y : %f,  : %f\n", P->x, P->y, P->z);				
+	//printf("u : %f, v : %f\n", d_u, d_v);
 }
 
 /**
@@ -67,12 +71,36 @@ void	get_ray(t_mini *mini, double d_u, double d_v, t_vec3 *ray_dir)
 	t_vec3		pixel_on_project_plan;
 
 	get_pixel_in_space(&pixel_on_project_plan, d_u, d_v, mini);
+//	printVec(pixel_on_project_plan);
 	get_ray_direction(ray_dir, &pixel_on_project_plan, mini);
+}
+
+void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
+{
+	int			i;
+	t_inter		k;
+	i = 0;
+	(void)x;
+	(void)y;
+	while (i < mini->N_OBJ)
+	{
+		k = intersect(mini, ray_direction, mini->scene.objet[i]);
+		if (k == 0)
+			printf("%d\n", k);
+		
+		if (k == in)
+			my_mlx_pixel_put(mini, x, y, color_shift(mini->scene.objet[i].color));			
+		else if (k == edge)
+			my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);			
+		else
+			my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
+		i++;
+	}
 }
 
 t_boolean	trace(t_mini *mini)
 {
-	t_var_trace	var;;
+	t_var_trace	var;
 	t_vec3		ray_direction;
 
 	var.i = 0;
@@ -88,6 +116,7 @@ t_boolean	trace(t_mini *mini)
 			var.delta_u = ((var.j + 0.5 / WIDTH) - 0.5)
 				* mini->scene.cam[mini->cam_lock].w;
 			get_ray(mini, var.delta_u, var.delta_v, &ray_direction);
+			clash_of_clan(mini, ray_direction, var.j, var.i);
 			var.j++;
 		}
 		var.i++;

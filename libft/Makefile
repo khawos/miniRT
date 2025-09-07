@@ -48,8 +48,8 @@ FILES = ft_isdigit.c \
 		print1.c \
 		printf_is_valid.c \
 		get_next_line.c \
-		get_next_line_utils.c
-
+		get_next_line_utils.c \
+		
 BOBO = .bonus
 BONUS = ft_lstnew_bonus.c \
 		ft_lstadd_front_bonus.c \
