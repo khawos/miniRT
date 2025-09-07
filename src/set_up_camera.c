@@ -14,23 +14,20 @@
 
 void    get_right_local_vector(t_mini *mini, int i)
 {
-    t_vec3  up_world;
+	t_vec3  up_world;
 
-    up_world = (t_vec3){0, 0, 1};
-    mini->scene.cam[i].right.x = vec_cross_x(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
-    mini->scene.cam[i].right.y = vec_cross_y(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
-    mini->scene.cam[i].right.z = vec_cross_z(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
+	up_world = (t_vec3){0, 0, 1};
+	mini->scene.cam[i].right.x = vec_cross_x(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
+	mini->scene.cam[i].right.y = vec_cross_y(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
+	mini->scene.cam[i].right.z = vec_cross_z(up_world, mini->scene.cam[i].vec_dir) / vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
 
 }
 
 void    get_up_local_vector(t_mini *mini, int i)
 {
-    t_vec3   *result;
-
-    *result = vec_cross(mini->scene.cam[i].vec_dir, mini->scene.cam[i].right);
-    mini->scene.cam[i].up.x = result->x;
-    mini->scene.cam[i].up.y = result->y;
-    mini->scene.cam[i].up.z = result->z;
+	mini->scene.cam[i].up.x = vec_cross_x(mini->scene.cam[i].vec_dir, mini->scene.cam[i].right);
+	mini->scene.cam[i].up.y = vec_cross_y(mini->scene.cam[i].vec_dir, mini->scene.cam[i].right);
+	mini->scene.cam[i].up.z = vec_cross_z(mini->scene.cam[i].vec_dir, mini->scene.cam[i].right);
 }
 
 void	set_up_cam(t_mini *mini)
@@ -38,12 +35,13 @@ void	set_up_cam(t_mini *mini)
 	int		i;
 
 	i = 0;
+	printAllCam(mini);
 	while (i < mini->n_cam)
 	{
 		get_right_local_vector(mini, i);
-        get_up_local_vector(mini, i);
-        mini->scene.cam[i].h = 2 * tan((double)mini->scene.cam[i].fov / 2);
-        mini->scene.cam[i].w = mini->scene.cam[i].h * ( WIDTH / HEIGHT);
-        i++;
+		get_up_local_vector(mini, i);
+		mini->scene.cam[i].h = 2 * tan((double)mini->scene.cam[i].fov / 2);
+		mini->scene.cam[i].w = mini->scene.cam[i].h * ( WIDTH / HEIGHT);
+		i++;
 	}
 }

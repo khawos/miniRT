@@ -6,13 +6,13 @@ void	printAllCam(t_mini *mini){
 
 		printf("Camera ID : %d\n", mini->scene.cam[i].id);
 		printf("position : x = %f, y = %f, z = %f\n",
-			mini->scene.cam[i].pos[0],
-			mini->scene.cam[i].pos[1],
-			mini->scene.cam[i].pos[2]);
+			mini->scene.cam[i].pos.x,
+			mini->scene.cam[i].pos.y,
+			mini->scene.cam[i].pos.z);
 		printf("vecteur directon : x = %f, y = %f, z = %f\n",
-			mini->scene.cam[i].vec_dir[0],
-			mini->scene.cam[i].vec_dir[1],
-			mini->scene.cam[i].vec_dir[2]);
+			mini->scene.cam[i].vec_dir.x,
+			mini->scene.cam[i].vec_dir.y,
+			mini->scene.cam[i].vec_dir.z);
 		printf("fov : %d\n", mini->scene.cam[i].fov);
 		printf("\n");
 	}
@@ -24,13 +24,13 @@ void	printAllObject(t_mini *mini){
 
 		printf("Camera ID : %d\n", mini->scene.cam[i].id);
 		printf("position : x = %f, y = %f, z = %f\n",
-			mini->scene.cam[i].pos[0],
-			mini->scene.cam[i].pos[1],
-			mini->scene.cam[i].pos[2]);
+			mini->scene.cam[i].pos.x,
+			mini->scene.cam[i].pos.y,
+			mini->scene.cam[i].pos.z);
 		printf("vecteur directon : x = %f, y = %f, z = %f\n",
-			mini->scene.cam[i].vec_dir[0],
-			mini->scene.cam[i].vec_dir[1],
-			mini->scene.cam[i].vec_dir[2]);
+			mini->scene.cam[i].vec_dir.x,
+			mini->scene.cam[i].vec_dir.y,
+			mini->scene.cam[i].vec_dir.z);
 		printf("fov : %d\n", mini->scene.cam[i].fov);
 		printf("\n");
 	}
@@ -45,16 +45,16 @@ void	printAllObject(t_mini *mini){
 		if (mini->scene.objet[i].type != A)
 		{
 			printf("position : x = %f, y = %f, z = %f\n",
-				mini->scene.objet[i].pos[0],
-				mini->scene.objet[i].pos[1],
-				mini->scene.objet[i].pos[2]);
+				mini->scene.objet[i].pos.x,
+				mini->scene.objet[i].pos.y,
+				mini->scene.objet[i].pos.z);
 		}
 		if (mini->scene.objet[i].type == cy || mini->scene.objet[i].type == pl)
 		{
 			printf("vecteur directon : x = %f, y = %f, z = %f\n",
-				mini->scene.objet[i].vec_dir[0],
-				mini->scene.objet[i].vec_dir[1],
-				mini->scene.objet[i].vec_dir[2]);
+				mini->scene.objet[i].vec_dir.x,
+				mini->scene.objet[i].vec_dir.y,
+				mini->scene.objet[i].vec_dir.z);
 		}
 		if (mini->scene.objet[i].type == A || mini->scene.objet[i].type == L)
 			printf("ratio [0.0;1.0] : %f\n", mini->scene.objet[i].ratio);

@@ -33,6 +33,16 @@ typedef struct	s_vec3
 	double	z;
 }				t_vec3;
 
+
+typedef struct s_var_trace
+{
+	double	i;
+	double	j;
+	double	delta_u;
+	double	delta_v;
+	
+}				t_var_trace;
+
 typedef struct	s_data {
 	
 	void	*img;
@@ -108,7 +118,7 @@ typedef struct	s_mini
 
 // MLX
 
-int	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
+int			my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 
 // WINDOW
@@ -123,7 +133,7 @@ double		__atoi_double(char **str);
 
 // FREE
 
-void free_mini(t_mini *mini);
+void 		free_mini(t_mini *mini);
 
 
 // -------- PARSING -------- 
@@ -133,7 +143,7 @@ t_boolean	count_line(t_mini *mini, char *file);
 
 // PARSE BUFFER
 
-void	parse_cam(t_mini *mini, char *buffer);
+void		parse_cam(t_mini *mini, char *buffer);
 
 // PARSE FILL MINI
 
@@ -146,12 +156,12 @@ void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
 
 // DEBUG
-void	printAllCam(t_mini *mini);
-void	printAllObject(t_mini *mini);
+void		printAllCam(t_mini *mini);
+void		printAllObject(t_mini *mini);
 
 //RAY 
 
-void	set_up_cam(t_mini *mini);
+void		set_up_cam(t_mini *mini);
 t_boolean	trace(t_mini *mini);
 
 // MATRIX MATH
@@ -161,4 +171,33 @@ double		vec_cross_x(t_vec3 i, t_vec3 j);
 double		vec_cross_y(t_vec3 i, t_vec3 j);
 double		vec_cross_z(t_vec3 i, t_vec3 j);
 double 		vec_normalize(t_vec3 i);
+
+// TRACE
+
+/**
+ * @brief 
+ * 
+ * get_pixel_in_space permets de connaitre l'emplacement 3D d'un pixel de notre plan projete.
+ * 
+ * @param P   : point dans l'espace 3D d'un pixel projete sur le plan de taille w * h 
+ * @param d_u : d_u correspond a delta_u, parametre de variaton du vecteur U (up). 
+ * @param d_v : d_u correspond a delta_u, parametre de variaton du vecteur R (right). 
+ * @param mini: mini tu connais y a tout e qui faut dedans
+ *
+ */ 
+void	get_pixel_in_space(t_vec3 *P, double d_u, double d_v, t_mini *mini);
+
+
+/**
+ * @brief get ray direction
+ * 
+ * Donne a ray_D un vecteur norme dans la direction de la cam vers P
+ * 
+ * @param ray_d directon du ray cast par la cam
+ * @param P point dans l'espace 3D d'un pixel projete sur le plan de taille w * h 
+ * @param mini mini tu connais y a tout e qui faut dedans
+ * 
+ */
+void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
+
 #endif

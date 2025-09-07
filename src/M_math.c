@@ -22,7 +22,7 @@ t_vec3 vec_cross(t_vec3 i, t_vec3 j)
 	return (result);
 }
 
-double  vec_cros_x(t_vec3 i, t_vec3 j)
+double  vec_cross_x(t_vec3 i, t_vec3 j)
 {
     double result;
 
@@ -30,7 +30,7 @@ double  vec_cros_x(t_vec3 i, t_vec3 j)
     return (result);
 }
 
-double  vec_cros_y(t_vec3 i, t_vec3 j)
+double  vec_cross_y(t_vec3 i, t_vec3 j)
 {
     double result;
 
@@ -38,7 +38,7 @@ double  vec_cros_y(t_vec3 i, t_vec3 j)
     return (result);
 }
 
-double  vec_cros_z(t_vec3 i, t_vec3 j)
+double  vec_cross_z(t_vec3 i, t_vec3 j)
 {
     double result;
 

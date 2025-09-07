@@ -14,6 +14,8 @@ SRC =	main.c \
 		debug.c \
 		basic_draw.c \
 		trace.c \
+		set_up_camera.c \
+		M_math.c
 		
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
