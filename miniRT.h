@@ -5,6 +5,7 @@
 # define HEIGHT 500
 # define WIDTH 500
 # define OBJ_MAX 20
+# define M_PI       3.14159265358979323846
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>

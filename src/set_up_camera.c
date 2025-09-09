@@ -49,7 +49,7 @@ void	set_up_cam(t_mini *mini)
 		get_up_local_vector(mini, i);
 		printf("up = x : %f, y : %f, z : %f\n", mini->scene.cam[i].up.x , mini->scene.cam[i].up.y, mini->scene.cam[i].up.z);
 		printf("right = x : %f, y : %f, z : %f\n", mini->scene.cam[i].right.x , mini->scene.cam[i].right.y, mini->scene.cam[i].right.z);
-		mini->scene.cam[i].h = 2 * tan((double)mini->scene.cam[i].fov / 2);
+		mini->scene.cam[i].h = 2 * tan((double)(mini->scene.cam[i].fov / 2) * (M_PI * 180));
 		mini->scene.cam[i].w = mini->scene.cam[i].h * ( WIDTH / HEIGHT);
 		i++;
 	}

@@ -113,7 +113,7 @@ t_boolean	trace(t_mini *mini)
 			var.delta_u = ((var.j + 0.5 / WIDTH) - 0.5)
 				* mini->scene.cam[mini->cam_lock].w;
 			get_ray(mini, var.delta_u, var.delta_v, &ray_direction);
-			printVec(ray_direction);
+			//printVec(ray_direction);
 			clash_of_clan(mini, ray_direction, var.j, var.i);
 			var.j++;
 		}
