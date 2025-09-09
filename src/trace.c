@@ -61,9 +61,12 @@ void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini)
 	ray_D->y = P->y - mini->scene.cam[mini->cam_lock].pos.y;
 	ray_D->z = P->z - mini->scene.cam[mini->cam_lock].pos.z;
 	norme_ray_D = vec_normalize(*ray_D);
-	ray_D->x = ray_D->x / norme_ray_D;
-	ray_D->y = ray_D->y / norme_ray_D;
-	ray_D->z = ray_D->z / norme_ray_D;
+	if (norme_ray_D  != 0)
+	{
+		ray_D->x = ray_D->x / norme_ray_D;
+		ray_D->y = ray_D->y / norme_ray_D;
+		ray_D->z = ray_D->z / norme_ray_D;
+	}
 }
 
 void	get_ray(t_mini *mini, double d_u, double d_v, t_vec3 *ray_dir)
@@ -72,7 +75,10 @@ void	get_ray(t_mini *mini, double d_u, double d_v, t_vec3 *ray_dir)
 
 	get_pixel_in_space(&pixel_on_project_plan, d_u, d_v, mini);
 //	printVec(pixel_on_project_plan);
-	get_ray_direction(ray_dir, &pixel_on_project_plan, mini);
+//	get_ray_direction(ray_dir, &pixel_on_project_plan, mini);
+	ray_dir->x = pixel_on_project_plan.x;
+	ray_dir->y = pixel_on_project_plan.y;
+	ray_dir->z = pixel_on_project_plan.z;
 }
 
 void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
@@ -94,29 +100,51 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 		i++;
 	}
 }
+/*
+* @brief
+* premier rayon en haut a gauche du plan projete. 
+
+	On addition la pos de la cam + la direction puis on bouge vers le haut up de la hauteur / 2, et puis vers la gauche en faisant - right de w / 2 de distance. 
+
+	Je sais ca parrait illisible.
+*/
+void	get_p_0(t_vec3 *p0, t_mini *mini)
+{
+	p0->x = mini->scene.cam[mini->cam_lock].pos.x + mini->scene.cam[mini->cam_lock].vec_dir.x +
+		(mini->scene.cam[mini->cam_lock].up.x * (mini->scene.cam[mini->cam_lock].h / 2.0f)) - 
+			(mini->scene.cam[mini->cam_lock].right.x * (mini->scene.cam[mini->cam_lock].w / 2.0f));
+
+	p0->y = mini->scene.cam[mini->cam_lock].pos.y + mini->scene.cam[mini->cam_lock].vec_dir.y +
+	(mini->scene.cam[mini->cam_lock].up.y * (mini->scene.cam[mini->cam_lock].h / 2.0f)) - 
+		(mini->scene.cam[mini->cam_lock].right.y* (mini->scene.cam[mini->cam_lock].w / 2.0f));
+
+	p0->z = mini->scene.cam[mini->cam_lock].pos.z + mini->scene.cam[mini->cam_lock].vec_dir.z +
+	(mini->scene.cam[mini->cam_lock].up.z* (mini->scene.cam[mini->cam_lock].h / 2.0f)) - 
+		(mini->scene.cam[mini->cam_lock].right.z * (mini->scene.cam[mini->cam_lock].w / 2.0f));
+}
 
 t_boolean	trace(t_mini *mini)
 {
 	t_var_trace	var;
-	t_vec3		ray_direction;
+	//t_vec3		ray_direction;
+	t_vec3		P_0;
 
 	var.i = 0;
 	var.delta_u = 0.0;
 	var.delta_v = 0.0;
-	while (var.i < HEIGHT)
+	get_p_0(&P_0, mini);
+	printVec(P_0);
+	while ( var.i < HEIGHT)
 	{
-		var.delta_v = (0.5 - (var.i + 0.5 / HEIGHT))
-			* mini->scene.cam[mini->cam_lock].h;
 		var.j = 0;
+		var.delta_v = 0;
 		while (var.j < WIDTH)
 		{
-			var.delta_u = ((var.j + 0.5 / WIDTH) - 0.5)
-				* mini->scene.cam[mini->cam_lock].w;
-			get_ray(mini, var.delta_u, var.delta_v, &ray_direction);
-			//printVec(ray_direction);
-			clash_of_clan(mini, ray_direction, var.j, var.i);
+		//	printf(" u : %f, v ; %f\n", var.delta_u, var.delta_v);
 			var.j++;
+			var.delta_v = var.delta_v + (mini->scene.cam[mini->cam_lock].w / (double)WIDTH);
 		}
+		var.delta_u = var.delta_u + (mini->scene.cam[mini->cam_lock].h / (double)HEIGHT);
 		var.i++;
 	}
 	return (true);

@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 	StructureNotifyMask, &close_window, &mini);
 	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win, mini.display.img.img, 0, 0);
-	printf("FLOP");
+	//printf("FLOP");
 	mlx_loop(mini.display.mlx);
 	return (0);
 }
