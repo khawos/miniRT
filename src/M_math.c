@@ -49,7 +49,7 @@ double  vec_cross_z(t_vec3 i, t_vec3 j)
     return (result);
 }
 
-double  vec_normalize(t_vec3 i)
+double  vec_get_norme(t_vec3 i)
 {
 	double	result;
 

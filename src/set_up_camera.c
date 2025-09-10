@@ -17,11 +17,11 @@ void    get_right_local_vector(t_mini *mini, int i)
 	t_vec3  up_world;
 	double	norme;
 	
-	up_world = (t_vec3){0, 1, 0};
+	up_world = (t_vec3){0, 0, 1};
 	mini->scene.cam[i].right.x = vec_cross_x(up_world, mini->scene.cam[i].vec_dir);
 	mini->scene.cam[i].right.y = vec_cross_y(up_world, mini->scene.cam[i].vec_dir);
 	mini->scene.cam[i].right.z = vec_cross_z(up_world, mini->scene.cam[i].vec_dir);
-	norme = vec_normalize(vec_cross(up_world, mini->scene.cam[i].vec_dir));
+	norme = vec_get_norme(vec_cross(up_world, mini->scene.cam[i].vec_dir));
 	if (norme != 0)
 	{
 			mini->scene.cam[i].right.x /= norme;

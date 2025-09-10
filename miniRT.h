@@ -163,6 +163,7 @@ void		parse_pl(t_mini *mini, char *buffer);
 void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
+
 // DEBUG
 void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
@@ -179,12 +180,19 @@ t_vec3 		vec_cross(t_vec3 i, t_vec3 j);
 double		vec_cross_x(t_vec3 i, t_vec3 j);
 double		vec_cross_y(t_vec3 i, t_vec3 j);
 double		vec_cross_z(t_vec3 i, t_vec3 j);
-double 		vec_normalize(t_vec3 i);
+double 		vec_get_norme(t_vec3 i);
 
 // MATRIX MATH2
 
-double	vec_dot(t_vec3 i, t_vec3 j);
-t_vec3	vec_substact(t_vec3 i, t_vec3 j);
+double		vec_dot(t_vec3 i, t_vec3 j);
+t_vec3		vec_substact(t_vec3 i, t_vec3 j);
+t_vec3		vec_normalize(t_vec3 i);
+t_vec3		vec_add(t_vec3 i, t_vec3 j);
+t_vec3		vec_mul_n(t_vec3 i, double n);
+void		vec_add_ptr(t_vec3 *result, t_vec3 add);
+void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
+
+
 
 // TRACE
 

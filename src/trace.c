@@ -60,7 +60,7 @@ void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini)
 	ray_D->x = P->x - mini->scene.cam[mini->cam_lock].pos.x;
 	ray_D->y = P->y - mini->scene.cam[mini->cam_lock].pos.y;
 	ray_D->z = P->z - mini->scene.cam[mini->cam_lock].pos.z;
-	norme_ray_D = vec_normalize(*ray_D);
+	norme_ray_D = vec_get_norme(*ray_D);
 	if (norme_ray_D  != 0)
 	{
 		ray_D->x = ray_D->x / norme_ray_D;
@@ -126,21 +126,22 @@ void	get_p_0(t_vec3 *p0, t_mini *mini)
 t_boolean	trace(t_mini *mini)
 {
 	t_var_trace	var;
-	//t_vec3		ray_direction;
-	t_vec3		P_0;
+	t_vec3		ray_direction;
 
 	var.i = 0;
 	var.delta_u = 0.0;
 	var.delta_v = 0.0;
-	get_p_0(&P_0, mini);
-	printVec(P_0);
 	while ( var.i < HEIGHT)
 	{
 		var.j = 0;
 		var.delta_v = 0;
+		get_p_0(&ray_direction, mini);
+		vec_sub_ptr(&ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].up, var.delta_u));
 		while (var.j < WIDTH)
 		{
 		//	printf(" u : %f, v ; %f\n", var.delta_u, var.delta_v);
+			clash_of_clan(mini, vec_normalize(vec_add(ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].right, var.delta_v))), var.j, var.i);
+		//	printVec(vec_add(ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].right, var.delta_v)));			
 			var.j++;
 			var.delta_v = var.delta_v + (mini->scene.cam[mini->cam_lock].w / (double)WIDTH);
 		}
