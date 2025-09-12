@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 00:28:07 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 13:29:52 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:36:52 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ void	parse_cam(t_mini *mini, char *buffer)
 
 void	parse_a(t_mini	*mini, char	*buffer)
 {
-
 	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
 	mini->sc.objet[mini->N_OBJ].type = A;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->sc.objet[mini->N_OBJ].ratio =__atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].ratio = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
@@ -58,7 +57,7 @@ void	parse_l(t_mini	*mini, char	*buffer)
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);	
+	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].ratio = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
@@ -77,9 +76,9 @@ void	parse_sp(t_mini *mini, char *buffer)
 		buffer++;
 	mini->sc.objet[mini->N_OBJ].pos.x = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.y =__atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);	
+	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
 	buffer++;
@@ -100,7 +99,7 @@ void	parse_pl(t_mini *mini, char *buffer)
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);	
+	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].vec_dir.x = __atoi_double(&buffer);
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].vec_dir.y = __atoi_double(&buffer);
@@ -117,7 +116,6 @@ void	parse_pl(t_mini *mini, char *buffer)
 
 void	parse_cy(t_mini *mini, char *buffer)
 {
-
 	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
 	mini->sc.objet[mini->N_OBJ].type = cy;
 	while (ft_isalpha(*buffer))
@@ -126,7 +124,7 @@ void	parse_cy(t_mini *mini, char *buffer)
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);	
+	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].vec_dir.x = __atoi_double(&buffer);
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].vec_dir.y = __atoi_double(&buffer);

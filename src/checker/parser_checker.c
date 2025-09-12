@@ -63,14 +63,13 @@ t_boolean	checker(char *file)
 	int 	fd;
 	char	*buffer;
 
-	(void)check_object_type;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (false);
 	while ((buffer = get_next_line(fd)))
 	{
 		if (!check_object_type(buffer))
-			return (false);
+			return (free(buffer), false);
 		free(buffer);
 	}
 	close(fd);

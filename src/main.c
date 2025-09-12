@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
+/*   Updated: 2025/09/12 14:52:10 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 t_boolean	init(t_mini *mini, char **av)
@@ -17,12 +29,10 @@ t_boolean	init(t_mini *mini, char **av)
 	return (true);
 }
 
-
-
 int	main(int ac, char **av)
 {
 	t_mini	mini;
-	
+
 	if (ac != 2)
 		return (1);
 	if (!init(&mini, av))
@@ -30,9 +40,9 @@ int	main(int ac, char **av)
 	set_up_cam(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
-	StructureNotifyMask, &close_window, &mini);
-	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win, mini.display.img.img, 0, 0);
-	//printf("FLOP");
+		StructureNotifyMask, &close_window, &mini);
+	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win,
+		mini.display.img.img, 0, 0);
 	mlx_loop(mini.display.mlx);
 	return (0);
 }

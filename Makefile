@@ -5,18 +5,18 @@ LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
-		window.c \
+		graphic_lib/window.c \
 		free.c \
-		parser.c \
-		parser_buffer.c \
-		parser_fill_mini.c \
+		parsing/parser.c \
+		parsing/parser_buffer.c \
+		parsing/parser_fill_mini.c \
 		utils.c \
 		debug.c \
-		basic_draw.c \
+		graphic_lib/basic_draw.c \
 		cast.c \
 		set_up_camera.c \
-		M_math.c \
-		M_math2.c \
+		maths/M_math.c \
+		maths/M_math2.c \
 		intersect.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \

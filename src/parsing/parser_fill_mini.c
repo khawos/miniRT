@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_mini.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-02 23:26:16 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/12 14:40:02 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 	close(fd);
 	return (true);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_checker2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-06 11:00:56 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-06 11:00:56 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/06 11:00:56 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/12 14:22:28 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_boolean	args_checker_a(char *line)
 	if (3 != count_double_array(words))
 		return (write(2, "Error: Wrong ambient number of arguments\n", 42), free_double_array(words), false);
 	if (!is_a_ratio(words[1]))
-		return (write(2, "Error: Wrong ambient light brightness ratio\n", 37), free_double_array(words), false);
+		return (write(2, "Error: Wrong ambient light brightness ratio\n", 45), free_double_array(words), false);
 	if (!is_a_rgb_value(words[2]))
-		return (write(2, "Error: Wrong ambient RGB value\n", 24), free_double_array(words), false);
+		return (write(2, "Error: Wrong ambient RGB value\n", 32), free_double_array(words), false);
 	
 	return (free_double_array(words), true);
 }

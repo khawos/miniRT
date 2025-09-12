@@ -133,14 +133,6 @@ typedef struct	s_mini
 int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
 unsigned int	color_shift(unsigned char rgb[3]);
 
-typedef struct	s_mini
-{
-	t_mlx	display;
-	t_sc 	sc;
-}				t_mini;
-
-
-
 
 // WINDOW
 
@@ -148,6 +140,8 @@ t_boolean	open_window(t_mini *mini);
 int			close_window(t_mini *mini);
 
 // UTILS
+
+t_boolean	is_space(char c);
 double		atoi_double(char *str);
 double		__atoi_double(char **str);
 
@@ -187,9 +181,9 @@ t_boolean	cast(t_mini *mini);
 
 // MATRIX MATH
 
-t_vec3 		vec_cross(t_vec3 i, t_vec3 j);
-t_vec3	vec_create(void);
-double 		vec_get_norme(t_vec3 i);
+t_vec3		vec_cross(t_vec3 i, t_vec3 j);
+t_vec3		vec_create(void);
+double		vec_get_norme(t_vec3 i);
 
 // MATRIX MATH2
 

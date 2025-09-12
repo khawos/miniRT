@@ -14,16 +14,13 @@ t_boolean	check_rt(char *file_name)
 
 t_boolean	parser(t_mini *mini, char **av)
 {
-	//int	fd;
 	int	n_cam;
 
 	n_cam = 0;
 	if (!check_rt(av[1]))
 		return (write(2, "Error\nMiniRT:Wrong file name.\n", 31), false);
-	// fd = open(av[1], O_RDONLY);
-	// if (fd < 0)
-	// 	return (false);
-	(void)mini;
+	if (!checker(av[1]))
+		return (false);
 	count_line(mini, av[1]);
 	fill_mini(mini, av[1]);
 	return (true);
@@ -32,7 +29,7 @@ t_boolean	parser(t_mini *mini, char **av)
 t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_line)
 {
 	int	i;
-	
+
 	i = -1;
 	mini->sc.cam = malloc(sizeof(t_cam) * n_cam);
 	if (!mini->sc.cam)
@@ -65,8 +62,6 @@ t_boolean	count_line(t_mini *mini, char *file)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		while (*buffer == ' ')
-			buffer++;					// IS_SPACE
 		if (ft_strncmp(buffer, "C", 1) == 0)
 			n_cam++;
 		if (*buffer != '\n')
