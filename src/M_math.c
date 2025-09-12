@@ -53,6 +53,6 @@ double  vec_get_norme(t_vec3 i)
 {
 	double	result;
 
-    result = sqrtf(powf(i.x, 2) + powf(i.y, 2) + powf(i.z, 2));
+    result = sqrtf(pow(i.x, 2) + pow(i.y, 2) + pow(i.z, 2));
     return (result);
 }

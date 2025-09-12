@@ -86,17 +86,19 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	int			i;
 	t_inter		k;
 	i = 0;
-	(void)x;
-	(void)y;
+
 	while (i < mini->N_OBJ)
 	{
 		k = intersect(mini, ray_direction, mini->scene.objet[i]);
-		if (k == out)
-			my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
+		//if (k == out)
+			//my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
 		if (k == in)
-			my_mlx_pixel_put(mini, x, y, color_shift(mini->scene.objet[i].color));			
+		{
+			my_mlx_pixel_put(mini, x, y, color_shift(mini->scene.objet[i].color));		
+		}	
 		else if (k == edge)
-			my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);			
+			(void)k;
+		//my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);
 		i++;
 	}
 }
@@ -141,7 +143,7 @@ t_boolean	trace(t_mini *mini)
 		{
 		//	printf(" u : %f, v ; %f\n", var.delta_u, var.delta_v);
 			clash_of_clan(mini, vec_normalize(vec_add(ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].right, var.delta_v))), var.j, var.i);
-		//	printVec(vec_add(ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].right, var.delta_v)));			
+			//printVec(vec_add(ray_direction, vec_mul_n(mini->scene.cam[mini->cam_lock].right, var.delta_v)));			
 			var.j++;
 			var.delta_v = var.delta_v + (mini->scene.cam[mini->cam_lock].w / (double)WIDTH);
 		}

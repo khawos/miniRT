@@ -2,7 +2,7 @@
 
 double	vec_dot(t_vec3 i, t_vec3 j)
 {
-	return (i.x * j.x + i.y * j.y + i.z * j.y);
+	return (i.x * j.x + i.y * j.y + i.z * j.z);
 }
 
 t_vec3	vec_substact(t_vec3 i, t_vec3 j)
@@ -48,7 +48,7 @@ t_vec3	vec_normalize(t_vec3 i)
 	result.x = i.x / norme;
 	result.y = i.y / norme;
 	result.z = i.z / norme;
-	return (result);
+		return (result);
 }
 
 t_vec3	vec_mul_n(t_vec3 i, double n)
