@@ -13,7 +13,7 @@ SRC =	main.c \
 		utils.c \
 		debug.c \
 		basic_draw.c \
-		trace.c \
+		cast.c \
 		set_up_camera.c \
 		M_math.c \
 		M_math2.c \

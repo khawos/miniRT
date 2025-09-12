@@ -91,14 +91,14 @@ typedef struct	s_camera
 	double			w;
 }				t_cam;
 
-typedef struct	s_scene
+typedef struct	s_sc
 {
 	t_cam			*cam;
 	unsigned char	nb_cam;
 	t_objet			*objet;
 	unsigned char	nb_objet;
 
-}				t_scene;
+}				t_sc;
 
 // GENERAL AND MLX
 
@@ -113,7 +113,7 @@ typedef struct	s_mlx
 typedef struct	s_mini
 {
 	t_mlx	display;
-	t_scene scene;
+	t_sc sc;
 	int		cam_lock;
 	int		n_cam;
 	int		n_cy;
@@ -172,14 +172,12 @@ void		printVec(t_vec3	Ray);
 //RAY 
 
 void		set_up_cam(t_mini *mini);
-t_boolean	trace(t_mini *mini);
+t_boolean	cast(t_mini *mini);
 
 // MATRIX MATH
 
 t_vec3 		vec_cross(t_vec3 i, t_vec3 j);
-double		vec_cross_x(t_vec3 i, t_vec3 j);
-double		vec_cross_y(t_vec3 i, t_vec3 j);
-double		vec_cross_z(t_vec3 i, t_vec3 j);
+t_vec3	vec_create(void);
 double 		vec_get_norme(t_vec3 i);
 
 // MATRIX MATH2
@@ -188,27 +186,13 @@ double		vec_dot(t_vec3 i, t_vec3 j);
 t_vec3		vec_substact(t_vec3 i, t_vec3 j);
 t_vec3		vec_normalize(t_vec3 i);
 t_vec3		vec_add(t_vec3 i, t_vec3 j);
-t_vec3		vec_mul_n(t_vec3 i, double n);
+t_vec3		vec_scale(t_vec3 i, double n);
 void		vec_add_ptr(t_vec3 *result, t_vec3 add);
 void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 
 
 
-// TRACE
-
-/**
- * @brief 
- * 
- * get_pixel_in_space permets de connaitre l'emplacement 3D d'un pixel de notre plan projete.
- * 
- * @param P   : point dans l'espace 3D d'un pixel projete sur le plan de taille w * h 
- * @param d_u : d_u correspond a delta_u, parametre de variaton du vecteur U (up). 
- * @param d_v : d_u correspond a delta_u, parametre de variaton du vecteur R (right). 
- * @param mini: mini tu connais y a tout e qui faut dedans
- *
- */ 
-void	get_pixel_in_space(t_vec3 *P, double d_u, double d_v, t_mini *mini);
-
+// CAST
 
 /**
  * @brief get ray direction

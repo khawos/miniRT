@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-02 23:35:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-02 23:35:09 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/12 13:29:52 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	free_mini(t_mini *mini)
 	int i;
 
 	i = 0;
-	while (i < mini->scene.nb_cam)
+	while (i < mini->sc.nb_cam)
 	{
-		free(mini->scene.cam[i].name);
+		free(mini->sc.cam[i].name);
 		i++;
 	}
-	free(mini->scene.cam);
+	free(mini->sc.cam);
 	i = 0;
-	while (i < mini->scene.nb_objet){
-		free(mini->scene.objet[i].name);
+	while (i < mini->sc.nb_objet){
+		free(mini->sc.objet[i].name);
 		i++;
 	}
-	free(mini->scene.objet);
+	free(mini->sc.objet);
 }

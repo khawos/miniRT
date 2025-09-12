@@ -34,19 +34,19 @@ t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_line)
 	int	i;
 	
 	i = -1;
-	mini->scene.cam = malloc(sizeof(t_cam) * n_cam);
-	if (!mini->scene.cam)
+	mini->sc.cam = malloc(sizeof(t_cam) * n_cam);
+	if (!mini->sc.cam)
 		return (false);
 	while (++i < n_cam)
-		mini->scene.cam[i].name = NULL;
-	mini->scene.nb_cam = n_cam;
-	mini->scene.objet = malloc(sizeof(t_objet) * (n_line - n_cam));
-	if (!mini->scene.objet)
+		mini->sc.cam[i].name = NULL;
+	mini->sc.nb_cam = n_cam;
+	mini->sc.objet = malloc(sizeof(t_objet) * (n_line - n_cam));
+	if (!mini->sc.objet)
 		return (false);
 	i = -1;
 	while (++i < n_line - n_cam)
-		mini->scene.objet[i].name = NULL;
-	mini->scene.nb_objet = n_line - n_cam;
+		mini->sc.objet[i].name = NULL;
+	mini->sc.nb_objet = n_line - n_cam;
 	return (true);
 }
 

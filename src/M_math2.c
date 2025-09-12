@@ -24,34 +24,19 @@ t_vec3	vec_add(t_vec3 i, t_vec3 j)
 	return (result); 
 }
 
-void	vec_add_ptr(t_vec3 *result, t_vec3 add)
-{
-	result->x += add.x;
-	result->y += add.y;
-	result->z += add.z;
-}
-
-void	vec_sub_ptr(t_vec3 *result, t_vec3 sub)
-{
-	result->x -= sub.x;
-	result->y -= sub.y;
-	result->z -= sub.z;
-}
-
 t_vec3	vec_normalize(t_vec3 i)
 {
-
 	t_vec3	result;
 	double	norme;
 
 	norme = vec_get_norme(i);
-	result.x = i.x / norme;
-	result.y = i.y / norme;
-	result.z = i.z / norme;
-		return (result);
+	if (norme == 0)
+		return (vec_create());
+	result = vec_scale(i, 1 / norme);
+	return (result);
 }
 
-t_vec3	vec_mul_n(t_vec3 i, double n)
+t_vec3	vec_scale(t_vec3 i, double n)
 {
 	t_vec3	result;
 
