@@ -75,3 +75,12 @@ double	__atoi_double(char **str)
 	}
 	return ((var.integer_part + var.float_part) * var.neg);
 }
+void	free_double_array(char **dest)
+{
+	int	i;
+
+	i = 0;
+	while (dest[i])
+		free(dest[i++]);
+	free(dest);
+}

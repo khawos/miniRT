@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3
+CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
 LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
@@ -18,14 +18,19 @@ SRC =	main.c \
 		M_math.c \
 		M_math2.c \
 		intersect.c \
-		
+		checker/arg_checker.c \
+		checker/arg_checker2.c \
+		checker/parser_checker.c \
+		checker/parser_checker_utils.c \
+		checker/parser_checker_utils2.c \
+
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
 all : $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
 $(NAME) : $(OBJS)

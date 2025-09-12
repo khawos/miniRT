@@ -11,11 +11,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
+# include <stdio.h>
 # include "libft/include/get_next_line.h"
 # include "libft/include/libft.h"
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <float.h>
+# include <limits.h>
 
 typedef	enum	s_inter
 {
@@ -127,8 +130,17 @@ typedef struct	s_mini
 
 // DRAW BASIC
 
-int			my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
+int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
 unsigned int	color_shift(unsigned char rgb[3]);
+
+typedef struct	s_mini
+{
+	t_mlx	display;
+	t_sc 	sc;
+}				t_mini;
+
+
+
 
 // WINDOW
 
@@ -136,7 +148,6 @@ t_boolean	open_window(t_mini *mini);
 int			close_window(t_mini *mini);
 
 // UTILS
-
 double		atoi_double(char *str);
 double		__atoi_double(char **str);
 
@@ -211,6 +222,39 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 
 t_inter	intersect(t_mini *mini, t_vec3 ray_direction, t_objet object);
 t_inter	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet object);
+void		free_double_array(char **dest);
 
+
+// PARSER
+
+t_boolean	parser(t_mini *mini, char **av);
+
+// PARSER_CHECKER
+
+t_boolean	checker(char *file);
+t_boolean	count_line(t_mini *mini, char *file);
+
+// PARSER CHECKER UTILS
+
+int			count_double_array(char **str);
+t_boolean	is_a_rgb_value(char *word);
+t_boolean	is_a_ratio(char	*word);
+t_boolean	is_a_xyz_normalize_value(char *word);
+t_boolean	is_a_xyz_value(char	*word);
+t_boolean	is_a_fov_value(char	*word);
+t_boolean	is_a_strictly_positive_number(char *word);
+int			count_coma(char *line);
+t_boolean	alpha_problem(char *line);
+t_boolean	nb_data_problem(char *line , char *type);
+
+// ARGS CHECKER
+
+t_boolean	args_checker_pl(char *line);
+t_boolean	args_checker_sp(char *line);
+t_boolean	args_checker_cy(char *line);
+t_boolean	args_checker_c(char *line);
+t_boolean	args_checker_a(char *line);
+t_boolean	args_checker_l(char *line);
+t_boolean	args_type_checker(char *type, char *line);
 
 #endif
