@@ -32,6 +32,7 @@ typedef struct	s_color
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
+	t_boolean		hit;
 }				t_color;
 
 
@@ -243,8 +244,8 @@ void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
 void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
-t_inter	intersect(t_mini *mini, t_vec3 ray_direction, t_objet object);
-t_inter	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet object);
+t_color	intersect(t_mini *mini, t_vec3 ray_direction);
+double	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 
 

@@ -15,11 +15,9 @@
 void	get_right_local_vector(t_mini *mini, int i)
 {
 	t_vec3	up_world;
-	double	norme;
 
-	up_world = (t_vec3){0, 0, 1};
+	up_world = (t_vec3){0, 0, -1};
 	mini->sc.cam[i].right = vec_cross(up_world, mini->sc.cam[i].vec_dir);
-	norme = vec_get_norme(vec_cross(up_world, mini->sc.cam[i].vec_dir));
 	mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
 }
 

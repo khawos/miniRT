@@ -14,28 +14,19 @@
 
 void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
-	int					i;
-	t_inter				k;
+	t_color				color;
 
-	i = 0;
-	while (i < mini->N_OBJ)
+	color = intersect(mini, ray_direction);
+	if (false == color.hit)
+		//calcul_backgroud(mini, x, y);
+		my_mlx_pixel_put(mini, x, y, 0xA0A0A0);
+	else
 	{
-		if (mini->sc.objet[i].type == sp)
-		{
-			k = intersect(mini, ray_direction, mini->sc.objet[i]);
-			if (k == out)
-				my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
-			if (k == in)
-			{
-				my_mlx_pixel_put(mini, x, y, color_shift(mini->sc.objet[i].color));		
-			}	
-			else if (k == edge)
-				(void)k;
-			//my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);
-		}
-		i++;
+	//	printf("JE SUIS HIT\n");
+		my_mlx_pixel_put(mini, x, y, color_shift(color));		
 	}
 }
+
 
 t_vec3	get_left_corner_viewport(t_mini *mini)
 {
@@ -70,6 +61,7 @@ t_boolean	cast(t_mini *mini)
 				vec_scale(cam.up, var.delta_u));
 		while (var.j < WIDTH)
 		{
+
 			clash_of_clan(mini, vec_normalize(vec_add(ray_direction,
 						vec_scale(cam.right, var.delta_v))), var.j, var.i);
 			var.j++;
