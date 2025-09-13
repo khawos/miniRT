@@ -30,6 +30,13 @@ void	free_mini(t_mini *mini)
 		i++;
 	}
 	free(mini->sc.objet);
+	i = 0;
+	while (i < mini->sc.nb_light)
+	{
+		free(mini->sc.light[i].name);
+		i++;
+	}
+	free(mini->sc.light);
 }
 
 void	free_double_array(char **dest)

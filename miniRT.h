@@ -27,6 +27,13 @@ typedef	enum	s_inter
 	edge,
 }				t_inter;
 
+typedef struct	s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}				t_color;
+
 
 typedef enum s_type
 {
@@ -73,7 +80,7 @@ typedef struct	s_objet
 	char			*name;
 	t_vec3			pos;
 	t_vec3			vec_dir;
-	unsigned char	color[3];
+	t_color			color;
 	double			ratio;
 	double			diameter;
 	double			height;
@@ -94,12 +101,27 @@ typedef struct	s_camera
 	double			w;
 }				t_cam;
 
+typedef	struct	s_light
+{
+	char			*name;
+	int				id;
+	double			ratio;
+	t_vec3			pos;
+	t_vec3			vec_dir;
+	t_color			color;
+	t_type			type;
+
+}				t_light;
+
+
 typedef struct	s_sc
 {
 	t_cam			*cam;
 	unsigned char	nb_cam;
 	t_objet			*objet;
 	unsigned char	nb_objet;
+	t_light			*light;
+	unsigned char	nb_light;
 
 }				t_sc;
 
@@ -116,7 +138,7 @@ typedef struct	s_mlx
 typedef struct	s_mini
 {
 	t_mlx	display;
-	t_sc sc;
+	t_sc 	sc;
 	int		cam_lock;
 	int		n_cam;
 	int		n_cy;
@@ -125,13 +147,14 @@ typedef struct	s_mini
 	int		n_a;
 	int		n_l;
 	int		N_OBJ;
+	int		N_LIGHT;
 	
 }				t_mini;
 
 // DRAW BASIC
 
 int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
-unsigned int	color_shift(unsigned char rgb[3]);
+unsigned int	color_shift(t_color rgb);
 
 
 // WINDOW
@@ -195,6 +218,12 @@ t_vec3		vec_scale(t_vec3 i, double n);
 void		vec_add_ptr(t_vec3 *result, t_vec3 add);
 void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 
+// COLOR MATH
+
+t_color	color_substract(t_color i, t_color j);
+t_color	color_add(t_color i, t_color j);
+t_color	color_mix(t_color i, t_color j);
+t_color	color_scala(t_color i, double ratio);
 
 
 // CAST

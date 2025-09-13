@@ -21,6 +21,7 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->n_sp = 0;
 	mini->n_cy = 0;
 	mini->N_OBJ = 0;
+	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
 	if (!parser(mini, av))
 		return (false);
@@ -38,6 +39,8 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	set_up_cam(&mini);
+	printAllCam(&mini);
+	printAllObject(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);

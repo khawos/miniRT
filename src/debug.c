@@ -59,9 +59,9 @@ void	printAllObject(t_mini *mini){
 		if (mini->sc.objet[i].type == A || mini->sc.objet[i].type == L)
 			printf("ratio [0.0;1.0] : %f\n", mini->sc.objet[i].ratio);
 		printf("color : r = %u, g = %u, b = %u\n",
-			mini->sc.objet[i].color[0],
-			mini->sc.objet[i].color[1],
-			mini->sc.objet[i].color[2]);
+			mini->sc.objet[i].color.r,
+			mini->sc.objet[i].color.g,
+			mini->sc.objet[i].color.b);
 		if (mini->sc.objet[i].type == cy || mini->sc.objet[i].type == sp)
 		{
 			printf("diameter : %f\n", mini->sc.objet[i].diameter);

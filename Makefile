@@ -17,6 +17,7 @@ SRC =	main.c \
 		set_up_camera.c \
 		maths/M_math.c \
 		maths/M_math2.c \
+		maths/C_math.c \
 		intersect.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \

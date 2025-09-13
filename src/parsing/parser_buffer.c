@@ -33,39 +33,39 @@ void	parse_cam(t_mini *mini, char *buffer)
 
 void	parse_a(t_mini	*mini, char	*buffer)
 {
-	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
-	mini->sc.objet[mini->N_OBJ].type = A;
+	mini->sc.light[mini->N_LIGHT].id = mini->N_OBJ;
+	mini->sc.light[mini->N_LIGHT].type = A;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->sc.objet[mini->N_OBJ].ratio = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].ratio = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.r = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.g = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.b = __atoi_double(&buffer);
 	mini->n_a++;
-	mini->N_OBJ++;
+	mini->N_LIGHT++;
 }
 
 void	parse_l(t_mini	*mini, char	*buffer)
 {
-	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
-	mini->sc.objet[mini->N_OBJ].type = L;
+	mini->sc.light[mini->N_LIGHT].id = mini->N_OBJ;
+	mini->sc.light[mini->N_LIGHT].type = L;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.x = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].pos.x = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].pos.y = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].ratio = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].pos.z = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].ratio = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.r = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.g = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->sc.light[mini->N_LIGHT].color.b = __atoi_double(&buffer);
 	mini->n_l++;
-	mini->N_OBJ++;
+	mini->N_LIGHT++;
 }
 
 void	parse_sp(t_mini *mini, char *buffer)
@@ -80,11 +80,11 @@ void	parse_sp(t_mini *mini, char *buffer)
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.r = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
 	mini->n_sp++;
 	mini->N_OBJ++;
 }
@@ -105,11 +105,11 @@ void	parse_pl(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].vec_dir.y = __atoi_double(&buffer);
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].vec_dir.z = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.r = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
 	mini->n_pl++;
 	mini->N_OBJ++;
 }
@@ -132,11 +132,11 @@ void	parse_cy(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].vec_dir.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].height = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color[0] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.r = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[1] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
 	buffer++;
-	mini->sc.objet[mini->N_OBJ].color[2] = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
 	mini->n_cy++;
 	mini->N_OBJ++;
 }

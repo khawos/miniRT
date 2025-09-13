@@ -14,22 +14,25 @@
 
 void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
-	int			i;
-	t_inter		k;
+	int					i;
+	t_inter				k;
 
 	i = 0;
 	while (i < mini->N_OBJ)
 	{
-		k = intersect(mini, ray_direction, mini->sc.objet[i]);
-		//if (k == out)
-			//my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
-		if (k == in)
+		if (mini->sc.objet[i].type == sp)
 		{
-			my_mlx_pixel_put(mini, x, y, color_shift(mini->sc.objet[i].color));		
-		}	
-		else if (k == edge)
-			(void)k;
-		//my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);
+			k = intersect(mini, ray_direction, mini->sc.objet[i]);
+			if (k == out)
+				my_mlx_pixel_put(mini, x, y, 0xFFFFFF);
+			if (k == in)
+			{
+				my_mlx_pixel_put(mini, x, y, color_shift(mini->sc.objet[i].color));		
+			}	
+			else if (k == edge)
+				(void)k;
+			//my_mlx_pixel_put(mini, x, y,(unsigned int)6579300);
+		}
 		i++;
 	}
 }

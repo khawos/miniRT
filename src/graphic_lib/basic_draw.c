@@ -12,11 +12,6 @@
 
 #include "miniRT.h"
 
-unsigned int	color_shift(unsigned char rgb[3])
-{
-	return ((unsigned int)(0 << 24 | rgb[0] << 16 | rgb[1] << 8 | rgb[2]));
-}
-
 int	my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color)
 {
 	char	*dst;
