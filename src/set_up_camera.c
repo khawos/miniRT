@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:13:29 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 15:27:45 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:59:09 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ void	set_up_cam(t_mini *mini)
 			(((double)mini->sc.cam[i].fov / 2.0f) * ((double)M_PI / 180.0f));
 		mini->sc.cam[i].w = mini->sc.cam[i].h * (
 				(double)WIDTH / (double)HEIGHT);
-		printf("front :");
-		printVec(mini->sc.cam[mini->cam_lock].vec_dir);
-		printf("up :");
-		printVec(mini->sc.cam[mini->cam_lock].up);
-		printf("right :");
-		printVec(mini->sc.cam[mini->cam_lock].right);
 		i++;
 	}
 }

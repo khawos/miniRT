@@ -225,7 +225,7 @@ void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 t_color	color_substract(t_color i, t_color j);
 t_color	color_add(t_color i, t_color j);
 t_color	color_mix(t_color i, t_color j);
-t_color	color_scala(t_color i, double ratio);
+t_color	color_scalar(t_color i, double ratio);
 
 
 // CAST
@@ -246,7 +246,7 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
 t_color	intersect(t_mini *mini, t_vec3 ray_direction);
-double	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet *object);
+double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 
 

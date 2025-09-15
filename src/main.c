@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/12 14:52:10 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:58:56 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	set_up_cam(&mini);
-	//printAllCam(&mini);
-	//printAllObject(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
