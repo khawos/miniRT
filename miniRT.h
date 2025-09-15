@@ -197,6 +197,7 @@ void		parse_cam(t_mini *mini, char *buffer);
 void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
+void		printObject(t_objet obj);
 
 //RAY 
 

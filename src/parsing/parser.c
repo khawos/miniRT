@@ -80,7 +80,6 @@ t_boolean	count_line(t_mini *mini, char *file)
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
-	printf("n_llight : %d, n_cam : %d, n_object : %d\n", n_light, n_cam, n_obj);
 	if (!alloc_mini(mini, n_cam, n_obj, n_light))
 		return (false);
 	return (close(fd), true);

@@ -52,6 +52,8 @@ t_boolean	cast(t_mini *mini)
 	cam = mini->sc.cam[mini->cam_lock];
 	var.i = 0;
 	var.delta_u = 0;
+	ray_direction = get_left_corner_viewport(mini);
+	printVec(ray_direction);
 	while (var.i < HEIGHT)
 	{
 		var.j = 0;

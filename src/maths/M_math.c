@@ -29,6 +29,7 @@ t_vec3	vec_cross(t_vec3 i, t_vec3 j)
 	result.x = i.y * j.z - i.z * j.y;
 	result.y = i.z * j.x - i.x * j.z;
 	result.z = i.x * j.y - i.y * j.x;
+	printVec(result);
 	return (result);
 }
 

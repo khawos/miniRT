@@ -77,3 +77,36 @@ void	printVec(t_vec3	Ray)
 {
 	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);
 }
+
+void	printObject(t_objet obj)
+{
+		printf("Type : %d\n",obj.type);
+		printf("ID : %d\n",obj.id);
+		if (obj.type != A)
+		{
+			printf("position : x = %f, y = %f, z = %f\n",
+				obj.pos.x,
+				obj.pos.y,
+				obj.pos.z);
+		}
+		if (obj.type == cy ||obj.type == pl)
+		{
+			printf("vecteur directon : x = %f, y = %f, z = %f\n",
+				obj.vec_dir.x,
+				obj.vec_dir.y,
+				obj.vec_dir.z);
+		}
+		if (obj.type == A ||obj.type == L)
+			printf("ratio [0.0;1.0] : %f\n",obj.ratio);
+		printf("color : r = %u, g = %u, b = %u\n",
+			obj.color.r,
+			obj.color.g,
+			obj.color.b);
+		if (obj.type == cy ||obj.type == sp)
+		{
+			printf("diameter : %f\n",obj.diameter);
+			if (obj.type == cy)
+				printf("height : %f\n",obj.height);
+		}
+		printf("\n");
+}

@@ -16,15 +16,15 @@ void	get_right_local_vector(t_mini *mini, int i)
 {
 	t_vec3	up_world;
 
-	up_world = (t_vec3){0, 0, -1};
-	mini->sc.cam[i].right = vec_cross(up_world, mini->sc.cam[i].vec_dir);
+	up_world = (t_vec3){0, 0, 1};
+	mini->sc.cam[i].right = vec_cross(mini->sc.cam[i].vec_dir, up_world);
 	mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
 }
 
 void	get_up_local_vector(t_mini *mini, int i)
 {
-	mini->sc.cam[i].up = vec_cross(mini->sc.cam[i].vec_dir,
-			mini->sc.cam[i].right);
+	mini->sc.cam[i].up = vec_cross(
+			mini->sc.cam[i].right, mini->sc.cam[i].vec_dir);
 }
 
 void	set_up_cam(t_mini *mini)
@@ -36,10 +36,16 @@ void	set_up_cam(t_mini *mini)
 	{
 		get_right_local_vector(mini, i);
 		get_up_local_vector(mini, i);
-		mini->sc.cam[i].h = 2 * tanf
+		mini->sc.cam[i].h = 2 * tan
 			(((double)mini->sc.cam[i].fov / 2.0f) * ((double)M_PI / 180.0f));
 		mini->sc.cam[i].w = mini->sc.cam[i].h * (
 				(double)WIDTH / (double)HEIGHT);
+		printf("front :");
+		printVec(mini->sc.cam[mini->cam_lock].vec_dir);
+		printf("up :");
+		printVec(mini->sc.cam[mini->cam_lock].up);
+		printf("right :");
+		printVec(mini->sc.cam[mini->cam_lock].right);
 		i++;
 	}
 }

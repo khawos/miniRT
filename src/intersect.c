@@ -16,11 +16,11 @@ double	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet *object)
 	t_equation	var;
 
 	var.a = vec_dot(ray_direction, ray_direction);
-	var.b = vec_dot(vec_scale(ray_direction, -2.0f),
-			vec_substact(mini->sc.cam[mini->cam_lock].pos, object->pos));
-	var.c = vec_dot(vec_substact(mini->sc.cam[mini->cam_lock].pos, object->pos),
-			vec_substact(mini->sc.cam[mini->cam_lock].pos,
-				object->pos)) - pow(object->diameter / 2.0f, 2);
+	var.b = vec_dot(vec_scale(ray_direction, -2.0),
+			vec_substact(object->pos, mini->sc.cam[mini->cam_lock].pos));
+	var.c = vec_dot(vec_substact(object->pos, mini->sc.cam[mini->cam_lock].pos),
+			vec_substact(object->pos, mini->sc.cam[mini->cam_lock].pos
+				)) - pow(object->diameter / 2.0, 2);
 	var.delta = pow(var.b, 2) - 4 * var.a * var.c;
 	if (var.delta > 0)
 	{
@@ -36,6 +36,24 @@ double	intersect_sp(t_mini *mini, t_vec3 ray_direction, t_objet *object)
 		return (-var.b / (2 * var.a));
 	return (-1);	
 }
+
+// double intersect_pl(t_mini *mini, t_vec3 ray_direction, t_objet *object)
+// {
+// 	double	t;
+
+// 	if (vec_dot(object->vec_dir, ray_direction) == 0)
+// 	{
+// 		if (vec_get_norme(vec_substact(mini->sc.cam[mini->cam_lock].pos, object->pos)) == 0)
+// 		{
+// 			object->color.hit = true;
+// 			return (0);
+// 		}
+// 		else
+// 			return (-1);
+// 	}
+
+	
+// }
 
 t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 {
@@ -62,7 +80,7 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 		}
 		if (pl == mini->sc.objet[i].type)
 		{
-
+			tmp = intersect_pl(mini, ray_direction, &mini->sc.objet[i]);
 		}
 		i++;
 	}

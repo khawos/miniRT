@@ -39,8 +39,8 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	set_up_cam(&mini);
-	printAllCam(&mini);
-	printAllObject(&mini);
+	//printAllCam(&mini);
+	//printAllObject(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
