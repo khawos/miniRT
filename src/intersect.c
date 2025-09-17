@@ -37,13 +37,13 @@ double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 	return (-1);	
 }
 
-// double intersect_pl(t_mini *mini, t_vec3 ray_direction, t_objet *object)
+// double intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 // {
 // 	double	t;
 
-// 	if (vec_dot(object->vec_dir, ray_direction) == 0)
+// 	if (vec_dot(vec_normalize(origin), object->vec_dir) == 0)
 // 	{
-// 		if (vec_get_norme(vec_substact(mini->sc.cam[mini->cam_lock].pos, object->pos)) == 0)
+// 		if (vec_dot(vec_substact(object->pos, origin), object->vec_dir) == 0)
 // 		{
 // 			object->color.hit = true;
 // 			return (0);
@@ -51,10 +51,11 @@ double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 // 		else
 // 			return (-1);
 // 	}
-
+// 	object->color.hit = true;
+// 	t = vec_dot(vec_substact(object->pos, origin), object->vec_dir) / vec_dot(vec_normalize(origin), object->vec_dir);
+// 	return (t); 
 	
 // }
-
 
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
@@ -73,11 +74,16 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 			if (tmp > -0.0000000001)
 				return (true);
 		}
+		// if (pl == mini->sc.objet[i].type)
+		// {
+		// 	tmp = intersect_pl(origin, ray_direction, &mini->sc.objet[i]);
+		// 	if (tmp > 0)
+		// 		return (true);
+		// }
 		i++;
 	}
 	return (false);
 }
-
 
 t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 {
@@ -91,10 +97,6 @@ t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 	return (result);
 }
 
-
-
-
-
 t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 {
 	double		t;
@@ -103,7 +105,6 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 	int			index_tmp;
 	t_color		result;
 
-	
 	i = 0;
 	t = 10000;
 	tmp = 0; 
@@ -121,6 +122,14 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 				index_tmp = i;
 			}
 		}
+		// if (pl == mini->sc.objet[i].type)
+		// {
+		// 	if (tmp < t && tmp > 0)
+		// 	{
+		// 		t = tmp;
+		// 		index_tmp = i;
+		// 	}
+		// }
 		i++;
 	}
 	if (shadow_ray(mini, ray_direction, t) && mini->sc.objet[index_tmp].color.hit == true)

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-09-16 08:39:00 by jbayonne          #+#    #+#             */
+/*   Updated: 2025-09-16 08:39:00 by jbayonne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
-typedef struct	s__atoi_utils{
-	
+typedef struct s__atoi_utils{
 	double	integer_part;
 	double	float_part;
 	double	power;
@@ -57,7 +68,7 @@ double	__atoi_double(char **str)
 		if (**str == '-')
 		{
 			var.neg = -1;
-			*str += 1; 
+			*str += 1;
 		}
 	}
 	while (**str != '.' && (**str >= '0' && **str <= '9'))

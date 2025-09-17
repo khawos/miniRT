@@ -162,6 +162,7 @@ unsigned int	color_shift(t_color rgb);
 
 t_boolean	open_window(t_mini *mini);
 int			close_window(t_mini *mini);
+int			handle_key_input(int keysym, t_mini *mini);
 
 // UTILS
 

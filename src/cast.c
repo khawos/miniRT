@@ -18,13 +18,12 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y)
 
 	color = intersect(mini, ray_direction);
 	if (false == color.hit)
-		my_mlx_pixel_put(mini, x, y, color_shift((t_color) {255, 255, 255, 0}));
+		my_mlx_pixel_put(mini, x, y, color_shift((t_color){255, 255, 255, 0}));
 	else
 	{
-		my_mlx_pixel_put(mini, x, y, color_shift(color));		
+		my_mlx_pixel_put(mini, x, y, color_shift(color));	
 	}
 }
-
 
 t_vec3	get_left_corner_viewport(t_mini *mini)
 {

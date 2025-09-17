@@ -57,3 +57,10 @@ int	close_window(t_mini *mini)
 	exit(0);
 	return (0);
 }
+
+int	handle_key_input(int keysym, t_mini *mini)
+{
+	if (keysym == 0xff1b)
+		close_window(mini);
+	return (keysym);
+}
