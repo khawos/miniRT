@@ -32,7 +32,7 @@ t_vec3	vec_normalize(t_vec3 i)
 
 	norme = vec_get_norme(i);
 	if (norme == 0)
-		return (vec_create());
+		return (vec_create(0, 0, 0));
 	result = vec_scale(i, 1 / norme);
 	return (result);
 }

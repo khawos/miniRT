@@ -3,7 +3,7 @@
 
 # define MINIRT_H
 # define HEIGHT 720
-# define WIDTH 720
+# define WIDTH 1280
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # include <unistd.h>
@@ -208,7 +208,7 @@ t_boolean	cast(t_mini *mini);
 // MATRIX MATH
 
 t_vec3		vec_cross(t_vec3 i, t_vec3 j);
-t_vec3		vec_create(void);
+t_vec3		vec_create(double x, double y, double z);
 double		vec_get_norme(t_vec3 i);
 double		convert_range(double v, double max_src, double min_dst, double max_dst);
 

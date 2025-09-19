@@ -12,13 +12,13 @@
 
 #include "miniRT.h"
 
-t_vec3	vec_create(void)
+t_vec3	vec_create(double x, double y, double z)
 {
 	t_vec3	vec;
 
-	vec.x = 0;
-	vec.y = 0;
-	vec.z = 0;
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
 	return (vec);
 }
 

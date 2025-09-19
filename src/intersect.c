@@ -105,7 +105,7 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
 	double	result;
 	t_color	color;
 
-	P_intersect = vec_scale(ray_direction, t);
+	P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
 	obj_to_light = vec_substact(mini->sc.light[1].pos , obj.pos);
 	normal = vec_normalize(vec_substact(P_intersect, obj.pos));
 	result = vec_dot(vec_normalize(normal), vec_normalize(obj_to_light));
