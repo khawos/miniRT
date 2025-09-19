@@ -12,13 +12,26 @@
 
 #include "miniRT.h"
 
+t_vec3	vec_abs(t_vec3 i)
+{
+	t_vec3 result;
+
+	result.x = fabs(i.x); 
+	result.y = fabs(i.y); 
+	result.z = fabs(i.z); 
+	return (result);
+}
+
 void	get_right_local_vector(t_mini *mini, int i)
 {
 	t_vec3	up_world;
 
 	up_world = (t_vec3){0, 0, 1};
+	if (vec_dot(up_world, mini->sc.cam[i].vec_dir) == 1)
+		up_world = (t_vec3){0, 1, 0};
 	mini->sc.cam[i].right = vec_cross(mini->sc.cam[i].vec_dir, up_world);
-	mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
+	printf("dot : %f\n", vec_dot(up_world, mini->sc.cam[i].vec_dir));
+	mini->sc.cam[i].right = vec_abs(vec_normalize(mini->sc.cam[i].right));
 }
 
 void	get_up_local_vector(t_mini *mini, int i)
@@ -40,6 +53,8 @@ void	set_up_cam(t_mini *mini)
 			(((double)mini->sc.cam[i].fov / 2.0f) * ((double)M_PI / 180.0f));
 		mini->sc.cam[i].w = mini->sc.cam[i].h * (
 				(double)WIDTH / (double)HEIGHT);
+		mini->sc.cam[i].up = vec_normalize(mini->sc.cam[i].up);
+		mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
 		i++;
 	}
 }

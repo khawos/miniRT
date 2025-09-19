@@ -38,6 +38,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (!init(&mini, av))
 		return (1);
+	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(mini.sc.cam[mini.cam_lock].vec_dir);
 	set_up_cam(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,

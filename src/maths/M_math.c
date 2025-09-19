@@ -29,11 +29,15 @@ t_vec3	vec_cross(t_vec3 i, t_vec3 j)
 	result.x = i.y * j.z - i.z * j.y;
 	result.y = i.z * j.x - i.x * j.z;
 	result.z = i.x * j.y - i.y * j.x;
-	printVec(result);
 	return (result);
 }
 
 double	vec_get_norme(t_vec3 i)
 {
 	return (sqrt(pow(i.x, 2) + pow(i.y, 2) + pow(i.z, 2)));
+}
+
+double	convert_range(double v, double max_src, double min_dst, double max_dst)
+{
+	return (min_dst + v * (max_dst - min_dst) / max_src);
 }

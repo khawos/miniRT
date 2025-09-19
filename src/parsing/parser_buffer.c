@@ -28,7 +28,6 @@ void	parse_cam(t_mini *mini, char *buffer)
 	buffer++;
 	mini->sc.cam[mini->n_cam].vec_dir.z = __atoi_double(&buffer);
 	mini->sc.cam[mini->n_cam].fov = __atoi_double(&buffer);
-	printVec(mini->sc.cam[mini->n_cam].vec_dir);
 	mini->n_cam++;
 }
 

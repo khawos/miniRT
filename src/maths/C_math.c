@@ -42,9 +42,19 @@ t_color	color_scalar(t_color i, double ratio)
 {
 	t_color	result;
 
-	result.r = (unsigned char)((double)i.r * ratio);
-	result.g = (unsigned char)((double)i.g * ratio);
-	result.b = (unsigned char)((double)i.b * ratio);
+	if (((double)i.r * ratio) > 255)
+		i.r = 0;
+	else
+		result.r = (unsigned char)((double)i.r * ratio);
+	if (((double)i.g * ratio) > 255)
+		i.r = 0;
+	else
+		result.g = (unsigned char)((double)i.g * ratio);
+	if (((double)i.b * ratio) > 255)
+		i.r = 0;
+	else
+		result.b = (unsigned char)((double)i.b * ratio);
+	result.hit = true;
 	return (result);
 }
 

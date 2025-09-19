@@ -97,6 +97,24 @@ t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 	return (result);
 }
 
+t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
+{
+	t_vec3	obj_to_light;
+	t_vec3	P_intersect;
+	t_vec3	normal;
+	double	result;
+	t_color	color;
+
+	P_intersect = vec_scale(ray_direction, t);
+	obj_to_light = vec_substact(mini->sc.light[1].pos , obj.pos);
+	normal = vec_normalize(vec_substact(P_intersect, obj.pos));
+	result = vec_dot(vec_normalize(normal), vec_normalize(obj_to_light));
+	if (result < 0)
+		result = 0;
+	color = color_scalar(obj.color, result);
+	return (color);
+}
+
 t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 {
 	double		t;
@@ -122,17 +140,11 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 				index_tmp = i;
 			}
 		}
-		// if (pl == mini->sc.objet[i].type)
-		// {
-		// 	if (tmp < t && tmp > 0)
-		// 	{
-		// 		t = tmp;
-		// 		index_tmp = i;
-		// 	}
-		// }
 		i++;
 	}
-	if (shadow_ray(mini, ray_direction, t) && mini->sc.objet[index_tmp].color.hit == true)
-		return (result);
+	//if (shadow_ray(mini, ray_direction, t) && mini->sc.objet[index_tmp].color.hit == true)
+	//	return (result);
+	if (mini->sc.objet[index_tmp].color.hit == true)
+		return (light_ray(mini, ray_direction,t , mini->sc.objet[index_tmp]));
 	return (mini->sc.objet[index_tmp].color);
 }
