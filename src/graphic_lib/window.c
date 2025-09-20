@@ -60,7 +60,26 @@ int	close_window(t_mini *mini)
 
 int	handle_key_input(int keysym, t_mini *mini)
 {
+	t_cam	*cam;
+
+	cam = &mini->sc.cam[mini->cam_lock];
 	if (keysym == 0xff1b)
 		close_window(mini);
+	if (keysym == 0xff53)
+	{
+		cam->pos.x += 10;
+		cast(mini);
+		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
+		mini->display.img.img, 0, 0);
+		printf("Render finish\n");
+	}
+	if (keysym == 0xff51)
+	{
+		cam->pos.x -= 10;
+		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
+		mini->display.img.img, 0, 0);
+		printf("Render finish\n");
+		cast(mini);
+	}
 	return (keysym);
 }

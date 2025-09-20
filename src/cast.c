@@ -53,28 +53,6 @@ t_vec3	get_left_corner_viewport(t_mini *mini)
 	return (result);
 }
 
-// t_vec3 get_left_corner_viewport(t_mini *mini)
-// {
-//     t_cam cam;
-//     t_vec3 result;
-
-//     cam = mini->sc.cam[mini->cam_lock];
-
-//     // Coin haut-gauche du viewport
-//     result = vec_add(cam.pos,
-//               vec_add(
-//                 cam.vec_dir,
-//                 vec_add(
-//                   vec_scale(cam.up, cam.h / 2.0f),
-//                   vec_scale(cam.right, -(cam.w / 2.0f))
-//                 )
-//               ));
-// 			  //printVec(cam.pos);
-
-//     return result;
-// }
-
-
 t_boolean	cast(t_mini *mini)
 {
 	t_var_trace	var;
@@ -84,9 +62,6 @@ t_boolean	cast(t_mini *mini)
 	cam = mini->sc.cam[mini->cam_lock];
 	var.i = 0;
 	var.delta_u = 0;
-	//printVec(vec_normalize(vec_substact(get_left_corner_viewport(mini), cam.pos)));
-	printVec(get_left_corner_viewport(mini));
-	printVec(cam.pos);
 	while (var.i < HEIGHT)
 	{
 		var.j = 0;
@@ -98,8 +73,6 @@ t_boolean	cast(t_mini *mini)
 		{
 			put_pixel(mini, vec_normalize(vec_substact(vec_add(ray_direction, vec_scale(cam.right, var.delta_v)), cam.pos)), var.j, var.i);
 			var.j++;
-			//if (var.j == 600)
-			//	printf("%f\n", var.delta_v);
 			var.delta_v = var.delta_v + (cam.w / (double)WIDTH);
 		}
 		var.delta_u = var.delta_u + (cam.h / (double)HEIGHT);
