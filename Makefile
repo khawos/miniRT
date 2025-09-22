@@ -1,4 +1,4 @@
-NAME = miniRT
+NAME = minirt
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
 LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd

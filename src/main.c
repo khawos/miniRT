@@ -42,6 +42,24 @@ t_boolean	init(t_mini *mini, char **av)
 	return (true);
 }
 
+void testcolor(t_mini *mini)
+{
+	t_color red = (t_color){255,0,0,0};
+	t_color blue = (t_color){0,0,255,0};
+	t_color green = (t_color){0,255,0,0};
+	t_color white = (t_color){255,255,255,0};
+
+	(void)blue;
+	(void)green;
+	(void)red;
+	(void)white;
+	for (int i = 0; i < HEIGHT ; i++){
+		for (int j = 0; j < WIDTH; j++){
+			my_mlx_pixel_put(mini, j, i, color_shift(color_multiplie(blue, green)));
+		}
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_mini	mini;
@@ -51,7 +69,7 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(mini.sc.cam[mini.cam_lock].vec_dir);
-
+	//testcolor(&mini);
 	set_up_cam(&mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,

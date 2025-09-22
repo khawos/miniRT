@@ -37,7 +37,6 @@ void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	t_color				color;
 
 	color = intersect(mini, ray_direction);
-
 	if (false == color.hit)
 	{
 		color = put_background(x, y);
@@ -45,7 +44,7 @@ void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	}
 	else
 	{
-		color = apply_ambiant(mini, color);
+	//	color = apply_ambiant(mini, color);
 		my_mlx_pixel_put(mini, x, y, color_shift(color));	
 	}
 

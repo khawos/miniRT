@@ -46,17 +46,46 @@ double intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 	object->color.hit = true;
 	object->vec_dir = vec_normalize(object->vec_dir);
 	if (vec_dot(ray_direction, object->vec_dir) == 0)
-	{
 		return (object->color.hit = false, 0);
-	}
 	t = vec_dot(vec_substact(object->pos, origin), object->vec_dir) / vec_dot(ray_direction, object->vec_dir);
 	if (t < 0)
-	{
 		object->color.hit = false;
-
-	}
 	return (t);
 }
+
+double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
+{
+	double	s1;
+	double	s2;
+	double	r;
+	t_vec3	a;
+	t_vec3	b;
+	(void)origin;
+	r = object->diameter / 2;
+	a = object->vec_dir;
+	b = vec_substact(object->pos, vec_scale(object->vec_dir, object->height / 2));
+
+	if (0 < (vec_dot(vec_cross(ray_direction, a), vec_cross(ray_direction, a)) * pow(r, 2) -
+		vec_dot(a, a) * pow(vec_dot(b, vec_cross(ray_direction, a)), 2)))
+	return (-1);
+
+	s1 = vec_dot(vec_cross(ray_direction, a), vec_cross(b, a)) + sqrt(vec_dot(vec_cross(ray_direction, a), vec_cross(ray_direction, a)) * pow(r, 2) -
+		vec_dot(a, a) * pow(vec_dot(b, vec_cross(ray_direction, a)), 2)) /
+		vec_dot(vec_cross(ray_direction, a), vec_cross(ray_direction, a));
+
+	s2 = vec_dot(vec_cross(ray_direction, a), vec_cross(b, a)) - sqrt(vec_dot(vec_cross(ray_direction, a), vec_cross(ray_direction, a)) * pow(r, 2) -
+	vec_dot(a, a) * pow(vec_dot(b, vec_cross(ray_direction, a)), 2)) /
+	vec_dot(vec_cross(ray_direction, a), vec_cross(ray_direction, a));
+	object->color.hit = true;
+	if (s1 > 0)
+		printf("%f\n", s1);
+	if (s1 < s2)
+		return (s1);
+	return (s2);
+}
+
+
+
 
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
@@ -108,7 +137,7 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
 		result = vec_dot(vec_normalize(normal), vec_normalize(obj_to_light));
 		if (result < 0)
 			result = 0;
-		color = color_scalar(obj.color, result * (mini->sc.light[1].ratio * convert_range(t, 1500, mini->sc.light[1].ratio, 0)));
+		color = color_scalar(obj.color, result);
 	}
 	if (obj.type == pl)
 	{
@@ -119,8 +148,10 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
 		obj_to_light = vec_substact(mini->sc.light[1].pos , P_intersect);
 		normal = obj.vec_dir;
 		result = fabs(vec_dot(normal, vec_normalize(obj_to_light)));
-		color = color_scalar(obj.color, result * mini->sc.light[1].ratio);
+		color = color_scalar(obj.color, result);
 	}
+	color = color_multiplie(color, apply_ambiant(mini, color));
+	color = color_multiplie(color, color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio));
 	return (color);
 }
 
@@ -155,13 +186,21 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 			if (tmp < t && tmp > 0)
 			{
 				t = tmp;
-				//printf("%f\n", t);
+				index_tmp = i;
+			}
+		}
+		if (cy == mini->sc.objet[i].type)
+		{
+			tmp = intersect_cy(mini->sc.cam[mini->cam_lock].pos, ray_direction, &mini->sc.objet[i]);
+			if (tmp < t && tmp > 0)
+			{
+				t = tmp;
 				index_tmp = i;
 			}
 		}
 		i++;
 	}
-	if (mini->sc.objet[index_tmp].color.hit == true)
-		return (light_ray(mini, ray_direction,t , mini->sc.objet[index_tmp]));
+	//if (mini->sc.objet[index_tmp].color.hit == true)
+		//return (light_ray(mini, ray_direction,t , mini->sc.objet[index_tmp]));
 	return (mini->sc.objet[index_tmp].color);
 }

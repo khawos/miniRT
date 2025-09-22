@@ -47,14 +47,24 @@ t_color	color_scalar(t_color i, double ratio)
 	else
 		result.r = (unsigned char)((double)i.r * ratio);
 	if (((double)i.g * ratio) > 255)
-		i.r = 0;
+		i.g = 0;
 	else
 		result.g = (unsigned char)((double)i.g * ratio);
 	if (((double)i.b * ratio) > 255)
-		i.r = 0;
+		i.b = 0;
 	else
 		result.b = (unsigned char)((double)i.b * ratio);
 	result.hit = true;
+	return (result);
+}
+
+t_color color_multiplie(t_color i, t_color j)
+{
+	t_color result;
+
+	result.r = (i.r * j.r) / 255;
+	result.g = (i.g * j.g) / 255;
+	result.b = (i.b * j.b) / 255;
 	return (result);
 }
 

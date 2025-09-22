@@ -225,6 +225,8 @@ void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 
 // COLOR MATH
 
+t_color	apply_ambiant(t_mini *mini, t_color color);
+t_color color_multiplie(t_color i, t_color j);
 t_color	color_substract(t_color i, t_color j);
 t_color	color_add(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);

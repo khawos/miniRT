@@ -113,7 +113,7 @@ void	printObject(t_objet obj)
 
 void	printColor(t_color color)
 {
-	printf("r:%c ", color.r);
-	printf("g:%c ", color.g);
-	printf("b:%c\n", color.b);
+	printf("r:%u ", color.r);
+	printf("g:%u ", color.g);
+	printf("b:%u\n", color.b);
 }
