@@ -26,6 +26,10 @@ t_vec3	vec_cross(t_vec3 i, t_vec3 j)
 {
 	t_vec3	result;
 
+	if (i.x == 0 && i.y == 0)
+	{
+		i.y = 0.000001;
+	}
 	result.x = i.y * j.z - i.z * j.y;
 	result.y = i.z * j.x - i.x * j.z;
 	result.z = i.x * j.y - i.y * j.x;

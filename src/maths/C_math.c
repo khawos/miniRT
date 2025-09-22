@@ -58,12 +58,11 @@ t_color	color_scalar(t_color i, double ratio)
 	return (result);
 }
 
-t_color	color_mix(t_color i, t_color j)
+t_color mix_colors(t_color c1, t_color c2)
 {
-	t_color result;
-
-	result.r = i.r * j.r;
-	result.g = i.g * j.g;
-	result.b = i.b * j.b;
-	return (result);	
+    t_color result;
+    result.r = (c1.r + c2.r) / 2;
+    result.g = (c1.g + c2.g) / 2;
+    result.b = (c1.b + c2.b) / 2;
+    return result;
 }

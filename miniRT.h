@@ -123,7 +123,7 @@ typedef struct	s_sc
 	unsigned char	nb_objet;
 	t_light			*light;
 	unsigned char	nb_light;
-
+	t_light			ambiant;
 }				t_sc;
 
 // GENERAL AND MLX
@@ -199,6 +199,7 @@ void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
 void		printObject(t_objet obj);
+void	printColor(t_color color);
 
 //RAY 
 
@@ -226,8 +227,9 @@ void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 
 t_color	color_substract(t_color i, t_color j);
 t_color	color_add(t_color i, t_color j);
-t_color	color_mix(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);
+t_color mix_colors(t_color c1, t_color c2);
+
 
 
 // CAST

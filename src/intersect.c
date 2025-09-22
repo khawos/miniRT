@@ -115,8 +115,11 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
 		
 		if (shadow_ray(mini, ray_direction, t))
 			return ((t_color){0,0,0,1});
-		else
-			return (printf("t : %f\n", t), color_scalar(obj.color, convert_range(t, 1500, mini->sc.light[1].ratio, 0)));
+		P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
+		obj_to_light = vec_substact(mini->sc.light[1].pos , P_intersect);
+		normal = obj.vec_dir;
+		result = fabs(vec_dot(normal, vec_normalize(obj_to_light)));
+		color = color_scalar(obj.color, result * mini->sc.light[1].ratio);
 	}
 	return (color);
 }
@@ -130,7 +133,7 @@ t_color	intersect(t_mini *mini, t_vec3 ray_direction)
 	t_color		result;
 
 	i = 0;
-	t = 1500;
+	t = 10000;
 	tmp = 0; 
 	index_tmp = 0;
 	result = (t_color){0,0,0,1};

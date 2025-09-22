@@ -23,18 +23,32 @@ t_color		put_background(int x, int y)
 	return (color);
 }
 
+t_color	apply_ambiant(t_mini *mini, t_color color)
+{
+	t_color	ambiant;
+
+	ambiant = color_scalar(mini->sc.ambiant.color, mini->sc.ambiant.ratio);
+	return (mix_colors(ambiant, color));
+}
+
+// AKA clash_of_clan
 void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
 	t_color				color;
 
 	color = intersect(mini, ray_direction);
+
 	if (false == color.hit)
 	{
 		color = put_background(x, y);
 		my_mlx_pixel_put(mini, x, y, color_shift(color));
 	}
 	else
+	{
+		color = apply_ambiant(mini, color);
 		my_mlx_pixel_put(mini, x, y, color_shift(color));	
+	}
+
 }
 
 t_vec3	get_left_corner_viewport(t_mini *mini)
