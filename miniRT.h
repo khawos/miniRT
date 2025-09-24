@@ -77,6 +77,7 @@ typedef struct	s_data {
 
 typedef struct	s_objet
 {
+	t_boolean		cap;
 	t_type			type;
 	char			*name;
 	t_vec3			pos;
@@ -233,7 +234,12 @@ t_color	color_add(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);
 t_color mix_colors(t_color c1, t_color c2);
 
+// INTERSECT
 
+double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 
 // CAST
 

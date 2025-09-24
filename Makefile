@@ -19,6 +19,7 @@ SRC =	main.c \
 		maths/M_math2.c \
 		maths/C_math.c \
 		intersect.c \
+		geometry.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \
 		checker/parser_checker.c \
