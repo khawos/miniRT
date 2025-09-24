@@ -45,3 +45,13 @@ double	convert_range(double v, double max_src, double min_dst, double max_dst)
 {
 	return (min_dst + v * (max_dst - min_dst) / max_src);
 }
+
+t_vec3	vec_div(t_vec3 i, double n)
+{
+	t_vec3	result;
+
+	result.x = i.x / n;
+	result.y = i.y / n;
+	result.z = i.z / n;
+	return (result);
+}

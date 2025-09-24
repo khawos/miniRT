@@ -222,6 +222,7 @@ t_vec3		vec_add(t_vec3 i, t_vec3 j);
 t_vec3		vec_scale(t_vec3 i, double n);
 void		vec_add_ptr(t_vec3 *result, t_vec3 add);
 void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
+t_vec3		vec_div(t_vec3 i, double n);
 
 // COLOR MATH
 
