@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-24 16:49:03 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/25 14:02:39 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 {
 	t_equation  var;
 
+	object->vec_dir = vec_normalize(object->vec_dir);
 	var.B = vec_substact(object->pos, vec_scale(object->vec_dir, object->height / 2));
 	var.W = vec_substact(origin, var.B);
 	var.H = vec_add(object->pos, vec_scale(object->vec_dir, object->height / 2));
@@ -98,7 +99,8 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 			return (var.s2);
 		}
 		else
-		{
+		{vec_substact(object->pos, vec_scale(object->vec_dir, object->height / 2));
+	var.W = vec_substact(origin, var.B);
 			var.intersect = vec_add(origin, vec_scale(ray_direction, var.s1));
 			var.intersect = vec_substact(var.intersect, var.B);
 			if (vec_dot(var.intersect, object->vec_dir) < 0 || vec_dot(var.intersect, object->vec_dir) > object->height)
@@ -111,21 +113,42 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 	return (-1);
 }
 
-double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
+
+double intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 {
-	t_equation  var;
+    t_equation var;
+    t_vec3 cap_center_top, cap_center_bottom;
+    t_vec3 ray_to_cap;
+    double distance_to_cap;
 
-	(void) origin;
-	var.B = vec_substact(object->pos, vec_scale(object->vec_dir, object->height / 2));
-	var.H = vec_add(object->pos, vec_scale(object->vec_dir, object->height / 2));
+    cap_center_top = vec_add(object->pos, vec_scale(object->vec_dir, object->height / 2));
+    cap_center_bottom = vec_substact(object->pos, vec_scale(object->vec_dir, object->height / 2));
 
-	var.s1 = vec_dot(vec_substact(var.H, origin), object->vec_dir) / vec_dot(object->vec_dir, ray_direction);
-	var.s2 = vec_dot(vec_substact(var.B, origin), object->vec_dir) / vec_dot(object->vec_dir, ray_direction);
-	var.intersect = vec_add(origin, vec_scale(ray_direction, var.s2));
-	if (pow(vec_get_norme(vec_substact(var.intersect, var.H)), 2) <= pow(object->diameter / 2, 2))
-	{
-		object->color.hit = true;
-		return (var.s2);
-	}
-	return (-1);
+	
+    var.t = vec_dot(vec_substact(cap_center_top, origin), object->vec_dir) /
+            vec_dot(ray_direction, object->vec_dir);
+    
+    if (var.t > 0) {
+        var.intersect = vec_add(origin, vec_scale(ray_direction, var.t));
+        ray_to_cap = vec_substact(var.intersect, cap_center_top);
+        distance_to_cap = vec_get_norme(ray_to_cap);
+        if (distance_to_cap <= object->diameter / 2) {
+            return (object->color.hit = true, object->cap = true, var.t);
+        }
+        }
+
+        var.t = vec_dot(vec_substact(cap_center_bottom, origin), object->vec_dir) /
+                vec_dot(ray_direction, object->vec_dir);
+
+        if (var.t > 0) {
+            var.intersect = vec_add(origin, vec_scale(ray_direction, var.t));
+            ray_to_cap = vec_substact(var.intersect, cap_center_bottom);
+            distance_to_cap = vec_get_norme(ray_to_cap);
+            if (distance_to_cap <= object->diameter / 2) {
+                return (object->color.hit = true, object->cap = true, var.t);
+            }
+        }
+    return -1;
 }
+
+

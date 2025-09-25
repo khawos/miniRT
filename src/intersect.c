@@ -4,11 +4,10 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
 	double		tmp;
 	int			i;
-
 	
-	i = 0;
+	i = -1;
 	tmp = 0; 
-	while (i < mini->N_OBJ)
+	while (++i < mini->N_OBJ)
 	{
 		mini->sc.objet[i].color.hit = false;
 		if (sp == mini->sc.objet[i].type)
@@ -22,11 +21,10 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 			tmp = intersect_cy(origin, ray_direction, &mini->sc.objet[i]);
 			if (tmp > -0.0000000001)
 				return (true);
-			//tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-			//if (tmp > -0.0000000001)
-			//	return (true);
+			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
+			if (tmp > -0.0000000001)
+				return (true);
 		}
-		i++;
 	}
 	return (false);
 }
@@ -69,6 +67,7 @@ t_color	intersect(t_mini *mini, t_vec3 ray_dir)
 	while (++i < mini->N_OBJ)
 	{
 		mini->sc.objet[i].color.hit = false;
+		mini->sc.objet[i].cap = true;
 		tmp = handle_object(mini, ray_dir, i, t);
 		if (tmp < t)
 		{
