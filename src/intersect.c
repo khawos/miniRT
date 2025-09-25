@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersect.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
+/*   Updated: 2025/09/25 14:16:11 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
-t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
+t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
 	double		tmp;
 	int			i;
-	
+
 	i = -1;
-	tmp = 0; 
+	tmp = 0;
 	while (++i < mini->N_OBJ)
 	{
 		mini->sc.objet[i].color.hit = false;

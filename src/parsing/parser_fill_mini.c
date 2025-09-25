@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 14:40:02 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:33:32 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,31 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 	}
 	close(fd);
 	return (true);
+}
+
+void	parse_cy(t_mini *mini, char *buffer)
+{
+	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
+	mini->sc.objet[mini->N_OBJ].type = cy;
+	while (ft_isalpha(*buffer))
+		buffer++;
+	mini->sc.objet[mini->N_OBJ].pos.x = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].pos.y = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].pos.z = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].vec_dir.x = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].vec_dir.y = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].vec_dir.z = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].height = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color.r = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
+	buffer++;
+	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
+	mini->n_cy++;
+	mini->N_OBJ++;
 }

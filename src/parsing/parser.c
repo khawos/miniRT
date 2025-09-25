@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 14:31:49 by amedenec          #+#    #+#             */
+/*   Updated: 2025/09/25 14:32:44 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 t_boolean	check_rt(char *file_name)
@@ -54,6 +66,17 @@ t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light)
 	return (true);
 }
 
+static void	count_elements(char *buffer, int *n_cam, int *n_obj, int *n_light)
+{
+	if (ft_strncmp(buffer, "C", 1) == 0)
+		(*n_cam)++;
+	else if (ft_strncmp(buffer, "L", 1) == 0
+		|| ft_strncmp(buffer, "A", 1) == 0)
+		(*n_light)++;
+	else if (*buffer != '\n')
+		(*n_obj)++;
+}
+
 t_boolean	count_line(t_mini *mini, char *file)
 {
 	char	*buffer;
@@ -71,16 +94,12 @@ t_boolean	count_line(t_mini *mini, char *file)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		if (ft_strncmp(buffer, "C", 1) == 0)
-			n_cam++;
-		else if (ft_strncmp(buffer, "L", 1) == 0 || ft_strncmp(buffer, "A", 1) == 0)
-			n_light++;
-		else if (*buffer != '\n')
-			n_obj++;
+		count_elements(buffer, &n_cam, &n_obj, &n_light);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	if (!alloc_mini(mini, n_cam, n_obj, n_light))
 		return (false);
-	return (close(fd), true);
+	close(fd);
+	return (true);
 }

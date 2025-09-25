@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 12:30:55 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 14:34:10 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:35:45 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,9 @@ int	my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color)
 		return (0);
 	}
 	return (-1);
+}
+
+unsigned int	color_shift(t_color rgb)
+{
+	return ((unsigned int)(0 << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b));
 }

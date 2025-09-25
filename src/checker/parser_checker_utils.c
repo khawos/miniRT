@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checker_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-06 10:41:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-06 10:41:03 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/06 10:41:03 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/25 14:56:49 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_boolean	is_a_xyz_value(char	*word)
 		return (false);
 	while (words[i])
 	{
-		if (!(atoi_double(words[i]) >= INT_MIN && atoi_double(words[i]) <= INT_MAX)) // A CHANGER pour les doubles
+		if (!(atoi_double(words[i]) >= INT_MIN
+				&& atoi_double(words[i]) <= INT_MAX)) // A CHANGER pour les doubles
 			return (free_double_array(words), false);
 		i++;
 	}
@@ -66,7 +67,8 @@ t_boolean	is_a_rgb_value(char *word)
 		return (false);
 	while (words[i])
 	{
-		if (!(ft_atoi(words[i]) >= 0 && ft_atoi(words[i]) <= 255)) // check if the rgb value is between 0 ans 255
+		if (!(ft_atoi(words[i]) >= 0
+				&& ft_atoi(words[i]) <= 255))
 			return (free_double_array(words), false);
 		i++;
 	}
@@ -81,5 +83,4 @@ int	count_double_array(char **str)
 	while (str[i])
 		i++;
 	return (i);
-
 }

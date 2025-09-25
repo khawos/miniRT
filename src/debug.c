@@ -73,6 +73,20 @@ void	printAllObject(t_mini *mini){
 	}
 }
 
+// void	testcolor(t_mini *mini)
+// {
+// 	t_color	red = (t_color){255,0,0,0};
+// 	t_color	blue = (t_color){0,0,255,0};
+// 	t_color	green = (t_color){0,255,0,0};
+// 	t_color	white = (t_color){255,255,255,0};
+
+// 	for (int i = 0; i < HEIGHT ; i++){
+// 		for (int j = 0; j < WIDTH; j++){
+// 			my_mlx_pixel_put(mini, j, i, color_shift(color_multiplie(blue, green)));
+// 		}
+// 	}
+// }
+
 void	printVec(t_vec3	Ray)
 {
 	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);

@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:00:56 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 14:22:28 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:48:59 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ t_boolean	args_checker_a(char *line)
 	if (!words)
 		return (false);
 	if (3 != count_double_array(words))
-		return (write(2, "Error: Wrong ambient number of arguments\n", 42), free_double_array(words), false);
+		return (write(2,
+				"Error: Wrong ambient number of arguments\n", 42),
+			free_double_array(words), false);
 	if (!is_a_ratio(words[1]))
-		return (write(2, "Error: Wrong ambient light brightness ratio\n", 45), free_double_array(words), false);
+		return (write(2,
+				"Error: Wrong ambient light brightness ratio\n", 45),
+			free_double_array(words), false);
 	if (!is_a_rgb_value(words[2]))
-		return (write(2, "Error: Wrong ambient RGB value\n", 32), free_double_array(words), false);
-	
+		return (write(2,
+				"Error: Wrong ambient RGB value\n", 32),
+			free_double_array(words), false);
 	return (free_double_array(words), true);
 }
 
@@ -49,6 +54,44 @@ t_boolean	args_type_checker(char *type, char *line)
 	if (ft_strncmp(type, "cy", 2) == 0)
 		if (args_checker_cy(line) == 0)
 			return (false);
+	return (true);
+}
 
-	return (true);		
+static	t_boolean	args_checker_cy_helper(char **words)
+{
+	if (!is_a_strictly_positive_number(words[4]))
+		return (write(2,
+				"Error: Wrong cylender height\n", 30),
+			free_double_array(words), false);
+	if (!is_a_rgb_value(words[5]))
+		return (write(2,
+				"Error: Wrong RGB value\n", 24),
+			free_double_array(words), false);
+	return (free_double_array(words), true);
+}
+
+t_boolean	args_checker_cy(char *line)
+{
+	char	**words;
+
+	words = ft_split(line, ' ');
+	if (!words)
+		return (false);
+	if (6 != count_double_array(words))
+		return (write(2,
+				"Error: Wrong cylinder number of arguments\n", 43),
+			free_double_array(words), false);
+	if (!is_a_xyz_value(words[1]))
+		return (write(2,
+				"Error: Wrong coordinates\n", 26),
+			free_double_array(words), false);
+	if (!is_a_xyz_normalize_value(words[2]))
+		return (write(2,
+				"Error: Wrong normalized orientation vector\n", 44),
+			free_double_array(words), false);
+	if (!is_a_strictly_positive_number(words[3]))
+		return (write(2,
+				"Error: Wrong cylender diameter\n", 32),
+			free_double_array(words), false);
+	return (args_checker_cy_helper(words));
 }

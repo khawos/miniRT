@@ -6,20 +6,19 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/15 15:16:12 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:23:37 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_color		put_background(int x, int y)
+t_color	put_background(int x, int y)
 {
 	t_color	color;
-	(void)x;
 
+	(void)x;
 	y = convert_range(y, HEIGHT, 0, 255);
 	color = (t_color){y / 4, y / 5, y, 0};
-
 	return (color);
 }
 
@@ -43,11 +42,7 @@ void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 		my_mlx_pixel_put(mini, x, y, color_shift(color));
 	}
 	else
-	{
-	//	color = apply_ambiant(mini, color);
-		my_mlx_pixel_put(mini, x, y, color_shift(color));	
-	}
-
+		my_mlx_pixel_put(mini, x, y, color_shift(color));
 }
 
 t_vec3	get_left_corner_viewport(t_mini *mini)
@@ -62,7 +57,6 @@ t_vec3	get_left_corner_viewport(t_mini *mini)
 			cam.up.y * (cam.h / 2.0f)) - (cam.right.y * (cam.w / 2.0f));
 	result.z = cam.pos.z + cam.vec_dir.z + (
 			cam.up.z * (cam.h / 2.0f)) - (cam.right.z * (cam.w / 2.0f));
-
 	return (result);
 }
 
@@ -73,9 +67,9 @@ t_boolean	cast(t_mini *mini)
 	t_cam		cam;
 
 	cam = mini->sc.cam[mini->cam_lock];
-	var.i = 0;
+	var.i = -1;
 	var.delta_u = 0;
-	while (var.i < HEIGHT)
+	while (++var.i < HEIGHT)
 	{
 		var.j = 0;
 		var.delta_v = 0;
@@ -84,12 +78,13 @@ t_boolean	cast(t_mini *mini)
 				vec_scale(cam.up, var.delta_u));
 		while (var.j < WIDTH)
 		{
-			put_pixel(mini, vec_normalize(vec_substact(vec_add(ray_direction, vec_scale(cam.right, var.delta_v)), cam.pos)), var.j, var.i);
+			put_pixel(mini, vec_normalize(vec_substact(vec_add(ray_direction,
+							vec_scale(cam.right, var.delta_v)),
+						cam.pos)), var.j, var.i);
 			var.j++;
 			var.delta_v = var.delta_v + (cam.w / (double)WIDTH);
 		}
 		var.delta_u = var.delta_u + (cam.h / (double)HEIGHT);
-		var.i++;
 	}
 	return (true);
 }

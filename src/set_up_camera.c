@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:13:29 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/15 14:59:09 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:08:01 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 t_vec3	vec_abs(t_vec3 i)
 {
-	t_vec3 result;
+	t_vec3	result;
 
-	result.x = fabs(i.x); 
-	result.y = fabs(i.y); 
-	result.z = fabs(i.z); 
+	result.x = fabs(i.x);
+	result.y = fabs(i.y);
+	result.z = fabs(i.z);
 	return (result);
 }
 
@@ -36,7 +36,7 @@ void	get_right_local_vector(t_mini *mini, int i)
 void	get_up_local_vector(t_mini *mini, int i)
 {
 	mini->sc.cam[i].up = vec_abs(vec_cross(
-			mini->sc.cam[i].vec_dir, mini->sc.cam[i].right));
+				mini->sc.cam[i].vec_dir, mini->sc.cam[i].right));
 }
 
 void	set_up_cam(t_mini *mini)

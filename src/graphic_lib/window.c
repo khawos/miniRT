@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:24 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/12 14:40:25 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:38:28 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int	handle_key_input(int keysym, t_mini *mini)
 		cam->pos.x += 10;
 		cast(mini);
 		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-		mini->display.img.img, 0, 0);
+			mini->display.img.img, 0, 0);
 		printf("Render finish\n");
 	}
 	if (keysym == 0xff51)
 	{
 		cam->pos.x -= 10;
 		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-		mini->display.img.img, 0, 0);
+			mini->display.img.img, 0, 0);
 		printf("Render finish\n");
 		cast(mini);
 	}

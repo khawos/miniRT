@@ -6,21 +6,15 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:45:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/15 13:51:05 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:37:04 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "miniRT.h"
-
-unsigned int	color_shift(t_color rgb)
-{
-	return ((unsigned int)(0 << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b));
-}
 
 t_color	color_substract(t_color i, t_color j)
 {
-	t_color result;
+	t_color	result;
 
 	result.r = i.r - j.r;
 	result.g = i.g - j.g;
@@ -30,7 +24,7 @@ t_color	color_substract(t_color i, t_color j)
 
 t_color	color_add(t_color i, t_color j)
 {
-	t_color result;
+	t_color	result;
 
 	result.r = i.r + j.r;
 	result.g = i.g + j.g;
@@ -58,9 +52,9 @@ t_color	color_scalar(t_color i, double ratio)
 	return (result);
 }
 
-t_color color_multiplie(t_color i, t_color j)
+t_color	color_multiplie(t_color i, t_color j)
 {
-	t_color result;
+	t_color	result;
 
 	result.r = (i.r * j.r) / 255;
 	result.g = (i.g * j.g) / 255;
@@ -68,11 +62,12 @@ t_color color_multiplie(t_color i, t_color j)
 	return (result);
 }
 
-t_color mix_colors(t_color c1, t_color c2)
+t_color	mix_colors(t_color c1, t_color c2)
 {
-    t_color result;
-    result.r = (c1.r + c2.r) / 2;
-    result.g = (c1.g + c2.g) / 2;
-    result.b = (c1.b + c2.b) / 2;
-    return result;
+	t_color	result;
+
+	result.r = (c1.r + c2.r) / 2;
+	result.g = (c1.g + c2.g) / 2;
+	result.b = (c1.b + c2.b) / 2;
+	return (result);
 }

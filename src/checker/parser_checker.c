@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_checker.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 14:53:54 by amedenec          #+#    #+#             */
+/*   Updated: 2025/09/25 14:53:55 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 static char	*get_first_word(char *line)
@@ -41,15 +53,15 @@ static t_boolean	check_object_type(char *line)
 	if (!type)
 		return (false);
 	if (ft_strlen(type) > 2)
-		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)), 
+		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);
-	if (!(ft_strncmp(type, "A", 1) != 0 ||
-		ft_strncmp(type, "C", 1) != 0 ||
-		ft_strncmp(type, "L", 1) != 0 ||
-		ft_strncmp(type, "pl", 2) != 0 ||
-		ft_strncmp(type, "cy", 2) != 0 ||
-		ft_strncmp(type, "sp", 2) != 0))
-		return (write(2, "error: '", 19), write(2, type, ft_strlen(type)), 
+	if (!(ft_strncmp(type, "A", 1) != 0
+			|| ft_strncmp(type, "C", 1) != 0
+			|| ft_strncmp(type, "L", 1) != 0
+			|| ft_strncmp(type, "pl", 2) != 0
+			|| ft_strncmp(type, "cy", 2) != 0
+			|| ft_strncmp(type, "sp", 2) != 0))
+		return (write(2, "error: '", 19), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);
 	if (!basic_line_checks(line, type))
 		return (free(type), false);
@@ -60,17 +72,19 @@ static t_boolean	check_object_type(char *line)
 
 t_boolean	checker(char *file)
 {
-	int 	fd;
+	int		fd;
 	char	*buffer;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (false);
-	while ((buffer = get_next_line(fd)))
+	buffer = get_next_line(fd);
+	while (buffer)
 	{
 		if (!check_object_type(buffer))
 			return (free(buffer), false);
 		free(buffer);
+		buffer = get_next_line(fd);
 	}
 	close(fd);
 	return (true);

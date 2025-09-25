@@ -1,21 +1,34 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light_ray.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
+/*   Updated: 2025/09/25 14:13:08 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "miniRT.h"
 
 static t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 {
 	t_vec3		secondary_ray;
-	t_vec3		P_intersect;
+	t_vec3		p_intersect;
 	t_boolean	result;
 
-	P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-	secondary_ray = vec_substact(mini->sc.light[1].pos , P_intersect);
-	result = is_intersect(mini, vec_normalize(secondary_ray), P_intersect);
+	p_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos,
+			vec_scale(ray_direction, t));
+	secondary_ray = vec_substact(mini->sc.light[1].pos, p_intersect);
+	result = is_intersect(mini, vec_normalize(secondary_ray), p_intersect);
 	return (result);
 }
 
 static t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
-	t_vec3	p, to_light;
+	t_vec3	p;
+	t_vec3	to_light;
 	t_vec3	normal;
 	double	dot;
 
@@ -60,8 +73,9 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	else
 	{
 		base = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
-		normal = vec_normalize(vec_substact(p, vec_add(base, vec_scale(obj.vec_dir,
-					vec_dot(vec_substact(p, base), obj.vec_dir)))));
+		normal = vec_normalize(vec_substact(p,
+					vec_add(base, vec_scale(obj.vec_dir,
+							vec_dot(vec_substact(p, base), obj.vec_dir)))));
 		dot = vec_dot(normal, vec_normalize(to_light));
 		if (dot < 0)
 			dot = 0;
