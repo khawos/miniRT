@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checker_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-06 10:45:30 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-06 10:45:30 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/06 10:45:30 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/25 15:20:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_boolean	is_a_strictly_positive_number(char *word)
 
 int	count_coma(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*line)
@@ -47,7 +47,7 @@ t_boolean	alpha_problem(char *line)
 	line += 2;
 	while (*line)
 	{
-		if (*line != ' ' &&  *line != '.' && *line != ',' && !ft_isdigit(*line)
+		if (*line != ' ' && *line != '.' && *line != ',' && !ft_isdigit(*line)
 			&& *line != '-' && *line != '\n')
 			return (write(2, "error: '", 9), write(2, line, 1),
 				write(2, "' : wrong input\n", 17), false);
@@ -56,12 +56,12 @@ t_boolean	alpha_problem(char *line)
 	return (true);
 }
 
-t_boolean	nb_data_problem(char *line , char *type)
+t_boolean	nb_data_problem(char *line, char *type)
 {
 	if (ft_strncmp(type, "A", 1) == 0)
 		if (count_coma(line) != 2)
 			return (false);
-	if (ft_strncmp(type, "C", 1) == 0 || ft_strncmp(type, "L", 1) == 0 
+	if (ft_strncmp(type, "C", 1) == 0 || ft_strncmp(type, "L", 1) == 0
 		|| ft_strncmp(type, "sp", 2) == 0)
 		if (count_coma(line) != 4)
 			return (false);
