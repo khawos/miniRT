@@ -2,9 +2,9 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1280
-# define OBJ_MAX 20
+# define HEIGHT 1080
+# define WIDTH 1920
+# define OBJ_MAX 20 
 # define M_PI       3.14159265358979323846
 # include <unistd.h>
 # include <fcntl.h>
@@ -257,6 +257,7 @@ t_color mix_colors(t_color c1, t_color c2);
 
 double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+double	intersect_sp_rev(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
@@ -283,7 +284,6 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
 t_color	intersect(t_mini *mini, t_vec3 ray_direction);
-double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 
 

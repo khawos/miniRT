@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:13:08 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/25 17:15:06 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ static t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	to_light;
 	t_vec3	normal;
 	double	dot;
-
+	
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
 	normal = vec_normalize(vec_substact(p, obj.pos));
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	if (dot < 0)
 		dot = 0;
 	return (color_scalar(obj.color, dot));
@@ -63,6 +65,8 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	base;
 	double	dot;
 
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	if (obj.cap)
@@ -87,13 +91,17 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
 	t_color	color;
 
+
 	if (obj.type == sp)
 		color = light_sp(mini, obj, ray_dir, t);
 	else if (obj.type == pl)
 		color = light_pl(mini, obj, ray_dir, t);
 	else
 		color = light_cy(mini, obj, ray_dir, t);
-	color = color_multiplie(color, apply_ambiant(mini, color));
+	if (color.r == 0 && color.g == 0 && color.b == 0)
+		color = color_multiplie(obj.color, apply_ambiant(mini, color));
+	else
+		color = color_multiplie(color, apply_ambiant(mini, color));
 	color = color_multiplie(color, color_scalar(mini->sc.light[1].color,
 				mini->sc.light[1].ratio));
 	return (color);
