@@ -1,0 +1,86 @@
+#include "miniRT.h"
+
+
+static t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
+{
+	t_vec3		secondary_ray;
+	t_vec3		P_intersect;
+	t_boolean	result;
+
+	P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
+	secondary_ray = vec_substact(mini->sc.light[1].pos , P_intersect);
+	result = is_intersect(mini, vec_normalize(secondary_ray), P_intersect);
+	return (result);
+}
+
+static t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+{
+	t_vec3	p, to_light;
+	t_vec3	normal;
+	double	dot;
+
+	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
+	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
+	normal = vec_normalize(vec_substact(p, obj.pos));
+	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
+	if (dot < 0)
+		dot = 0;
+	return (color_scalar(obj.color, dot));
+}
+
+static t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+{
+	t_vec3	p;
+	t_vec3	to_light;
+	double	dot;
+
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
+	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
+	to_light = vec_substact(mini->sc.light[1].pos, p);
+	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
+	return (color_scalar(obj.color, dot));
+}
+
+static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+{
+	t_vec3	p;
+	t_vec3	to_light;
+	t_vec3	normal;
+	t_vec3	base;
+	double	dot;
+
+	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
+	to_light = vec_substact(mini->sc.light[1].pos, p);
+	if (obj.cap)
+	{
+		normal = obj.vec_dir;
+		dot = fabs(vec_dot(normal, vec_normalize(to_light)));
+	}
+	else
+	{
+		base = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
+		normal = vec_normalize(vec_substact(p, vec_add(base, vec_scale(obj.vec_dir,
+					vec_dot(vec_substact(p, base), obj.vec_dir)))));
+		dot = vec_dot(normal, vec_normalize(to_light));
+		if (dot < 0)
+			dot = 0;
+	}
+	return (color_scalar(obj.color, dot));
+}
+
+t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
+{
+	t_color	color;
+
+	if (obj.type == sp)
+		color = light_sp(mini, obj, ray_dir, t);
+	else if (obj.type == pl)
+		color = light_pl(mini, obj, ray_dir, t);
+	else
+		color = light_cy(mini, obj, ray_dir, t);
+	color = color_multiplie(color, apply_ambiant(mini, color));
+	color = color_multiplie(color, color_scalar(mini->sc.light[1].color,
+				mini->sc.light[1].ratio));
+	return (color);
+}

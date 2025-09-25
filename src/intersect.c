@@ -31,126 +31,52 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 	return (false);
 }
 
-t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
+static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 {
-	t_vec3		secondary_ray;
-	t_vec3		P_intersect;
-	t_boolean	result;
+	double	tmp;
+	t_objet	*obj;
 
-	P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-	secondary_ray = vec_substact(mini->sc.light[1].pos , P_intersect);
-	result = is_intersect(mini, vec_normalize(secondary_ray), P_intersect);
-	return (result);
+	obj = &mini->sc.objet[i];
+	tmp = 0;
+	if (obj->type == sp)
+		tmp = intersect_sp(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+	else if (obj->type == pl)
+		tmp = intersect_pl(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+	else if (obj->type == cy)
+	{
+		tmp = intersect_cy(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+		if (tmp > 0 && tmp < t)
+			return (obj->cap = false, tmp);
+		tmp = intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+		if (tmp > 0 && tmp < t)
+			return (obj->cap = true, tmp);
+	}
+	if (tmp > 0 && tmp < t)
+		return (tmp);
+	return (t);
 }
 
-t_color	light_ray(t_mini *mini, t_vec3 ray_direction, double t, t_objet obj)
+t_color	intersect(t_mini *mini, t_vec3 ray_dir)
 {
-	t_vec3	obj_to_light;
-	t_vec3	P_intersect;
-	t_vec3	normal;
-	double	result;
-	t_color	color;
+	int		i;
+	int		closest;
+	double	t;
+	double	tmp;
 
-	if (obj.type == sp)
-	{
-		P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-		obj_to_light = vec_substact(mini->sc.light[1].pos , obj.pos);
-		normal = vec_normalize(vec_substact(P_intersect, obj.pos));
-		result = vec_dot(vec_normalize(normal), vec_normalize(obj_to_light));
-		if (result < 0)
-			result = 0;
-		color = color_scalar(obj.color, result);
-	}
-	if (obj.type == pl)
-	{
-		if (shadow_ray(mini, ray_direction, t))
-			return ((t_color){0,0,0,1});
-		P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-		obj_to_light = vec_substact(mini->sc.light[1].pos , P_intersect);
-		normal = obj.vec_dir;
-		result = fabs(vec_dot(normal, vec_normalize(obj_to_light)));
-		color = color_scalar(obj.color, result);
-	}
-	if (obj.type == cy)
-	{
-		if (obj.cap == true)
-		{
-			P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-			obj_to_light = vec_substact(mini->sc.light[1].pos , P_intersect);
-			normal = obj.vec_dir;
-			result = fabs(vec_dot(normal, vec_normalize(obj_to_light)));
-			color = color_scalar(obj.color, result);
-			color = color_multiplie(color, apply_ambiant(mini, color));
-			color = color_multiplie(color, color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio));
-			return (color);
-		}
-		t_vec3	base;			
-		P_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_direction, t));
-		obj_to_light = vec_substact(mini->sc.light[1].pos , P_intersect);
-		base = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
-		normal = vec_normalize(vec_substact( P_intersect, (vec_add(base, vec_scale(obj.vec_dir, vec_dot( vec_substact(P_intersect, base),obj.vec_dir))))));
-		result = vec_dot(normal, vec_normalize(obj_to_light));
-		if (result < 0)
-			result = 0;
-		color = color_scalar(obj.color, result);
-	}
-	color = color_multiplie(color, apply_ambiant(mini, color));
-	color = color_multiplie(color, color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio));
-	return (color);
-}
-
-t_color	intersect(t_mini *mini, t_vec3 ray_direction)
-{
-	double		t;
-	double		tmp;
-	int			i;
-	int			index_tmp;
-
-	i = 0;
 	t = 10000;
-	tmp = 0; 
-	index_tmp = 0;
-	while (i < mini->N_OBJ)
+	closest = 0;
+	i = -1;
+	while (++i < mini->N_OBJ)
 	{
 		mini->sc.objet[i].color.hit = false;
-		mini->sc.objet[i].cap = false;
-		if (sp == mini->sc.objet[i].type)
+		tmp = handle_object(mini, ray_dir, i, t);
+		if (tmp < t)
 		{
-			tmp = intersect_sp(mini->sc.cam[mini->cam_lock].pos, ray_direction, &mini->sc.objet[i]);
-			if (tmp < t && tmp > 0)
-			{
-				t = tmp;
-				index_tmp = i;
-			}
+			t = tmp;
+			closest = i;
 		}
-		if (pl == mini->sc.objet[i].type)
-		{
-			tmp = intersect_pl(mini->sc.cam[mini->cam_lock].pos, ray_direction, &mini->sc.objet[i]);
-			if (tmp < t && tmp > 0)
-			{
-				t = tmp;
-				index_tmp = i;
-			}
-		}
-		if (cy == mini->sc.objet[i].type)
-		{
-			tmp = intersect_cy(mini->sc.cam[mini->cam_lock].pos, ray_direction, &mini->sc.objet[i]);
-			if (tmp < t && tmp > 0)
-			{
-				t = tmp;
-				index_tmp = i;
-			}
-			tmp = intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_direction, &mini->sc.objet[i]);
-			if (tmp < t && tmp > 0)
-			{
-				mini->sc.objet[i].cap = true;
-				t = tmp;
-				index_tmp = i;
-			}
-		}
-		i++;
 	}
-	if (mini->sc.objet[index_tmp].color.hit == true)
-		return (light_ray(mini, ray_direction,t , mini->sc.objet[index_tmp]));
-	return (mini->sc.objet[index_tmp].color);
+	if (mini->sc.objet[closest].color.hit)
+		return (light_ray(mini, ray_dir, t, mini->sc.objet[closest]));
+	return (mini->sc.objet[closest].color);
 }

@@ -240,6 +240,11 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
+
+// LIGHT_RAY
+
+t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
 
 // CAST
 

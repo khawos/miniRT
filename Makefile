@@ -14,6 +14,7 @@ SRC =	main.c \
 		debug.c \
 		graphic_lib/basic_draw.c \
 		cast.c \
+		light_ray.c \
 		set_up_camera.c \
 		maths/M_math.c \
 		maths/M_math2.c \
