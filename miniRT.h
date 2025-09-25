@@ -46,6 +46,7 @@ typedef enum s_type
 	cy,
 }				t_type;				
 
+
 typedef struct	s_vec3
 {
 	double	x;
@@ -53,6 +54,24 @@ typedef struct	s_vec3
 	double	z;
 }				t_vec3;
 
+typedef	struct s_equation
+{
+	double	a;
+	double	b;
+	double	c;
+	double	delta;
+	double	s1;
+	double	s2;
+	double  t;
+	t_vec3	intersect;
+	t_vec3	H;
+	t_vec3	B;
+	t_vec3	H_chapeau;
+	t_vec3	W;
+	t_vec3	cap_center_top;
+	t_vec3	cap_center_bottom;
+
+}				t_equation;
 
 typedef struct s_var_trace
 {
