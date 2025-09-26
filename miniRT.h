@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1280
+# define HEIGHT 1080
+# define WIDTH 1920
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # include <unistd.h>

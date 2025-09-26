@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:23:37 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:06:48 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 	t_color	ambiant;
 
 	ambiant = color_scalar(mini->sc.ambiant.color, mini->sc.ambiant.ratio);
-	return (mix_colors(ambiant, color));
+	return (color_multiplie(ambiant, color));
 }
 
 // AKA clash_of_clan

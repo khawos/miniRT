@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:16:11 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:09:00 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 			if (tmp > -0.0000000001)
 				return (true);
 			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-			if (tmp > -0.0000000001)
+			if (tmp > 0.0000000001)
 				return (true);
 		}
 	}

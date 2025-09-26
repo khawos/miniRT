@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:13:08 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:44:31 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ static t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	normal;
 	double	dot;
 
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
 	normal = vec_normalize(vec_substact(p, obj.pos));
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
-	return (color_scalar(obj.color, dot));
-}
+	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
+				mini->sc.light[1].ratio)), dot));}
 
 static t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
@@ -52,7 +54,8 @@ static t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
-	return (color_scalar(obj.color, dot));
+	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
+				mini->sc.light[1].ratio)), dot));
 }
 
 static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
@@ -63,6 +66,8 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	base;
 	double	dot;
 
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	if (obj.cap)
@@ -77,24 +82,27 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 					vec_add(base, vec_scale(obj.vec_dir,
 							vec_dot(vec_substact(p, base), obj.vec_dir)))));
 		dot = vec_dot(normal, vec_normalize(to_light));
-		if (dot < 0)
-			dot = 0;
+		//if (dot < 0)
+		//	dot = 0;
 	}
-	return (color_scalar(obj.color, dot));
+	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
+				mini->sc.light[1].ratio)), dot));
 }
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
 	t_color	color;
+	t_color	ambiant;
+	t_color	final;
 
+	
 	if (obj.type == sp)
 		color = light_sp(mini, obj, ray_dir, t);
 	else if (obj.type == pl)
 		color = light_pl(mini, obj, ray_dir, t);
 	else
 		color = light_cy(mini, obj, ray_dir, t);
-	color = color_multiplie(color, apply_ambiant(mini, color));
-	color = color_multiplie(color, color_scalar(mini->sc.light[1].color,
-				mini->sc.light[1].ratio));
-	return (color);
+	ambiant = apply_ambiant(mini, obj.color);		
+	final = mix_colors(color, ambiant);
+	return (final);
 }

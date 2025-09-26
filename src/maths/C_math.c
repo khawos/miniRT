@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:45:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:37:04 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:18:34 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,10 @@ t_color	color_scalar(t_color i, double ratio)
 {
 	t_color	result;
 
-	if (((double)i.r * ratio) > 255)
-		i.r = 0;
-	else
-		result.r = (unsigned char)((double)i.r * ratio);
-	if (((double)i.g * ratio) > 255)
-		i.g = 0;
-	else
-		result.g = (unsigned char)((double)i.g * ratio);
-	if (((double)i.b * ratio) > 255)
-		i.b = 0;
-	else
-		result.b = (unsigned char)((double)i.b * ratio);
-	result.hit = true;
+	result.r = (unsigned char)((double)i.r * ratio);
+	result.g = (unsigned char)((double)i.g * ratio);
+	result.b = (unsigned char)((double)i.b * ratio);
+	//result.hit = true;
 	return (result);
 }
 
