@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/26 13:44:31 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:50:19 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 					vec_add(base, vec_scale(obj.vec_dir,
 							vec_dot(vec_substact(p, base), obj.vec_dir)))));
 		dot = vec_dot(normal, vec_normalize(to_light));
-		//if (dot < 0)
-		//	dot = 0;
+		if (dot < 0)
+			dot = 0;
 	}
 	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
 				mini->sc.light[1].ratio)), dot));
@@ -104,5 +104,5 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 		color = light_cy(mini, obj, ray_dir, t);
 	ambiant = apply_ambiant(mini, obj.color);		
 	final = mix_colors(color, ambiant);
-	return (final);
+	return (final.hit = true, final);
 }
