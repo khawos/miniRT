@@ -40,8 +40,10 @@ static t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
-	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
-				mini->sc.light[1].ratio)), dot));}
+	return (color_scalar(color_multiplie(obj.color,
+				color_scalar(mini->sc.light[1].color,
+					mini->sc.light[1].ratio)), dot));
+}
 
 static t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
@@ -54,9 +56,16 @@ static t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
-	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
-				mini->sc.light[1].ratio)), dot));
+	return (color_scalar(color_multiplie(obj.color,
+				color_scalar(mini->sc.light[1].color,
+					mini->sc.light[1].ratio)), dot));
 }
+
+static void	light_cy_util(double *dot, t_vec3 *normal, t_objet obj, t_vec3 to_light)
+{
+	*normal = obj.vec_dir;
+	*dot = fabs(vec_dot(*normal, vec_normalize(to_light)));
+}	
 
 static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
@@ -71,10 +80,7 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	if (obj.cap)
-	{
-		normal = obj.vec_dir;
-		dot = fabs(vec_dot(normal, vec_normalize(to_light)));
-	}
+		light_cy_util(&dot, &normal, obj, to_light);
 	else
 	{
 		base = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
@@ -85,8 +91,9 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 		if (dot < 0)
 			dot = 0;
 	}
-	return (color_scalar(color_multiplie(obj.color, color_scalar(mini->sc.light[1].color,
-				mini->sc.light[1].ratio)), dot));
+	return (color_scalar(color_multiplie(obj.color,
+				color_scalar(mini->sc.light[1].color,
+					mini->sc.light[1].ratio)), dot));
 }
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
@@ -94,7 +101,6 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 	t_color	color;
 	t_color	ambiant;
 	t_color	final;
-
 	
 	if (obj.type == sp)
 		color = light_sp(mini, obj, ray_dir, t);

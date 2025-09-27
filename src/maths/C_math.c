@@ -39,7 +39,6 @@ t_color	color_scalar(t_color i, double ratio)
 	result.r = (unsigned char)((double)i.r * ratio);
 	result.g = (unsigned char)((double)i.g * ratio);
 	result.b = (unsigned char)((double)i.b * ratio);
-	//result.hit = true;
 	return (result);
 }
 
