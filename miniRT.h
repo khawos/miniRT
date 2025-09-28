@@ -252,6 +252,7 @@ t_color	color_substract(t_color i, t_color j);
 t_color	color_add(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);
 t_color mix_colors(t_color c1, t_color c2);
+t_color	mix_layer(t_color c1, t_color c2);
 
 // INTERSECT
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specular.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-27 14:02:24 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/09/28 13:19:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,18 @@ t_color specular_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_specular	var;
 	t_color		light_color;
 	double		dot;
-
+	
+	var.specular.hit = false;
 	specular_util(&var, obj);
-	light_color = color_scalar(mini->sc.light[0].color, mini->sc.light[0].ratio);
+	light_color = color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio);
 	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray_dir, t));
-	var.to_light = vec_normalize(vec_substact(mini->sc.light[1].pos, var.intersect));
-	var.to_cam = vec_normalize(vec_substact(mini->sc.cam[0].pos, var.intersect));
-	var.halfway = vec_div(vec_normalize(vec_add(var.to_light, var.to_cam)), vec_get_norme(vec_add(var.to_light, var.to_cam)));
-	dot = vec_dot(var.normal, vec_normalize(var.halfway));
-	if (dot < 0)
-		dot = 0;
-	var.specular = color_scalar(light_color, pow(dot,180) * 1);
-	var.specular.hit = true;
-	// if (var.specular.r + var.specular.g + var.specular.b != 0)
-	// 	var.specular = (t_color){0,0,255,1};
+	var.to_light = vec_substact(mini->sc.light[1].pos, var.intersect);
+	var.to_cam = vec_substact(mini->sc.cam[0].pos, var.intersect);
+	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
+	
+	dot = vec_dot(var.normal, var.halfway);
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 20));
+	if (dot > 0)
+		var.specular.hit = true;
 	return (var.specular);
 }

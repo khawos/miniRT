@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/26 13:50:19 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/28 13:29:49 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,8 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 	else
 		diffuse_direct = light_cy(mini, obj, ray_dir, t);
 	specular = specular_sp(mini, obj, ray_dir, t);
-	printColor(specular);
 	ambiant = apply_ambiant(mini, obj.color);		
 	final = mix_colors(diffuse_direct, ambiant);
-	final = mix_colors(final, specular);
+	final = mix_layer(final, specular);
 	return (final.hit = true, final);
 }
