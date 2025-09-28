@@ -98,17 +98,23 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
-	t_color	color;
+	t_color	diffuse_direct;
 	t_color	ambiant;
+	t_color	specular;
 	t_color	final;
 	
 	if (obj.type == sp)
-		color = light_sp(mini, obj, ray_dir, t);
+	{
+		diffuse_direct = light_sp(mini, obj, ray_dir, t);
+	}
 	else if (obj.type == pl)
-		color = light_pl(mini, obj, ray_dir, t);
+		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else
-		color = light_cy(mini, obj, ray_dir, t);
+		diffuse_direct = light_cy(mini, obj, ray_dir, t);
+	specular = specular_sp(mini, obj, ray_dir, t);
+	printColor(specular);
 	ambiant = apply_ambiant(mini, obj.color);		
-	final = mix_colors(color, ambiant);
+	final = mix_colors(diffuse_direct, ambiant);
+	final = mix_colors(final, specular);
 	return (final.hit = true, final);
 }
