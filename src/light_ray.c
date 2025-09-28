@@ -100,20 +100,18 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
 	t_color	diffuse_direct;
 	t_color	ambiant;
-	t_color	specular;
+	t_color	spec;
 	t_color	final;
 	
 	if (obj.type == sp)
-	{
 		diffuse_direct = light_sp(mini, obj, ray_dir, t);
-	}
 	else if (obj.type == pl)
 		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else
 		diffuse_direct = light_cy(mini, obj, ray_dir, t);
-	specular = specular_sp(mini, obj, ray_dir, t);
+	spec = specular(mini, obj, ray_dir, t);
 	ambiant = apply_ambiant(mini, obj.color);		
 	final = mix_colors(diffuse_direct, ambiant);
-	final = mix_layer(final, specular);
-	return (final.hit = true, final);
+	final = mix_layer(final, spec);
+	return (final);
 }

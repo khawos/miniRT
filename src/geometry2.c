@@ -36,12 +36,14 @@ void	init_var_cy(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 
 double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 {
+	double	dot;
+
 	if (var->s1 > var->s2)
 	{
 		var->intersect = vec_add(origin, vec_scale(ray_d, var->s2));
 		var->intersect = vec_substact(var->intersect, var->B);
-		if (vec_dot(var->intersect, obj->vec_dir) < 0
-			|| vec_dot(var->intersect, obj->vec_dir) > obj->height)
+		dot = vec_dot(var->intersect, obj->vec_dir);
+		if (dot < 0 || dot > obj->height)
 			return (obj->color.hit = false, -1);
 		return (var->s2);
 	}
@@ -49,8 +51,8 @@ double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 	{
 		var->intersect = vec_add(origin, vec_scale(ray_d, var->s1));
 		var->intersect = vec_substact(var->intersect, var->B);
-		if (vec_dot(var->intersect, obj->vec_dir) < 0
-			|| vec_dot(var->intersect, obj->vec_dir) > obj->height)
+		dot = vec_dot(var->intersect, obj->vec_dir);
+		if (dot < 0 || dot > obj->height)
 			return (obj->color.hit = false, -1);
 		return (var->s1);
 	}
@@ -77,10 +79,11 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 
 void	init_var_cap(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 {
-	var->cap_center_top = vec_add(obj->pos,
-			vec_scale(obj->vec_dir, obj->height / 2));
-	var->cap_center_bottom = vec_substact(obj->pos,
-			vec_scale(obj->vec_dir, obj->height / 2));
+	t_vec3	scale;
+
+	scale = vec_scale(obj->vec_dir, obj->height / 2);
+	var->cap_center_top = vec_add(obj->pos, scale);
+	var->cap_center_bottom = vec_substact(obj->pos, scale);
 	var->t = vec_dot(vec_substact(var->cap_center_top, origin), obj->vec_dir)
 		/ vec_dot(ray_d, obj->vec_dir);
 }

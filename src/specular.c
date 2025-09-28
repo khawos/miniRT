@@ -29,7 +29,7 @@ void	specular_util(t_specular *var, t_objet obj)
 	(void)base;
 	if (sp == obj.type)
 		var->normal = vec_normalize(vec_substact(var->intersect, obj.pos));
-	else if (pl == obj.type)
+	if (pl == obj.type)
 		var->normal = obj.vec_dir;
 	else if (cy == obj.type && !obj.cap)
 	{
@@ -38,24 +38,27 @@ void	specular_util(t_specular *var, t_objet obj)
 			vec_add(base, vec_scale(obj.vec_dir,
 					vec_dot(vec_substact(var->intersect, base), obj.vec_dir)))));
 	}
+	else if (cy == obj.type && obj.cap)
+	{
+		var->normal = obj.vec_dir;
+	}
 }
 
-t_color specular_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
 	t_specular	var;
 	t_color		light_color;
 	double		dot;
 	
 	var.specular.hit = false;
-	specular_util(&var, obj);
-	light_color = color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio);
 	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray_dir, t));
-	var.to_light = vec_substact(mini->sc.light[1].pos, var.intersect);
-	var.to_cam = vec_substact(mini->sc.cam[0].pos, var.intersect);
+	specular_util(&var, obj);
+	var.to_light = vec_normalize(vec_substact(mini->sc.light[1].pos, var.intersect));
+	light_color = color_scalar(mini->sc.light[1].color, mini->sc.light[1].ratio);
+	var.to_cam = vec_normalize(vec_substact(mini->sc.cam[0].pos, var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
-	
 	dot = vec_dot(var.normal, var.halfway);
-	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 20));
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 50));
 	if (dot > 0)
 		var.specular.hit = true;
 	return (var.specular);

@@ -323,5 +323,5 @@ t_boolean	args_type_checker(char *type, char *line);
 
 // SPECULAR
 
-t_color specular_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 #endif
