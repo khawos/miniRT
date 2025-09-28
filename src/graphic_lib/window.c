@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:24 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:38:28 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/28 11:16:25 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_boolean	open_window(t_mini *mini)
 	if (!mini->display.mlx)
 		return (false);
 	mini->display.mlx_win = mlx_new_window(mini->display.mlx,
-			WIDTH, HEIGHT, "miniRT");
+			WIDTH, HEIGHT, "minirt");
 	if (!mini->display.mlx_win)
 		return (mlx_destroy_display(mini->display.mlx),
 			free(mini->display.mlx), false);
