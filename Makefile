@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
 LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
@@ -41,7 +41,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 $(NAME) : $(OBJS)
 	$(MAKE) -C minilibx-linux/
 	$(MAKE) -C libft/
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) libft/libft.a minilibx-linux/libmlx.a minilibx-linux/libmlx_Linux.a -o $(NAME)
+	$(CC) $(LFLAGS) $(OBJS) libft/libft.a minilibx-linux/libmlx.a minilibx-linux/libmlx_Linux.a -o $(NAME)
 
 clean :
 	rm -f -r $(OBJ_DIR)

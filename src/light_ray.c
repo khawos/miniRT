@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-static t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
+t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 {
 	t_vec3		secondary_ray;
 	t_vec3		p_intersect;
