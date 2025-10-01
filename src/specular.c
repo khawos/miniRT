@@ -59,7 +59,7 @@ t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	var.to_cam = vec_normalize(vec_substact(mini->sc.cam[0].pos, var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);
-	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 2));
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 15));
 	if (dot > 0)
 		var.specular.hit = true;
 	return (var.specular);
