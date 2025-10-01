@@ -36,12 +36,14 @@ void	init_var_cy(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 
 double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 {
+	double	dot;
+
 	if (var->s1 > var->s2)
 	{
 		var->intersect = vec_add(origin, vec_scale(ray_d, var->s2));
 		var->intersect = vec_substact(var->intersect, var->B);
-		if (vec_dot(var->intersect, obj->vec_dir) < 0
-			|| vec_dot(var->intersect, obj->vec_dir) > obj->height)
+		dot = vec_dot(var->intersect, obj->vec_dir);
+		if (dot < 0 || dot > obj->height)
 			return (obj->color.hit = false, -1);
 		return (var->s2);
 	}
@@ -49,8 +51,8 @@ double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 	{
 		var->intersect = vec_add(origin, vec_scale(ray_d, var->s1));
 		var->intersect = vec_substact(var->intersect, var->B);
-		if (vec_dot(var->intersect, obj->vec_dir) < 0
-			|| vec_dot(var->intersect, obj->vec_dir) > obj->height)
+		dot = vec_dot(var->intersect, obj->vec_dir);
+		if (dot < 0 || dot > obj->height)
 			return (obj->color.hit = false, -1);
 		return (var->s1);
 	}
@@ -77,11 +79,12 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 
 void	init_var_cap(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 {
-	var->cap_center_top = vec_add(obj->pos,
-			vec_scale(obj->vec_dir, obj->height / 2));
-	var->cap_center_bottom = vec_substact(obj->pos,
-			vec_scale(obj->vec_dir, obj->height / 2));
-	var->t = vec_dot(vec_substact(var->cap_center_top, origin), obj->vec_dir)
+	t_vec3	scale;
+
+	scale = vec_scale(obj->vec_dir, obj->height / 2);
+	var->cap_center_top = vec_add(obj->pos, scale);
+	var->cap_center_bottom = vec_substact(obj->pos, scale);
+	var->s1 = vec_dot(vec_substact(var->cap_center_top, origin), obj->vec_dir)
 		/ vec_dot(ray_d, obj->vec_dir);
 }
 
@@ -89,26 +92,27 @@ double	intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *obj)
 {
 	t_equation	var;
 	t_vec3		ray_to_cap;
-	double		distance_to_cap;
 
 	init_var_cap(origin, ray_direction, obj, &var);
-	if (var.t > 0)
+	if (var.s1 > 0)
 	{
-		var.intersect = vec_add(origin, vec_scale(ray_direction, var.t));
+		var.intersect = vec_add(origin, vec_scale(ray_direction, var.s1));
 		ray_to_cap = vec_substact(var.intersect, var.cap_center_top);
-		distance_to_cap = vec_get_norme(ray_to_cap);
-		if (distance_to_cap <= obj->diameter / 2)
-			return (obj->color.hit = true, obj->cap = true, var.t);
+		var.s1 = vec_get_norme(ray_to_cap);
 	}
-	var.t = vec_dot(vec_substact(var.cap_center_bottom, origin), obj->vec_dir)
+	var.s2 = vec_dot(vec_substact(var.cap_center_bottom, origin), obj->vec_dir)
 		/ vec_dot(ray_direction, obj->vec_dir);
-	if (var.t > 0)
+	if (var.s2 > 0)
 	{
-		var.intersect = vec_add(origin, vec_scale(ray_direction, var.t));
+		var.intersect = vec_add(origin, vec_scale(ray_direction, var.s2));
 		ray_to_cap = vec_substact(var.intersect, var.cap_center_bottom);
-		distance_to_cap = vec_get_norme(ray_to_cap);
-		if (distance_to_cap <= obj->diameter / 2)
-			return (obj->color.hit = true, obj->cap = true, var.t);
+		var.s2 = vec_get_norme(ray_to_cap);
+	}
+	if ((var.s1 <= obj->diameter / 2 && var.s1 > 0) || (var.s2 <= obj->diameter / 2 && var.s2 > 0))
+	{
+		if (var.s1 < var.s2)
+			return (obj->color.hit = true, obj->cap = true, var.s1);
+		return (obj->color.hit = true, obj->cap = true, var.s2);
 	}
 	return (-1);
 }

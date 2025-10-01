@@ -43,13 +43,15 @@ double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 {
 	double	t;
+	double	dot;
 
+	dot = vec_dot(ray_direction, object->vec_dir);
 	object->color.hit = true;
 	object->vec_dir = vec_normalize(object->vec_dir);
-	if (vec_dot(ray_direction, object->vec_dir) == 0)
+	if (dot == 0)
 		return (object->color.hit = false, 0);
 	t = vec_dot(vec_substact(object->pos, origin), object->vec_dir)
-		/ vec_dot(ray_direction, object->vec_dir);
+		/ dot;
 	if (t < 0)
 		object->color.hit = false;
 	return (t);

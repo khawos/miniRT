@@ -12,13 +12,44 @@
 
 #include "miniRT.h"
 
+// t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
+// {
+// 	double		tmp;
+// 	int			i;
+
+// 	i = -1;
+// 	tmp = 0;
+// 	while (++i < mini->N_OBJ)
+// 	{
+// 		mini->sc.objet[i].color.hit = false;
+// 		if (sp == mini->sc.objet[i].type)
+// 		{
+// 			tmp = intersect_sp(origin, ray_direction, &mini->sc.objet[i]);
+// 			if (tmp > -0.0000000001)
+// 				return (true);
+// 		}
+// 		if (cy == mini->sc.objet[i].type)
+// 		{
+// 			tmp = intersect_cy(origin, ray_direction, &mini->sc.objet[i]);
+// 			if (tmp > -0.0000000001)
+// 				return (true);
+// 			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
+// 			if (tmp > -0.0000000001)
+// 				return (true);
+// 		}
+// 	}
+// 	return (false);
+// }
+
 t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
 	double		tmp;
 	int			i;
+	double		intersect_to_light;
 
 	i = -1;
 	tmp = 0;
+	intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos, origin));
 	while (++i < mini->N_OBJ)
 	{
 		mini->sc.objet[i].color.hit = false;
@@ -26,20 +57,24 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 		{
 			tmp = intersect_sp(origin, ray_direction, &mini->sc.objet[i]);
 			if (tmp > -0.0000000001)
-				return (true);
+				if (tmp < intersect_to_light)
+					return (true);
 		}
 		if (cy == mini->sc.objet[i].type)
 		{
 			tmp = intersect_cy(origin, ray_direction, &mini->sc.objet[i]);
 			if (tmp > -0.0000000001)
-				return (true);
-			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-			if (tmp > 0.0000000001)
-				return (true);
+				if (tmp < intersect_to_light)
+					return (true);
 		}
-	}
+			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
+			if (tmp > -0.0000000001)
+				if (tmp < intersect_to_light)
+					return (true);
+		}
 	return (false);
 }
+
 
 static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 {

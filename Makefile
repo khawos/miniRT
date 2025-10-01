@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
 LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
@@ -22,6 +22,7 @@ SRC =	main.c \
 		intersect.c \
 		geometry.c \
 		geometry2.c \
+		specular.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \
 		checker/parser_checker.c \
@@ -40,7 +41,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 $(NAME) : $(OBJS)
 	$(MAKE) -C minilibx-linux/
 	$(MAKE) -C libft/
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) libft/libft.a minilibx-linux/libmlx.a minilibx-linux/libmlx_Linux.a -o $(NAME)
+	$(CC) $(LFLAGS) $(OBJS) libft/libft.a minilibx-linux/libmlx.a minilibx-linux/libmlx_Linux.a -o $(NAME)
 
 clean :
 	rm -f -r $(OBJ_DIR)

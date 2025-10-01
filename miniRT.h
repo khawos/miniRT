@@ -252,6 +252,7 @@ t_color	color_substract(t_color i, t_color j);
 t_color	color_add(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);
 t_color mix_colors(t_color c1, t_color c2);
+t_color	mix_layer(t_color c1, t_color c2);
 
 // INTERSECT
 
@@ -319,4 +320,9 @@ t_boolean	args_checker_a(char *line);
 t_boolean	args_checker_l(char *line);
 t_boolean	args_type_checker(char *type, char *line);
 
+
+// SPECULAR
+
+t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
+t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 #endif

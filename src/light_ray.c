@@ -6,13 +6,13 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/26 13:50:19 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/09/28 13:29:49 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
+t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 {
 	t_vec3		secondary_ray;
 	t_vec3		p_intersect;
@@ -98,17 +98,20 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
-	t_color	color;
+	t_color	diffuse_direct;
 	t_color	ambiant;
+	t_color	spec;
 	t_color	final;
 	
 	if (obj.type == sp)
-		color = light_sp(mini, obj, ray_dir, t);
+		diffuse_direct = light_sp(mini, obj, ray_dir, t);
 	else if (obj.type == pl)
-		color = light_pl(mini, obj, ray_dir, t);
+		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else
-		color = light_cy(mini, obj, ray_dir, t);
+		diffuse_direct = light_cy(mini, obj, ray_dir, t);
+	spec = specular(mini, obj, ray_dir, t);
 	ambiant = apply_ambiant(mini, obj.color);		
-	final = mix_colors(color, ambiant);
-	return (final.hit = true, final);
+	final = mix_colors(diffuse_direct, ambiant);
+	final = mix_layer(final, spec);
+	return (final);
 }
