@@ -5,6 +5,7 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 # define OBJ_MAX 20
+# define DISTANCE_RENDER_MAX 10000
 # define M_PI       3.14159265358979323846
 # include <unistd.h>
 # include <fcntl.h>
@@ -19,6 +20,7 @@
 # include <X11/keysym.h>
 # include <float.h>
 # include <limits.h>
+# include <pthread.h>
 
 typedef	enum	s_inter
 {
@@ -169,7 +171,8 @@ typedef struct	s_mini
 	int		n_l;
 	int		N_OBJ;
 	int		N_LIGHT;
-	
+	int		min;
+	int		max;
 }				t_mini;
 
 // DRAW BASIC
@@ -224,7 +227,7 @@ void	printColor(t_color color);
 //RAY 
 
 void		set_up_cam(t_mini *mini);
-t_boolean	cast(t_mini *mini);
+void		*cast(void *mini);
 
 // MATRIX MATH
 
@@ -266,7 +269,8 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
 
-// CAST
+// CASTdouble get_all_intersect(t_mini *mini, t_vec3 ray_dir)
+
 
 /**
  * @brief get ray direction
@@ -279,12 +283,10 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
  * 
  */
 void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
-
-void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
-t_color	intersect(t_mini *mini, t_vec3 ray_direction);
-double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+t_color		intersect(t_mini *mini, t_vec3 ray_direction);
+double		intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 
 
@@ -325,4 +327,9 @@ t_boolean	args_type_checker(char *type, char *line);
 
 t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
 t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+
+// 
+
+double 		get_all_intersect(t_mini *mini, t_vec3 ray_dir);
+t_boolean	run_thread(t_mini *mini);
 #endif

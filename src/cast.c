@@ -34,7 +34,12 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
 	t_color				color;
+	//double				t;
 
+	//t = get_all_intersect(mini, ray_direction);
+	//color = color_scalar((t_color){255,0,0,1}, convert_range(t, DISTANCE_RENDER_MAX, 1, 0));
+	//if (t == DISTANCE_RENDER_MAX)
+	//	color.hit = false;
 	color = intersect(mini, ray_direction);
 	if (false == color.hit)
 	{
@@ -60,16 +65,58 @@ t_vec3	get_left_corner_viewport(t_mini *mini)
 	return (result);
 }
 
-t_boolean	cast(t_mini *mini)
+t_boolean	run_thread(t_mini *mini)
+{
+	int			h;
+	pthread_t	thid[0];
+	int			i;
+
+	h = HEIGHT / 3;
+	mini->min = -1;
+	mini->max = h;
+	i = -1;
+	while (++i < 3)
+	{
+		if (i == 0)
+			mini->min = -1;
+		else
+			mini->min = mini->max;
+		mini->max = h + (h * i);
+		if (pthread_create(&thid[i], NULL, cast, &mini) < 0)
+			return (false);
+	}
+	i = -1;
+	while (++i < 3)
+	{
+		pthread_join(thid[i], NULL);
+	}
+	return (true);
+}
+
+double	get_delta_u(int	min, double w)
+{
+	double	delta;
+
+	delta = 0;
+	while (min && min != -1)
+	{
+		delta = delta + (w / (double)WIDTH);
+		min--;
+	}
+	return (delta);
+}
+
+void	*cast(void *arg)
 {
 	t_var_trace	var;
 	t_vec3		ray_direction;
 	t_cam		cam;
+	t_mini		*mini;
 
+	mini = (t_mini *)arg;
 	cam = mini->sc.cam[mini->cam_lock];
-	var.i = -1;
-	var.delta_u = 0;
-	while (++var.i < HEIGHT)
+	var.delta_u = get_delta_u(mini->min, cam.w);
+	while (++mini->min < mini->max)
 	{
 		var.j = 0;
 		var.delta_v = 0;
@@ -80,11 +127,11 @@ t_boolean	cast(t_mini *mini)
 		{
 			put_pixel(mini, vec_normalize(vec_substact(vec_add(ray_direction,
 							vec_scale(cam.right, var.delta_v)),
-						cam.pos)), var.j, var.i);
+						cam.pos)), var.j, mini->min);
 			var.j++;
 			var.delta_v = var.delta_v + (cam.w / (double)WIDTH);
 		}
 		var.delta_u = var.delta_u + (cam.h / (double)HEIGHT);
 	}
-	return (true);
+	return (NULL);
 }

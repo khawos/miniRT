@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
 	set_up_cam(&mini);
-	cast(&mini);
+	run_thread(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
 	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win,
