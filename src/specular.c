@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/05 20:02:05 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 20:08:46 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	specular_util(t_specular *var, t_objet obj)
 		var->normal = vec_normalize(vec_substact(var->intersect, obj.pos));
 	if (pl == obj.type)
 		var->normal = obj.vec_dir;
-	else if (cy == obj.type && )
+	else if (cy == obj.type && !obj.cap)
 	{
 		base = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
 		var->normal = vec_normalize(vec_substact(var->intersect,

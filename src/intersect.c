@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 19:51:28 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 20:08:00 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
 	i = -1;
 	while (++i < mini->N_OBJ)
 	{
+
+		
 		mini->sc.objet[i].cap = true;
+
+
 		tmp = handle_object(mini, ray_dir, i, *t);
 		if (tmp < *t)
 		{

@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 20:00:59 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 20:13:21 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
+	
 	if (t == intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_dir, &obj))
 		light_cy_util(&dot, &normal, obj, to_light);
 	else
