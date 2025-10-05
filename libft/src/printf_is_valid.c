@@ -20,11 +20,6 @@ int	ap_is_valid(va_list ap, char *c)
 		if (va_arg(ap, int) == -2147483648)
 			return (-1);
 	}
-	else if (*c == 'u')
-	{	
-		if (va_arg(ap, unsigned) < 0)
-			return (0);
-	}
 	return (1);
 }	
 
