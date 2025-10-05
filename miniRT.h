@@ -7,7 +7,10 @@
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
+# define N_THREAD 24
 # include <unistd.h>
+# include <semaphore.h>
+# include <pthread.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -76,11 +79,11 @@ typedef	struct s_equation
 
 typedef struct s_var_trace
 {
-	double	i;
-	double	j;
+	unsigned int	i;
+	unsigned int	j;
 	double	delta_u;
 	double	delta_v;
-	
+	int		max;
 }				t_var_trace;
 
 typedef struct	s_data {
@@ -162,6 +165,9 @@ typedef struct	s_mini
 	t_mlx	display;
 	t_sc 	sc;
 	t_vec3	left_corner;
+	sem_t	*m_cast;
+	int		max;
+	int		min;
 	int		cam_lock;
 	int		n_cam;
 	int		n_cy;
@@ -226,7 +232,7 @@ void		printColor(t_color color);
 //RAY 
 
 void		set_up_cam(t_mini *mini);
-t_boolean	cast(t_mini *mini);
+void		*cast(void *arg);
 
 // MATRIX MATH
 

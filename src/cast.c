@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/05 17:26:20 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:20:04 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,35 @@ t_vec3	get_left_corner_viewport(t_mini mini)
 	return (result);
 }
 
-t_boolean	cast(t_mini *mini)
+double	get_delta_u(t_cam cam, int min)
+{
+	double	delta_u;
+	int		i;
+
+	i = 0;
+	delta_u = 0;
+	while (i != min && min != -1)
+	{
+		delta_u = delta_u + (cam.h / (double)HEIGHT);
+		i++;
+	}
+	return (delta_u);
+}
+
+void	*cast(void *arg)
 {
 	t_var_trace	var;
 	t_vec3		ray_direction;
 	t_cam		cam;
+	t_mini		*mini;
 
+	mini = (t_mini *)arg;
 	cam = mini->sc.cam[mini->cam_lock];
-	var.i = -1;
-	var.delta_u = 0;
-	while (++var.i < HEIGHT)
+	var.i = mini->min;
+	var.max = mini->max;
+	var.delta_u = get_delta_u(cam, var.i);
+	sem_post(mini->m_cast);
+	while (++var.i <= var.max)
 	{
 		var.j = 0;
 		var.delta_v = 0;
@@ -86,5 +105,5 @@ t_boolean	cast(t_mini *mini)
 		}
 		var.delta_u = var.delta_u + (cam.h / (double)HEIGHT);
 	}
-	return (true);
+	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:02:39 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:07:16 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 	double	dot;
 
 	dot = vec_dot(ray_direction, object->vec_dir);
-	object->color.hit = true;
 	object->vec_dir = vec_normalize(object->vec_dir);
 	if (dot == 0)
 		return (object->color.hit = false, 0);
