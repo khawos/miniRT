@@ -113,5 +113,5 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 	ambiant = apply_ambiant(mini, obj.color);		
 	final = mix_colors(diffuse_direct, ambiant);
 	final = mix_layer(final, spec);
-	return (final.hit = true, final);
+	return (final);
 }

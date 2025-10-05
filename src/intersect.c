@@ -68,7 +68,7 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 					return (true);
 		}
 			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-			if (tmp > -0.0000000001)
+			if (tmp > 0.0000000001)
 				if (tmp < intersect_to_light)
 					return (true);
 		}
