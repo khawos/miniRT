@@ -161,6 +161,7 @@ typedef struct	s_mini
 {
 	t_mlx	display;
 	t_sc 	sc;
+	t_vec3	left_corner;
 	int		cam_lock;
 	int		n_cam;
 	int		n_cy;
@@ -220,7 +221,7 @@ void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
 void		printObject(t_objet obj);
-void	printColor(t_color color);
+void		printColor(t_color color);
 
 //RAY 
 
@@ -322,8 +323,10 @@ t_boolean	args_checker_l(char *line);
 t_boolean	args_type_checker(char *type, char *line);
 
 
+t_vec3	get_left_corner_viewport(t_mini mini);
+
 // SPECULAR
 
 t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
-t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 #endif

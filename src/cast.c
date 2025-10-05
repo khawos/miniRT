@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/26 13:06:48 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:26:20 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	my_mlx_pixel_put(mini, x, y, color_shift(color));
 }
 
-t_vec3	get_left_corner_viewport(t_mini *mini)
+t_vec3	get_left_corner_viewport(t_mini mini)
 {
 	t_vec3	result;
 	t_cam	cam;
 
-	cam = mini->sc.cam[mini->cam_lock];
+	cam = mini.sc.cam[mini.cam_lock];
 	result.x = cam.pos.x + cam.vec_dir.x + (
 			cam.up.x * (cam.h / 2.0f)) - (cam.right.x * (cam.w / 2.0f));
 	result.y = cam.pos.y + cam.vec_dir.y + (
@@ -74,8 +74,7 @@ t_boolean	cast(t_mini *mini)
 	{
 		var.j = 0;
 		var.delta_v = 0;
-		ray_direction = get_left_corner_viewport(mini);
-		ray_direction = vec_substact(ray_direction,
+		ray_direction = vec_substact(mini->left_corner,
 				vec_scale(cam.up, var.delta_u));
 		while (var.j < WIDTH)
 		{

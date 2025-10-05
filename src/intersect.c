@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 17:13:58 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:15:13 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 				if (tmp < intersect_to_light)
 					return (true);
 		}
-			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-			if (tmp > 0.0000000001)
-				if (tmp < intersect_to_light)
-					return (true);
-		}
+		tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
+		if (tmp > 0.0000000001)
+			if (tmp < intersect_to_light)
+				return (true);
+	}
 	return (false);
 }
 
@@ -64,7 +64,6 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 		if (tmp > 0 && tmp < t)
 			return (obj->cap = false, tmp);
 		tmp = intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
-		//printf("%f\n", tmp);
 		if (tmp > 0 && tmp < t)
 			return (obj->cap = true, tmp);
 	}

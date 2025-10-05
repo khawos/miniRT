@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:10:24 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:27:06 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int ac, char **av)
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
 	set_up_cam(&mini);
+	mini.left_corner = get_left_corner_viewport(mini);
 	cast(&mini);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
