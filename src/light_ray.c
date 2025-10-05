@@ -96,6 +96,13 @@ static t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 					mini->sc.light[1].ratio)), dot));
 }
 
+t_boolean	is_hard_shadow(t_color c)
+{
+	if (c.r + c.g + c.b == 0)
+		return (true);
+	return (false);
+}
+
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 {
 	t_color	diffuse_direct;
@@ -109,7 +116,10 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else
 		diffuse_direct = light_cy(mini, obj, ray_dir, t);
-	spec = specular(mini, obj, ray_dir, t);
+	if (!is_hard_shadow(diffuse_direct))
+		spec = specular(mini, obj, ray_dir, t);
+	else
+		spec = (t_color){0,0,0,0};
 	ambiant = apply_ambiant(mini, obj.color);		
 	final = mix_colors(diffuse_direct, ambiant);
 	final = mix_layer(final, spec);

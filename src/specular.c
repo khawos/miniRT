@@ -50,8 +50,6 @@ t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_color		light_color;
 	double		dot;
 	
-	if (shadow_ray(mini, ray_dir, t))
-		return (var.specular.hit = false, (t_color){0,0,0,0});
 	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray_dir, t));
 	specular_util(&var, obj);
 	var.to_light = vec_normalize(vec_substact(mini->sc.light[1].pos, var.intersect));
