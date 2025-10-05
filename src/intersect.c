@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 17:15:13 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:51:28 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 	intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos, origin));
 	while (++i < mini->N_OBJ)
 	{
-		mini->sc.objet[i].color.hit = false;
 		if (sp == mini->sc.objet[i].type)
 		{
 			tmp = intersect_sp(origin, ray_direction, &mini->sc.objet[i]);

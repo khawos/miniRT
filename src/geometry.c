@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/05 18:07:16 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:50:46 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
 	dot = vec_dot(ray_direction, object->vec_dir);
 	object->vec_dir = vec_normalize(object->vec_dir);
 	if (dot == 0)
-		return (object->color.hit = false, 0);
+		return (0);
 	t = vec_dot(vec_substact(object->pos, origin), object->vec_dir)
 		/ dot;
-	if (t < 0)
-		object->color.hit = false;
 	return (t);
 }

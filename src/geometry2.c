@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   geometry_2.c                                       :+:      :+:    :+:   */
+/*   geometry2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-25 12:40:56 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-25 12:40:56 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/25 12:40:56 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/05 19:51:03 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,11 @@ double	intersect_cap(t_vec3 o, t_vec3 d, t_objet *obj)
 	t2 = calc_cap_inter(o, d, var.cap_center_bottom, obj);
 	if (t1 > 0 && (t2 < 0 || t1 < t2))
 	{
-		obj->color.hit = true;
 		obj->cap = true;
 		return (t1);
 	}
 	if (t2 > 0)
 	{
-		obj->color.hit = true;
 		obj->cap = true;
 		return (t2);
 	}

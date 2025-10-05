@@ -292,7 +292,6 @@ void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
 t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t);
-double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 
 
