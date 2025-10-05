@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/26 13:09:00 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:13:58 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-// t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
-// {
-// 	double		tmp;
-// 	int			i;
-
-// 	i = -1;
-// 	tmp = 0;
-// 	while (++i < mini->N_OBJ)
-// 	{
-// 		mini->sc.objet[i].color.hit = false;
-// 		if (sp == mini->sc.objet[i].type)
-// 		{
-// 			tmp = intersect_sp(origin, ray_direction, &mini->sc.objet[i]);
-// 			if (tmp > -0.0000000001)
-// 				return (true);
-// 		}
-// 		if (cy == mini->sc.objet[i].type)
-// 		{
-// 			tmp = intersect_cy(origin, ray_direction, &mini->sc.objet[i]);
-// 			if (tmp > -0.0000000001)
-// 				return (true);
-// 			tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-// 			if (tmp > -0.0000000001)
-// 				return (true);
-// 		}
-// 	}
-// 	return (false);
-// }
 
 t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 {
