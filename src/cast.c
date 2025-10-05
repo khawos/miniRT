@@ -34,15 +34,16 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
 	t_color				color;
+	double				t;
 
-	color = intersect(mini, ray_direction);
-	if (false == color.hit)
+	color = intersect(mini, ray_direction, &t);
+	if (t == RENDER_DISTANCE)
 	{
 		color = put_background(x, y);
 		my_mlx_pixel_put(mini, x, y, color_shift(color));
-	}
-	else
-		my_mlx_pixel_put(mini, x, y, color_shift(color));
+		return ;
+	} 
+	my_mlx_pixel_put(mini, x, y, color_shift(color));
 }
 
 t_vec3	get_left_corner_viewport(t_mini *mini)

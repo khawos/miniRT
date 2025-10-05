@@ -12,6 +12,7 @@
 
 #include "miniRT.h"
 
+
 t_light	get_ambiant(t_mini *mini)
 {
 	int	i;

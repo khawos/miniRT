@@ -6,6 +6,7 @@
 # define WIDTH 1920
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
+# define RENDER_DISTANCE 10000
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -283,7 +284,7 @@ void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
 void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
-t_color	intersect(t_mini *mini, t_vec3 ray_direction);
+t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t);
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
 void		free_double_array(char **dest);
 

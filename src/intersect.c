@@ -93,6 +93,7 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 		if (tmp > 0 && tmp < t)
 			return (obj->cap = false, tmp);
 		tmp = intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+		//printf("%f\n", tmp);
 		if (tmp > 0 && tmp < t)
 			return (obj->cap = true, tmp);
 	}
@@ -101,28 +102,26 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 	return (t);
 }
 
-t_color	intersect(t_mini *mini, t_vec3 ray_dir)
+t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
 {
 	int		i;
 	int		closest;
-	double	t;
 	double	tmp;
 
-	t = 10000;
+	*t = RENDER_DISTANCE;
 	closest = 0;
 	i = -1;
 	while (++i < mini->N_OBJ)
 	{
-		mini->sc.objet[i].color.hit = false;
 		mini->sc.objet[i].cap = true;
-		tmp = handle_object(mini, ray_dir, i, t);
-		if (tmp < t)
+		tmp = handle_object(mini, ray_dir, i, *t);
+		if (tmp < *t)
 		{
-			t = tmp;
+			*t = tmp;
 			closest = i;
 		}
 	}
-	if (mini->sc.objet[closest].color.hit)
-		return (light_ray(mini, ray_dir, t, mini->sc.objet[closest]));
-	return (mini->sc.objet[closest].color);
+	if (*t != RENDER_DISTANCE)
+		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));
+	return ((t_color){0,0,0,0});
 }
