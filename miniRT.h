@@ -264,10 +264,10 @@ t_color	mix_layer(t_color c1, t_color c2);
 
 // INTERSECT
 
-double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
-double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
-double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
-double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet *object);
+double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet object);
+double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object);
+double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
+double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
 
 // LIGHT_RAY

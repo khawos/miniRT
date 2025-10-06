@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 20:08:00 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:15:27 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,33 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 	double		tmp;
 	int			i;
 	double		intersect_to_light;
+	t_objet		objet;
 
 	i = -1;
 	tmp = 0;
 	intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos, origin));
 	while (++i < mini->N_OBJ)
 	{
+		objet = mini->sc.objet[i];
 		if (sp == mini->sc.objet[i].type)
 		{
-			tmp = intersect_sp(origin, ray_direction, &mini->sc.objet[i]);
+			tmp = intersect_sp(origin, ray_direction, objet);
 			if (tmp > -0.0000000001)
 				if (tmp < intersect_to_light)
 					return (true);
 		}
 		if (cy == mini->sc.objet[i].type)
 		{
-			tmp = intersect_cy(origin, ray_direction, &mini->sc.objet[i]);
+			objet.vec_dir = vec_normalize(objet.vec_dir);
+			tmp = intersect_cy(origin, ray_direction, objet);
 			if (tmp > -0.0000000001)
 				if (tmp < intersect_to_light)
 					return (true);
+			tmp = intersect_cap(origin, ray_direction, objet);
+			if (tmp > 0.0000000001)
+				if (tmp < intersect_to_light)
+					return (true);
 		}
-		tmp = intersect_cap(origin, ray_direction, &mini->sc.objet[i]);
-		if (tmp > 0.0000000001)
-			if (tmp < intersect_to_light)
-				return (true);
 	}
 	return (false);
 }
@@ -49,22 +52,23 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
 static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 {
 	double	tmp;
-	t_objet	*obj;
+	t_objet	obj;
 
-	obj = &mini->sc.objet[i];
+	obj = mini->sc.objet[i];
 	tmp = 0;
-	if (obj->type == sp)
+	if (obj.type == sp)
 		tmp = intersect_sp(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
-	else if (obj->type == pl)
+	else if (obj.type == pl)
 		tmp = intersect_pl(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
-	else if (obj->type == cy)
+	else if (obj.type == cy)
 	{
+		obj.vec_dir = vec_normalize(obj.vec_dir);
 		tmp = intersect_cy(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
 		if (tmp > 0 && tmp < t)
-			return (obj->cap = false, tmp);
+			return (tmp);
 		tmp = intersect_cap(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
 		if (tmp > 0 && tmp < t)
-			return (obj->cap = true, tmp);
+			return (tmp);
 	}
 	if (tmp > 0 && tmp < t)
 		return (tmp);
@@ -82,11 +86,6 @@ t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
 	i = -1;
 	while (++i < mini->N_OBJ)
 	{
-
-		
-		mini->sc.objet[i].cap = true;
-
-
 		tmp = handle_object(mini, ray_dir, i, *t);
 		if (tmp < *t)
 		{

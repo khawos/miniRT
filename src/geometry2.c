@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:40:56 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/05 19:51:03 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/06 11:23:13 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_var_cy(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 	double	dot_w_chap;
 
 	vec_dir_scale = vec_scale(obj->vec_dir, obj->height / 2);
-	obj->vec_dir = vec_normalize(obj->vec_dir);
 	var->B = vec_substact(obj->pos, vec_dir_scale);
 	var->H = vec_add(obj->pos, vec_dir_scale);
 	var->W = vec_substact(origin, var->B);
@@ -44,7 +43,7 @@ double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 		var->intersect = vec_substact(var->intersect, var->B);
 		dot = vec_dot(var->intersect, obj->vec_dir);
 		if (dot < 0 || dot > obj->height)
-			return (obj->color.hit = false, -1);
+			return (-1);
 		return (var->s2);
 	}
 	else
@@ -53,24 +52,23 @@ double	inter_cy_2(t_vec3 origin, t_vec3 ray_d, t_objet *obj, t_equation *var)
 		var->intersect = vec_substact(var->intersect, var->B);
 		dot = vec_dot(var->intersect, obj->vec_dir);
 		if (dot < 0 || dot > obj->height)
-			return (obj->color.hit = false, -1);
+			return (-1);
 		return (var->s1);
 	}
 }
 
-double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet *object)
+double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 {
 	t_equation	var;
 
-	init_var_cy(origin, ray_direction, object, &var);
+	init_var_cy(origin, ray_direction, &object, &var);
 	if (var.delta > 0)
 	{
-		object->color.hit = true;
 		var.s1 = (-var.b + sqrt(var.delta)) / (2 * var.a);
 		var.s2 = (-var.b - sqrt(var.delta)) / (2 * var.a);
 		if ((var.s1 < 0 && var.s2 < 0))
-			return (object->color.hit = false, -1);
-		return (inter_cy_2(origin, ray_direction, object, &var));
+			return (-1);
+		return (inter_cy_2(origin, ray_direction, &object, &var));
 	}
 	if (0 == var.delta)
 		return (-var.b / (2 * var.a));
@@ -109,7 +107,7 @@ double	calc_cap_inter(t_vec3 o, t_vec3 d, t_vec3 c, t_objet *obj)
 	return (-1);
 }
 
-double	intersect_cap(t_vec3 o, t_vec3 d, t_objet *obj)
+double	intersect_cap(t_vec3 o, t_vec3 d, t_objet obj)
 {
 	t_equation	var;
 	double		t1;
@@ -117,19 +115,13 @@ double	intersect_cap(t_vec3 o, t_vec3 d, t_objet *obj)
 
 	t1 = -1;
 	t2 = -1;
-	init_var_cap(o, d, obj, &var);
-	t1 = calc_cap_inter(o, d, var.cap_center_top, obj);
-	t2 = calc_cap_inter(o, d, var.cap_center_bottom, obj);
+	init_var_cap(o, d, &obj, &var);
+	t1 = calc_cap_inter(o, d, var.cap_center_top, &obj);
+	t2 = calc_cap_inter(o, d, var.cap_center_bottom, &obj);
 	if (t1 > 0 && (t2 < 0 || t1 < t2))
-	{
-		obj->cap = true;
 		return (t1);
-	}
 	if (t2 > 0)
-	{
-		obj->cap = true;
 		return (t2);
-	}
 	return (-1);
 }
 
