@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -g3
 LFLAGS = -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src

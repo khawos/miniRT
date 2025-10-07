@@ -67,19 +67,21 @@ int	handle_key_input(int keysym, t_mini *mini)
 		close_window(mini);
 	if (keysym == 0xff53)
 	{
-		cam->pos.x += 10;
-		cast(mini);
+		cam->pos.x += 3;
+		run_thread(mini);
 		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
 			mini->display.img.img, 0, 0);
 		printf("Render finish\n");
 	}
 	if (keysym == 0xff51)
 	{
-		cam->pos.x -= 10;
+		cam->pos.x -= 3;
+		run_thread(mini);
 		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
 			mini->display.img.img, 0, 0);
 		printf("Render finish\n");
-		cast(mini);
 	}
+	printf("cam : ");
+	printVec(mini->sc.cam[mini->cam_lock].pos);
 	return (keysym);
 }

@@ -334,4 +334,9 @@ t_vec3	get_left_corner_viewport(t_mini mini);
 
 t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
 t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+
+//THREAD
+
+t_boolean	run_thread(t_mini *mini);
+
 #endif
