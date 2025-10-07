@@ -6,6 +6,7 @@ OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
 		graphic_lib/window.c \
+		graphic_lib.handle_input.c \
 		free.c \
 		parsing/parser.c \
 		parsing/parser_buffer.c \

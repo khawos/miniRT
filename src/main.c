@@ -49,6 +49,9 @@ t_boolean	run_thread(t_mini *mini)
 	pthread_t	thid[N_THREAD];
 	int			i;
 
+	set_up_cam(mini);
+	mini->sc.cam[mini->cam_lock].vec_dir = vec_normalize(
+			mini->sc.cam[mini->cam_lock].vec_dir);
 	mini->left_corner = get_left_corner_viewport(*mini);
 	h = HEIGHT / N_THREAD;
 	mini->min = -1;
@@ -79,11 +82,11 @@ int	main(int ac, char **av)
 		return (1);
 	if (!init(&mini, av))
 		return (1);
+	sem_unlink("/cast_init");
+	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
-	sem_unlink("/cast_init");
-	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
 	if (!run_thread(&mini))
 		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
@@ -91,8 +94,9 @@ int	main(int ac, char **av)
 	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win,
 		mini.display.img.img, 0, 0);
 	printf("Render finish\n");
-	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,
+	mlx_hook(mini.display.mlx_win, KeyRelease, KeyReleaseMask,
 		handle_key_input, (t_mini *)&mini);
+	mlx_mouse_hook(mini.display.mlx_win, handle_mouse_input, (t_mini *)&mini);
 	mlx_loop(mini.display.mlx);
 	sem_close(mini.m_cast);
 	sem_unlink("/cast_init");
