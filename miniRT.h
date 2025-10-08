@@ -8,6 +8,7 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
+# define BLOCK_SIZE 4
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -166,6 +167,7 @@ typedef struct	s_mini
 	t_sc 	sc;
 	t_vec3	left_corner;
 	sem_t	*m_cast;
+	sem_t	*s_img;
 	int		max;
 	int		min;
 	int		cam_lock;

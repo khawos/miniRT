@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/05 19:20:38 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/08 17:55:38 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,13 @@ t_boolean	run_thread(t_mini *mini)
 			mini->sc.cam[mini->cam_lock].vec_dir);
 	mini->left_corner = get_left_corner_viewport(*mini);
 	h = HEIGHT / N_THREAD;
-	mini->min = -1;
+	mini->min = 0;
 	mini->max = h;
 	i = -1;
 	while (++i < N_THREAD)
 	{
 		sem_wait(mini->m_cast);
-		if (i == 0)
-			mini->min = -1;
-		else
+		if (i != 0)
 			mini->min = mini->max;
 		mini->max = h + (h * i);
 		if (pthread_create(&thid[i], NULL, cast, mini) < 0)
@@ -71,6 +69,8 @@ t_boolean	run_thread(t_mini *mini)
 	i = -1;
 	while (++i < N_THREAD)
 		pthread_join(thid[i], NULL);
+	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
+		mini->display.img.img, 0, 0);
 	return (true);
 }
 
@@ -83,7 +83,9 @@ int	main(int ac, char **av)
 	if (!init(&mini, av))
 		return (1);
 	sem_unlink("/cast_init");
+	sem_unlink("/image");
 	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
+	mini.s_img = sem_open("/image", O_CREAT | O_EXCL, 0644, 1);
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
@@ -91,8 +93,6 @@ int	main(int ac, char **av)
 		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
-	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win,
-		mini.display.img.img, 0, 0);
 	printf("Render finish\n");
 	mlx_hook(mini.display.mlx_win, KeyRelease, KeyReleaseMask,
 		handle_key_input, (t_mini *)&mini);

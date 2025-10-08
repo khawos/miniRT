@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specular.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/06 12:22:03 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/08 17:40:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,5 @@ t_color specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);
 	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 35));
-	if (dot > 0)
-		var.specular.hit = true;
 	return (var.specular);
 }
