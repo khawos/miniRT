@@ -115,6 +115,7 @@ typedef struct	s_objet
 	t_vec3			p0;
 	t_vec3			p1;
 	t_vec3			p2;
+	t_vec3			tr_normal;
 }				t_objet;
 
 typedef struct	s_camera

@@ -44,7 +44,6 @@ void	set_up_cam(t_mini *mini)
 	int		i;
 
 	i = 0;
-	printf("MINI NCAM : %d\n", mini->n_cam);
 	while (i < mini->n_cam)
 	{
 		get_right_local_vector(mini, i);

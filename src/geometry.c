@@ -55,3 +55,24 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 		/ dot;
 	return (t);
 }
+
+void	get_normal_tr(t_objet *tr, int n)
+{
+	int	i;
+
+	i = 0;
+	if (n == 0)
+		return ;
+	tr->tr_normal = vec_cross(vec_substact(tr->p0, tr->p1), vec_substact(tr->p0, tr->p2));
+	tr->tr_normal = vec_normalize(tr->tr_normal);
+}
+
+void	set_normal-_tr(t_mini *mini)
+{
+
+}
+
+double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
+{
+
+}
