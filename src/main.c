@@ -32,6 +32,7 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->n_pl = 0;
 	mini->n_sp = 0;
 	mini->n_cy = 0;
+	mini->n_tr = 0;
 	mini->N_OBJ = 0;
 	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
@@ -86,7 +87,7 @@ int	main(int ac, char **av)
 	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
-			mini.sc.cam[mini.cam_lock].vec_dir);
+	mini.sc.cam[mini.cam_lock].vec_dir);
 	if (!run_thread(&mini))
 		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,

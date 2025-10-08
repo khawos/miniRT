@@ -1,8 +1,20 @@
 #include "miniRT.h"
+void	printVec(t_vec3	Ray)
+{
+	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);
+}
+
+
+void	printColor(t_color color)
+{
+	printf("r:%u ", color.r);
+	printf("g:%u ", color.g);
+	printf("b:%u\n", color.b);
+}
 
 void	printAllCam(t_mini *mini){
 
-	for (int i = 0; i < mini->sc.nb_cam; i++){
+	for (int i = 0; i < mini->n_cam; i++){
 
 		printf("Camera ID : %d\n", mini->sc.cam[i].id);
 		printf("position : x = %f, y = %f, z = %f\n",
@@ -68,28 +80,20 @@ void	printAllObject(t_mini *mini){
 			if (mini->sc.objet[i].type == cy)
 				printf("height : %f\n", mini->sc.objet[i].height);
 		}
+		if (mini->sc.objet[i].type == tr)
+		{
+			printf("p1 = ");
+			printVec(mini->sc.objet[i].p0);
+			printf("p2 = ");
+			printVec(mini->sc.objet[i].p1);
+			printf("p3 = ");
+			printVec(mini->sc.objet[i].p2);
+			printColor(mini->sc.objet[i].color);
+			printf("spec = %f\n",mini->sc.objet[i].spec);
+		}
 		printf("\n");
 
 	}
-}
-
-// void	testcolor(t_mini *mini)
-// {
-// 	t_color	red = (t_color){255,0,0,0};
-// 	t_color	blue = (t_color){0,0,255,0};
-// 	t_color	green = (t_color){0,255,0,0};
-// 	t_color	white = (t_color){255,255,255,0};
-
-// 	for (int i = 0; i < HEIGHT ; i++){
-// 		for (int j = 0; j < WIDTH; j++){
-// 			my_mlx_pixel_put(mini, j, i, color_shift(color_multiplie(blue, green)));
-// 		}
-// 	}
-// }
-
-void	printVec(t_vec3	Ray)
-{
-	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);
 }
 
 void	printObject(t_objet obj)
@@ -123,11 +127,4 @@ void	printObject(t_objet obj)
 				printf("height : %f\n",obj.height);
 		}
 		printf("\n");
-}
-
-void	printColor(t_color color)
-{
-	printf("r:%u ", color.r);
-	printf("g:%u ", color.g);
-	printf("b:%u\n", color.b);
 }

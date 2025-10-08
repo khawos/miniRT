@@ -9,6 +9,7 @@ SRC =	main.c \
 		graphic_lib/handle_input.c \
 		free.c \
 		parsing/parser.c \
+		parsing/parser_utils.c \
 		parsing/parser_buffer.c \
 		parsing/parser_fill_mini.c \
 		utils.c \
