@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 12:10:15 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/08 17:50:37 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/08 19:41:13 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	handle_key_input_bis(int keysym, t_mini *mini, t_cam *cam)
 {
 	if (keysym == 0xff52)
 	{
+		
 		cam->pos = vec_add(cam->pos, vec_scale(cam->vec_dir, 6));
 		run_thread(mini);
 	}
@@ -24,9 +25,6 @@ int	handle_key_input_bis(int keysym, t_mini *mini, t_cam *cam)
 		cam->pos = vec_substact(cam->pos, vec_scale(cam->vec_dir, 6));
 		run_thread(mini);
 	}
-	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-		mini->display.img.img, 0, 0);
-	//printf("Render finish\n");
 	return (keysym);
 }
 
@@ -67,8 +65,5 @@ int	handle_mouse_input(int keysym, int x, int y, t_mini *mini)
 		mini->sc.cam[mini->cam_lock].fov *= 1.15;
 	}
 	run_thread(mini);
-	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-		mini->display.img.img, 0, 0);
-	//printf("Render finish\n");
 	return (keysym);
 }

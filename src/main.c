@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/08 17:55:38 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/08 19:42:58 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
 	if (!parser(mini, av))
-		return (false);
+	return (false);
+
+	pthread_mutex_init(&mini->render_mutex, NULL);
+	mini->is_rendering = false;
+
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (false);
@@ -73,6 +77,8 @@ t_boolean	run_thread(t_mini *mini)
 		mini->display.img.img, 0, 0);
 	return (true);
 }
+
+
 
 int	main(int ac, char **av)
 {
