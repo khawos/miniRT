@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-07 12:10:15 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-07 12:10:15 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/07 12:10:15 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/08 16:06:38 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ int	handle_key_input_bis(int keysym, t_mini *mini, t_cam *cam)
 	if (keysym == 0xff52)
 	{
 		cam->pos = vec_add(cam->pos, vec_scale(cam->vec_dir, 3));
-		set_up_cam(mini);
 		run_thread(mini);
 	}
 	if (keysym == 0xff54)
 	{
 		cam->pos = vec_substact(cam->pos, vec_scale(cam->vec_dir, 3));
-		set_up_cam(mini);
 		run_thread(mini);
 	}
 	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
@@ -42,13 +40,11 @@ int	handle_key_input(int keysym, t_mini *mini)
 	if (keysym == 0xff53)
 	{
 		cam->pos = vec_add(cam->pos, vec_scale(cam->right, 3));
-		set_up_cam(mini);
 		run_thread(mini);
 	}
 	if (keysym == 0xff51)
 	{
 		cam->pos = vec_substact(cam->pos, vec_scale(cam->right, 3));
-		set_up_cam(mini);
 		run_thread(mini);
 	}
 	return (handle_key_input_bis(keysym, mini, cam));

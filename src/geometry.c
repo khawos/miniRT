@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/06 11:13:09 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:12:18 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 {
 	t_equation	var;
-
+	t_vec3	cam_to_object;
+	
+	cam_to_object = vec_substact(object.pos, origin);
 	var.a = vec_dot(ray_direction, ray_direction);
 	var.b = vec_dot(vec_scale(ray_direction, -2.0),
-			vec_substact(object.pos, origin));
-	var.c = vec_dot(vec_substact(object.pos, origin),
+			cam_to_object);
+	var.c = vec_dot(cam_to_object,
 			vec_substact(object.pos, origin
 				)) - pow(object.diameter / 2.0, 2);
 	var.delta = pow(var.b, 2) - 4 * var.a * var.c;
