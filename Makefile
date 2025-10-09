@@ -22,6 +22,7 @@ SRC =	main.c \
 		maths/C_math.c \
 		intersect.c \
 		geometry.c \
+		horloge.c \
 		geometry2.c \
 		specular.c \
 		checker/arg_checker.c \

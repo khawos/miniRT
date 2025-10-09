@@ -8,12 +8,14 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE 2
+# define BLOCK_SIZE_MAX 20
+# define BLOCK_SIZE_MIN 1
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include <stdio.h>
 # include <math.h>
 # include <stdio.h>
@@ -85,6 +87,7 @@ typedef struct s_var_trace
 	double	delta_u;
 	double	delta_v;
 	int		max;
+	int		block_size;
 }				t_var_trace;
 
 typedef struct	s_data {
@@ -179,8 +182,10 @@ typedef struct	s_mini
 	int		n_l;
 	int		N_OBJ;
 	int		N_LIGHT;
+	int		block_size;
 	t_boolean is_rendering;
 	pthread_mutex_t render_mutex;
+	unsigned long	last_input;
 }				t_mini;
 
 // DRAW BASIC
@@ -341,6 +346,8 @@ t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 //THREAD
 
-t_boolean	run_thread(t_mini *mini);
+t_boolean		run_thread(t_mini *mini);
+unsigned long	chrono(void);
+
 
 #endif

@@ -35,6 +35,8 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->N_OBJ = 0;
 	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
+	mini->last_input = chrono();
+	mini->block_size = BLOCK_SIZE_MAX;
 	if (!parser(mini, av))
 		return (false);
 	if (pthread_mutex_init(&mini->render_mutex, NULL) < 0)
@@ -51,7 +53,6 @@ t_boolean	run_thread(t_mini *mini)
 	pthread_t	thid[N_THREAD];
 	int			i;
 
-	pthread_mutex_lock(&mini->render_mutex);
 	set_up_cam(mini);
 	mini->sc.cam[mini->cam_lock].vec_dir = vec_normalize(
 			mini->sc.cam[mini->cam_lock].vec_dir);
@@ -74,12 +75,26 @@ t_boolean	run_thread(t_mini *mini)
 		pthread_join(thid[i], NULL);
 	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
 		mini->display.img.img, 0, 0);
-	pthread_mutex_unlock(&mini->render_mutex);
 	return (true);
 }
 
 int render_loop(t_mini *mini)
 {
+	unsigned long	time;
+	unsigned long	limit;
+
+	time = 0;
+	limit = 1500;
+	pthread_mutex_lock(&mini->render_mutex);
+	time = chrono() - mini->last_input;
+	if (mini->block_size > 1 && time >= limit)
+	{
+		if (mini->block_size == 2)
+			mini->block_size--;
+		else
+			mini->block_size -= 2;
+	}
+	pthread_mutex_unlock(&mini->render_mutex);
 	run_thread(mini);
 }
 
@@ -100,7 +115,6 @@ int	main(int ac, char **av)
 			mini.sc.cam[mini.cam_lock].vec_dir);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
-	printf("Render finish\n");
 	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,
 		handle_key_input, (t_mini *)&mini);
 	mlx_mouse_hook(mini.display.mlx_win, handle_mouse_input, (t_mini *)&mini);

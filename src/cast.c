@@ -87,14 +87,14 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 		color = put_background(x, y);
 	color_int = color_shift(color);
 
-	if (x + BLOCK_SIZE - 1 >= WIDTH || y + BLOCK_SIZE - 1 >= HEIGHT)
+	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
 		return ;
 
 	i = 0;
-	while (i < BLOCK_SIZE)
+	while (i < mini->block_size)
 	{
 		j = -1;
-		while (++j < BLOCK_SIZE)
+		while (++j < mini->block_size)
 			my_mlx_pixel_put(mini, x + j, y + i, color_int);
 		i++;
 	}
@@ -132,38 +132,6 @@ double	get_delta_u(t_cam cam, int min)
 	return (delta_u);
 }
 
-// void	*cast(void *arg)
-// {
-// 	t_var_trace	var;
-// 	t_vec3		ray_direction;
-// 	t_cam		cam;
-// 	t_mini		*mini;
-
-// 	mini = (t_mini *)arg;
-// 	cam = mini->sc.cam[mini->cam_lock];
-// 	var.i = mini->min;
-// 	var.max = mini->max;
-// 	var.delta_u = get_delta_u(cam, var.i);
-// 	sem_post(mini->m_cast);
-// 	while (++var.i <= var.max)
-// 	{
-// 		var.j = 0;
-// 		var.delta_v = 0;
-// 		ray_direction = vec_substact(mini->left_corner,
-// 				vec_scale(cam.up, var.delta_u));
-// 		while (var.j < WIDTH)
-// 		{
-// 			put_pixel(mini, vec_normalize(vec_substact(vec_add(ray_direction,
-// 							vec_scale(cam.right, var.delta_v)),
-// 						cam.pos)), var.j, var.i);
-// 			var.j++;
-// 			var.delta_v = var.delta_v + (cam.w / (double)WIDTH);
-// 		}
-// 		var.delta_u = var.delta_u + (cam.h / (double)HEIGHT);
-// 	}
-// 	return (NULL);
-// }
-
 static void	render_line(t_mini *mini, t_var_trace *var, t_cam cam, t_vec3 ray_direction)
 {
 	t_vec3	ray_dir;
@@ -176,8 +144,8 @@ static void	render_line(t_mini *mini, t_var_trace *var, t_cam cam, t_vec3 ray_di
 					vec_add(ray_direction, vec_scale(cam.right, var->delta_v)),
 					cam.pos));
 		put_pixel_block(mini, ray_dir, var->j, var->i);
-		var->j += BLOCK_SIZE;
-		var->delta_v += BLOCK_SIZE * (cam.w / (double)WIDTH);
+		var->j += mini->block_size;
+		var->delta_v += mini->block_size * (cam.w / (double)WIDTH);
 	}
 }
 
@@ -193,14 +161,17 @@ void	*cast(void *arg)
 	var.i = mini->min;
 	var.max = mini->max;
 	var.delta_u = get_delta_u(cam, var.i);
+	var.block_size = mini->block_size;
 	sem_post(mini->m_cast);
 	while (var.i <= var.max)
 	{
+		pthread_mutex_lock(&mini->render_mutex);
 		ray_direction = vec_substact(mini->left_corner,
 				vec_scale(cam.up, var.delta_u));
 		render_line(mini, &var, cam, ray_direction);
-		var.i += BLOCK_SIZE;
-		var.delta_u += BLOCK_SIZE * (cam.h / (double)HEIGHT);
+		var.i += mini->block_size;
+		var.delta_u += mini->block_size * (cam.h / (double)HEIGHT);
+		pthread_mutex_unlock(&mini->render_mutex);
 	}
 	return (NULL);
 }
