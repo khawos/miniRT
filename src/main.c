@@ -85,7 +85,6 @@ int render_loop(t_mini *mini)
 
 	time = 0;
 	limit = 1500;
-	pthread_mutex_lock(&mini->render_mutex);
 	time = chrono() - mini->last_input;
 	if (mini->block_size > 1 && time >= limit)
 	{
@@ -94,8 +93,9 @@ int render_loop(t_mini *mini)
 		else
 			mini->block_size -= 2;
 	}
-	pthread_mutex_unlock(&mini->render_mutex);
+	sem_wait(mini->s_img);
 	run_thread(mini);
+	sem_post(mini->s_img);
 }
 
 int	main(int ac, char **av)
@@ -109,7 +109,7 @@ int	main(int ac, char **av)
 	sem_unlink("/cast_init");
 	sem_unlink("/image");
 	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
-	mini.s_img = sem_open("/image", O_CREAT | O_EXCL, 0644, 1);
+	mini.s_img = sem_open("/image", O_CREAT | O_EXCL, 0644, 25);
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);

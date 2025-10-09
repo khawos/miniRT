@@ -45,34 +45,6 @@ void	put_pixel(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	} 
 	my_mlx_pixel_put(mini, x, y, color_shift(color));
 }
-//GPT
-// void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
-// {
-// 	t_color	color;
-// 	double	t;
-// 	unsigned int color_int;
-
-// 	color = intersect(mini, ray_direction, &t);
-// 	if (t == RENDER_DISTANCE)
-// 	{
-// 		color = put_background(x, y);
-// 		my_mlx_pixel_put(mini, x, y, color_shift(color));
-// 		my_mlx_pixel_put(mini, x + 1 , y, color_shift(color));
-// 		my_mlx_pixel_put(mini, x, y + 1, color_shift(color));
-// 		my_mlx_pixel_put(mini, x + 1, y + 1, color_shift(color));
-		
-// 		return ;
-// 	} 
-// 	color_int = color_shift(color);
-
-// 	if (x + 1 >= WIDTH || y + 1 >= HEIGHT)
-// 		return ;
-
-// 	my_mlx_pixel_put(mini, x, y, color_int);
-// 	my_mlx_pixel_put(mini, x + 1, y, color_int);
-// 	my_mlx_pixel_put(mini, x, y + 1, color_int);
-// 	my_mlx_pixel_put(mini, x + 1, y + 1, color_int);
-// }
 
 void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
@@ -99,8 +71,6 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 		i++;
 	}
 }
-
-
 
 t_vec3	get_left_corner_viewport(t_mini mini)
 {
@@ -165,13 +135,13 @@ void	*cast(void *arg)
 	sem_post(mini->m_cast);
 	while (var.i <= var.max)
 	{
-		pthread_mutex_lock(&mini->render_mutex);
 		ray_direction = vec_substact(mini->left_corner,
 				vec_scale(cam.up, var.delta_u));
+		sem_wait(mini->s_img);
 		render_line(mini, &var, cam, ray_direction);
 		var.i += mini->block_size;
 		var.delta_u += mini->block_size * (cam.h / (double)HEIGHT);
-		pthread_mutex_unlock(&mini->render_mutex);
+		sem_post(mini->s_img);
 	}
 	return (NULL);
 }
