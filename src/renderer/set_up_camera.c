@@ -39,25 +39,6 @@ void	get_up_local_vector(t_mini *mini, int i)
 				mini->sc.cam[i].vec_dir, mini->sc.cam[i].right));
 }
 
-// void	set_up_cam(t_mini *mini)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < mini->n_cam)
-// 	{
-// 		get_right_local_vector(mini, i);
-// 		get_up_local_vector(mini, i);
-// 		mini->sc.cam[i].h = 2 * tan
-// 			(((double)mini->sc.cam[i].fov / 2.0f) * ((double)M_PI / 180.0f));
-// 		mini->sc.cam[i].w = mini->sc.cam[i].h * (
-// 				(double)WIDTH / (double)HEIGHT);
-// 		mini->sc.cam[i].up = vec_normalize(mini->sc.cam[i].up);
-// 		mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
-// 		i++;
-// 	}
-// }
-
 void	set_up_cam(t_mini *mini)
 {
 	int		i;

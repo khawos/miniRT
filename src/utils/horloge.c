@@ -21,8 +21,3 @@ unsigned long	chrono(void)
 	time = tv.tv_sec * 1000000 + tv.tv_usec;
 	return (time / 1000);
 }
-
-unsigned long	current_time(unsigned long start)
-{
-	return (chrono() - start);
-}

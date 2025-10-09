@@ -6,30 +6,36 @@ OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
 		graphic_lib/window.c \
-		graphic_lib/handle_input.c \
-		free.c \
-		parsing/parser.c \
-		parsing/parser_buffer.c \
-		parsing/parser_fill_mini.c \
-		utils.c \
-		debug.c \
 		graphic_lib/basic_draw.c \
-		cast.c \
-		light_ray.c \
-		set_up_camera.c \
+		graphic_lib/handle_input.c \
+		light/specular.c \
+		light/light_ray.c \
+		light/light_geometry.c \
+		renderer/cast.c \
+		renderer/render.c \
+		renderer/set_up_camera.c \
 		maths/M_math.c \
 		maths/M_math2.c \
-		maths/C_math.c \
-		intersect.c \
-		geometry.c \
-		horloge.c \
-		geometry2.c \
-		specular.c \
+		maths/C_math0.c \
+		maths/C_math1.c \
+		geometry_intersect/intersect.c \
+		geometry_intersect/geometry0.c \
+		geometry_intersect/geometry1.c \
+		geometry_intersect/geometry2.c \
+		utils/horloge.c \
+		utils/cast_utils.c \
+		utils/free.c \
+		utils/utils.c \
+		utils/mini_initialisation.c \
+		utils/debug.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \
 		checker/parser_checker.c \
 		checker/parser_checker_utils.c \
 		checker/parser_checker_utils2.c \
+		parsing/parser.c \
+		parsing/parser_buffer.c \
+		parsing/parser_fill_mini.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

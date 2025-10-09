@@ -12,42 +12,54 @@
 
 #include "miniRT.h"
 
-t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
+typedef struct s_is_intersect
 {
 	double		tmp;
 	int			i;
 	double		intersect_to_light;
 	t_objet		objet;
+}				t_is_intersect;
 
-	i = -1;
-	tmp = 0;
-	intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos, origin));
-	while (++i < mini->N_OBJ)
+t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
+{
+	if (cy == var.objet.type)
 	{
-		objet = mini->sc.objet[i];
-		if (sp == mini->sc.objet[i].type)
-		{
-			tmp = intersect_sp(origin, ray_direction, objet);
-			if (tmp > -0.0000000001)
-				if (tmp < intersect_to_light)
-					return (true);
-		}
-		if (cy == mini->sc.objet[i].type)
-		{
-			objet.vec_dir = vec_normalize(objet.vec_dir);
-			tmp = intersect_cy(origin, ray_direction, objet);
-			if (tmp > -0.0000000001)
-				if (tmp < intersect_to_light)
-					return (true);
-			tmp = intersect_cap(origin, ray_direction, objet);
-			if (tmp > 0.0000000001)
-				if (tmp < intersect_to_light)
-					return (true);
-		}
+		var.objet.vec_dir = vec_normalize(var.objet.vec_dir);
+		var.tmp = intersect_cy(origin, ray_dir, var.objet);
+		if (var.tmp > -0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+		var.tmp = intersect_cap(origin, ray_dir, var.objet);
+		if (var.tmp > 0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
 	}
 	return (false);
 }
 
+t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
+{
+	t_is_intersect	var;
+
+	var.i = -1;
+	var.tmp = 0;
+	var.intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos,
+				origin));
+	while (++var.i < mini->N_OBJ)
+	{
+		var.objet = mini->sc.objet[var.i];
+		if (sp == var.objet.type)
+		{
+			var.tmp = intersect_sp(origin, ray_direction, var.objet);
+			if (var.tmp > -0.0000000001)
+				if (var.tmp < var.intersect_to_light)
+					return (true);
+		}
+		if (is_intersect_bis(ray_direction, origin, var))
+			return (true);
+	}
+	return (false);
+}
 
 static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 {
@@ -75,7 +87,7 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 	return (t);
 }
 
-t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
+t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 {
 	int		i;
 	int		closest;
@@ -95,5 +107,5 @@ t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));
-	return ((t_color){0,0,0,0});
+	return ((t_color){0, 0, 0, 0});
 }

@@ -12,20 +12,28 @@
 
 #include "miniRT.h"
 
+t_equation	inters_sp_init(t_vec3 ray_d, t_objet obj, t_vec3 cam_to_obj)
+{
+	t_equation	var;
+
+	var.a = vec_dot(ray_d, ray_d);
+	var.b = vec_dot(vec_scale(ray_d, -2.0),
+			cam_to_obj);
+	var.c = vec_dot(cam_to_obj,
+			cam_to_obj) - pow(obj.diameter / 2.0, 2);
+	var.delta = pow(var.b, 2) - 4 * var.a * var.c;
+	return (var);
+}
+
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 {
 	t_equation	var;
-	t_vec3	cam_to_object;
-	double	denum;
-	double	sqrt_delta;
-	
+	t_vec3		cam_to_object;
+	double		denum;
+	double		sqrt_delta;
+
 	cam_to_object = vec_substact(object.pos, origin);
-	var.a = vec_dot(ray_direction, ray_direction);
-	var.b = vec_dot(vec_scale(ray_direction, -2.0),
-			cam_to_object);
-	var.c = vec_dot(cam_to_object,
-			cam_to_object) - pow(object.diameter / 2.0, 2);
-	var.delta = pow(var.b, 2) - 4 * var.a * var.c;
+	var = inters_sp_init(ray_direction, object, cam_to_object);
 	if (var.delta > 0)
 	{
 		denum = 2 * var.a;

@@ -25,10 +25,8 @@ int	handle_key_input(int keysym, t_mini *mini)
 {
 	t_cam	*cam;
 
-	pthread_mutex_lock(&mini->render_mutex);
 	mini->last_input = chrono();
 	mini->block_size = BLOCK_SIZE_MAX;
-	pthread_mutex_unlock(&mini->render_mutex);
 	cam = &mini->sc.cam[mini->cam_lock];
 	if (keysym == 0xff1b)
 		close_window(mini);
@@ -43,20 +41,16 @@ int	handle_mouse_input(int keysym, int x, int y, t_mini *mini)
 {
 	if (keysym == 4)
 	{
-		pthread_mutex_lock(&mini->render_mutex);
 		mini->last_input = chrono();
 		mini->block_size = BLOCK_SIZE_MAX;
-		pthread_mutex_unlock(&mini->render_mutex);
 		if (mini->sc.cam[mini->cam_lock].fov * 0.85 < 20)
 			return (keysym);
 		mini->sc.cam[mini->cam_lock].fov *= 0.85;
 	}
 	if (keysym == 5)
 	{
-		pthread_mutex_lock(&mini->render_mutex);
 		mini->last_input = chrono();
 		mini->block_size = BLOCK_SIZE_MAX;
-		pthread_mutex_unlock(&mini->render_mutex);
 		if (mini->sc.cam[mini->cam_lock].fov * 1.15 > 180)
 			return (keysym);
 		mini->sc.cam[mini->cam_lock].fov *= 1.15;
