@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/08 17:54:39 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:03:05 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,6 @@ void	*cast(void *arg)
 	var.i = mini->min;
 	var.max = mini->max;
 	var.delta_u = get_delta_u(cam, var.i);
-	printf("var.i = %d\n", var.i);
 	sem_post(mini->m_cast);
 	while (var.i <= var.max)
 	{

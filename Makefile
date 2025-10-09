@@ -1,7 +1,7 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -g3
-LFLAGS = -lXext -lX11 -lm -lz -lbsd
+CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -O3 -flto
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -flto
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \

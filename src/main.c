@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/08 19:42:58 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:56:22 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
 	if (!parser(mini, av))
-	return (false);
-
-	pthread_mutex_init(&mini->render_mutex, NULL);
-	mini->is_rendering = false;
-
+		return (false);
+	if (pthread_mutex_init(&mini->render_mutex, NULL) < 0)
+		return (false);												// ATTENTION FREE
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (false);
@@ -53,6 +51,7 @@ t_boolean	run_thread(t_mini *mini)
 	pthread_t	thid[N_THREAD];
 	int			i;
 
+	pthread_mutex_lock(&mini->render_mutex);
 	set_up_cam(mini);
 	mini->sc.cam[mini->cam_lock].vec_dir = vec_normalize(
 			mini->sc.cam[mini->cam_lock].vec_dir);
@@ -68,17 +67,21 @@ t_boolean	run_thread(t_mini *mini)
 			mini->min = mini->max;
 		mini->max = h + (h * i);
 		if (pthread_create(&thid[i], NULL, cast, mini) < 0)
-			return (false);
+			return (false);										// ATTENTION FREE + KILL THREAD
 	}
 	i = -1;
 	while (++i < N_THREAD)
 		pthread_join(thid[i], NULL);
 	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
 		mini->display.img.img, 0, 0);
+	pthread_mutex_unlock(&mini->render_mutex);
 	return (true);
 }
 
-
+int render_loop(t_mini *mini)
+{
+	run_thread(mini);
+}
 
 int	main(int ac, char **av)
 {
@@ -95,16 +98,16 @@ int	main(int ac, char **av)
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
-	if (!run_thread(&mini))
-		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
 	printf("Render finish\n");
-	mlx_hook(mini.display.mlx_win, KeyRelease, KeyReleaseMask,
+	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,
 		handle_key_input, (t_mini *)&mini);
 	mlx_mouse_hook(mini.display.mlx_win, handle_mouse_input, (t_mini *)&mini);
+	mlx_loop_hook (mini.display.mlx, render_loop, &mini);
 	mlx_loop(mini.display.mlx);
 	sem_close(mini.m_cast);
 	sem_unlink("/cast_init");
+	pthread_mutex_destroy(&mini.render_mutex);
 	return (0);
 }
