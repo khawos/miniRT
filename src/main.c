@@ -88,6 +88,7 @@ int	main(int ac, char **av)
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 	mini.sc.cam[mini.cam_lock].vec_dir);
+	set_normal_tr(&mini);
 	if (!run_thread(&mini))
 		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,

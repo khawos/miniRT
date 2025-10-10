@@ -281,6 +281,7 @@ double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
+void		set_normal_tr(t_mini *mini);
 
 // LIGHT_RAY
 
@@ -350,5 +351,9 @@ t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 //THREAD
 
 t_boolean	run_thread(t_mini *mini);
+double	compute_tr_area(t_vec3 a, t_vec3 b, t_vec3 c);
+double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object);
+
+
 
 #endif

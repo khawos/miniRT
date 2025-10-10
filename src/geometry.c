@@ -51,28 +51,57 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 	object.vec_dir = vec_normalize(object.vec_dir);
 	if (dot == 0)
 		return (0);
-	t = vec_dot(vec_substact(object.pos, origin), object.vec_dir)
-		/ dot;
+	t = vec_dot(vec_substact(object.pos, origin), object.vec_dir) / dot;
 	return (t);
 }
 
-void	get_normal_tr(t_objet *tr, int n)
+double	compute_tr_area(t_vec3 a, t_vec3 b, t_vec3 c)
 {
-	int	i;
+	double	area;
 
-	i = 0;
-	if (n == 0)
-		return ;
-	tr->tr_normal = vec_cross(vec_substact(tr->p0, tr->p1), vec_substact(tr->p0, tr->p2));
-	tr->tr_normal = vec_normalize(tr->tr_normal);
-}
-
-void	set_normal-_tr(t_mini *mini)
-{
-
+	area = 0.5 * vec_get_norme(vec_cross(vec_substact(a, b), vec_substact(a, c)));
+	return (area);
 }
 
 double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 {
+	double	a0;
+	double	a1;
+	double	a2;
+	double	a3;
+	double	t;
+	double	dot;
+	t_vec3	p;
 
+	dot = vec_dot(ray_direction, object.tr_normal);
+	object.vec_dir = vec_normalize(object.tr_normal);
+	if (dot == 0)
+		return (0);
+	t = vec_dot(vec_substact(object.pos, origin), object.tr_normal) / dot;
+	p = vec_add(origin, vec_scale(ray_direction, t));
+	a0 = compute_tr_area(object.p0, object.p1, object.p2);
+	a1 = compute_tr_area(p, object.p1, object.p2);
+	a2 = compute_tr_area(object.p0, p, object.p2);
+	a3 = compute_tr_area(object.p0, object.p1, p);
+	if (a1 + a2 + a3 > a0)
+		return (0);
+	return (t);
+}
+
+void	set_normal_tr(t_mini *mini)
+{
+	int		i;
+	t_objet	*obj;
+
+	i = 0;
+	obj = mini->sc.objet;
+	while (i < mini->N_OBJ)
+	{
+		if (obj->type == tr)
+		{
+			obj->tr_normal = vec_cross(vec_substact(obj->p0, obj->p1), vec_substact(obj->p0, obj->p2));
+			obj->tr_normal = vec_normalize(obj->tr_normal);
+		}
+		i++;
+	}
 }

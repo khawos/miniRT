@@ -70,6 +70,8 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 		if (tmp > 0 && tmp < t)
 			return (tmp);
 	}
+	else if (obj.type == tr)
+		tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
 	if (tmp > 0 && tmp < t)
 		return (tmp);
 	return (t);
@@ -94,6 +96,10 @@ t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t)
 		}
 	}
 	if (*t != RENDER_DISTANCE)
+	{
+		if (mini->sc.objet[closest].type == tr)
+			return (mini->sc.objet[closest].color);
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));
+	}
 	return ((t_color){0,0,0,0});
 }
