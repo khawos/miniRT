@@ -8,11 +8,14 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
+# define BLOCK_SIZE_MAX 5
+# define BLOCK_SIZE_MIN 1
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include <stdio.h>
 # include <math.h>
 # include <stdio.h>
@@ -85,6 +88,7 @@ typedef struct s_var_trace
 	double	delta_u;
 	double	delta_v;
 	int		max;
+	int		block_size;
 }				t_var_trace;
 
 typedef struct	s_data {
@@ -172,6 +176,7 @@ typedef struct	s_mini
 	t_sc 	sc;
 	t_vec3	left_corner;
 	sem_t	*m_cast;
+	sem_t	*s_img;
 	int		max;
 	int		min;
 	int		cam_lock;
@@ -184,7 +189,10 @@ typedef struct	s_mini
 	int		n_l;
 	int		N_OBJ;
 	int		N_LIGHT;
-	
+	int		block_size;
+	t_boolean is_rendering;
+	pthread_mutex_t render_mutex;
+	unsigned long	last_input;
 }				t_mini;
 
 // DRAW BASIC
@@ -235,6 +243,7 @@ void		parse_cam(t_mini *mini, char *buffer);
 void		parse_tr(t_mini *mini, char *buffer);
 
 // DEBUG
+
 void		printAllCam(t_mini *mini);
 void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
@@ -287,24 +296,9 @@ void		set_normal_tr(t_mini *mini);
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
 
-// CAST
-
-/**
- * @brief get ray direction
- * 
- * Donne a ray_D un vecteur norme dans la direction de la cam vers P
- * 
- * @param ray_d directon du ray cast par la cam
- * @param P point dans l'espace 3D d'un pixel projete sur le plan de taille w * h 
- * @param mini mini tu connais y a tout e qui faut dedans
- * 
- */
-void	get_ray_direction(t_vec3 *ray_D, t_vec3 *P, t_mini *mini);
-
-void	clash_of_clan(t_mini *mini, t_vec3 ray_direction, int x, int y);
 // INTERSEC
 
-t_color	intersect(t_mini *mini, t_vec3 ray_dir, double *t);
+t_color		intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t);
 void		free_double_array(char **dest);
 
 
@@ -355,5 +349,26 @@ double	compute_tr_area(t_vec3 a, t_vec3 b, t_vec3 c);
 double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 
 
+t_boolean		run_thread(t_mini *mini);
+unsigned long	chrono(void);
+
+// render 
+
+int render_loop(t_mini *mini);
+
+// Cast utils
+
+t_vec3	get_left_corner_viewport(t_mini mini);
+double	get_delta_u(t_cam cam, int min);
+
+// init
+
+t_boolean	init(t_mini *mini, char **av);
+
+// LIGHT
+
+t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 #endif

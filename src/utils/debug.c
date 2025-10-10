@@ -96,6 +96,11 @@ void	printAllObject(t_mini *mini){
 	}
 }
 
+// void	printVec(t_vec3	Ray)
+// {
+// 	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);
+// }
+
 void	printObject(t_objet obj)
 {
 		printf("Type : %d\n",obj.type);

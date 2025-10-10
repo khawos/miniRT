@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"keysym.h": "c",
-		"minirt.h": "c"
+		"minirt.h": "c",
+		"unistd.h": "c"
 	}
 }
