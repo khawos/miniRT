@@ -83,7 +83,7 @@ double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 	a1 = compute_tr_area(p, object.p1, object.p2);
 	a2 = compute_tr_area(object.p0, p, object.p2);
 	a3 = compute_tr_area(object.p0, object.p1, p);
-	if (a1 + a2 + a3 > a0)
+	if (a1 + a2 + a3 > a0 + 0.0000001)
 		return (0);
 	return (t);
 }
@@ -101,7 +101,11 @@ void	set_normal_tr(t_mini *mini)
 		{
 			obj->tr_normal = vec_cross(vec_substact(obj->p0, obj->p1), vec_substact(obj->p0, obj->p2));
 			obj->tr_normal = vec_normalize(obj->tr_normal);
+			// obj->p0 = vec_scale(obj->p0, 20);
+			// obj->p1 = vec_scale(obj->p1, 20);
+			// obj->p2 = vec_scale(obj->p2, 20);
 		}
 		i++;
 	}
+	printf("nb tr : %d ", mini->n_tr);
 }
