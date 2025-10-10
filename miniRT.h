@@ -24,7 +24,7 @@
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include <float.h>
+# include <float.h>1.461727,-1.220011,-0.242970 
 # include <limits.h>
 
 typedef	enum	s_inter
@@ -51,6 +51,7 @@ typedef enum s_type
 	pl,
 	sp,
 	cy,
+	tr,
 }				t_type;				
 
 
@@ -114,6 +115,11 @@ typedef struct	s_objet
 	double			diameter;
 	double			height;
 	unsigned char	id;
+	double			spec;
+	t_vec3			p0;
+	t_vec3			p1;
+	t_vec3			p2;
+	t_vec3			tr_normal;
 }				t_objet;
 
 typedef struct	s_camera
@@ -179,6 +185,7 @@ typedef struct	s_mini
 	int		n_pl;
 	int		n_sp;
 	int		n_a;
+	int		n_tr;
 	int		n_l;
 	int		N_OBJ;
 	int		N_LIGHT;
@@ -216,6 +223,9 @@ void 		free_mini(t_mini *mini);
 
 t_boolean	parser(t_mini *mini, char **av);
 t_boolean	count_line(t_mini *mini, char *file);
+t_vec3		get_point(char **buffer);
+t_color		get_color(char **buffer);
+double		get_spec(char *buffer);
 
 // PARSE BUFFER
 
@@ -230,6 +240,7 @@ void		parse_pl(t_mini *mini, char *buffer);
 void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
+void		parse_tr(t_mini *mini, char *buffer);
 
 // DEBUG
 
@@ -279,6 +290,7 @@ double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
+void		set_normal_tr(t_mini *mini);
 
 // LIGHT_RAY
 
@@ -331,6 +343,11 @@ t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
 t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 //THREAD
+
+t_boolean	run_thread(t_mini *mini);
+double	compute_tr_area(t_vec3 a, t_vec3 b, t_vec3 c);
+double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object);
+
 
 t_boolean		run_thread(t_mini *mini);
 unsigned long	chrono(void);

@@ -36,6 +36,7 @@ SRC =	main.c \
 		parsing/parser.c \
 		parsing/parser_buffer.c \
 		parsing/parser_fill_mini.c \
+		parsing/parser_utils.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

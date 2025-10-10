@@ -31,8 +31,8 @@ t_boolean	parser(t_mini *mini, char **av)
 	n_cam = 0;
 	if (!check_rt(av[1]))
 		return (write(2, "Error\nMiniRT:Wrong file name.\n", 31), false);
-	if (!checker(av[1]))
-		return (false);
+	//if (!checker(av[1]))
+	//	return (false);
 	count_line(mini, av[1]);
 	fill_mini(mini, av[1]);
 	return (true);

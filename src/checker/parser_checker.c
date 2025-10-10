@@ -60,6 +60,7 @@ static t_boolean	check_object_type(char *line)
 			|| ft_strncmp(type, "L", 1) != 0
 			|| ft_strncmp(type, "pl", 2) != 0
 			|| ft_strncmp(type, "cy", 2) != 0
+			|| ft_strncmp(type, "tr", 2) != 0
 			|| ft_strncmp(type, "sp", 2) != 0))
 		return (write(2, "error: '", 19), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);

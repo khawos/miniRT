@@ -15,7 +15,10 @@
 t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
 {
 	if (!ft_strncmp(buffer, "C", i))
-		return (parse_cam(mini, buffer), true);
+	{
+		parse_cam(mini, buffer);
+		return (true);
+	}
 	if (!ft_strncmp(buffer, "A", i))
 		return (parse_a(mini, buffer), true);
 	if (!ft_strncmp(buffer, "L", i))
@@ -26,6 +29,8 @@ t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
 		return (parse_pl(mini, buffer), true);
 	if (!ft_strncmp(buffer, "cy", i))
 		return (parse_cy(mini, buffer), true);
+	if (!ft_strncmp(buffer, "tr", i))
+		return (parse_tr(mini, buffer), true);
 	return (false);
 }
 
@@ -91,6 +96,7 @@ void	parse_cy(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
 	buffer++;
 	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
 	mini->n_cy++;
 	mini->N_OBJ++;
 }

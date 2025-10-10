@@ -26,7 +26,10 @@ int	main(int ac, char **av)
 	mini.s_img = sem_open("/image", O_CREAT | O_EXCL, 0644, 24);
 	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
-			mini.sc.cam[mini.cam_lock].vec_dir);
+	mini.sc.cam[mini.cam_lock].vec_dir);
+	set_normal_tr(&mini);
+	if (!run_thread(&mini))
+		return (-1);
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
 	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,

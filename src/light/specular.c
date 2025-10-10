@@ -49,7 +49,11 @@ t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_color		light_color;
 	double		dot;
 	double		is_cap;
+	double		spec;
 
+	spec = 15;
+	if (obj.spec != -1)
+		spec = obj.spec;
 	if (obj.type == cy)
 		is_cap = intersect_cap(mini->sc.cam[0].pos, ray_dir, obj);
 	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray_dir, t));
@@ -62,6 +66,8 @@ t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 				var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);
-	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 35));
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), spec));
+	if (dot > 0)
+		var.specular.hit = true;
 	return (var.specular);
 }
