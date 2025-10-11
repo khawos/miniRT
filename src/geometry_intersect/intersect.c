@@ -34,6 +34,13 @@ t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 			if (var.tmp < var.intersect_to_light)
 				return (true);
 	}
+	else if (tr == var.objet.type)
+	{
+		var.tmp = intersect_tr(origin, ray_dir, var.objet);
+		if (var.tmp > 0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+	}
 	return (false);
 }
 
@@ -108,10 +115,6 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 		}
 	}
 	if (*t != RENDER_DISTANCE)
-	{
-		if (mini->sc.objet[closest].type == tr)
-			return (mini->sc.objet[closest].color);
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));
-	}
 	return ((t_color){0, 0, 0, 0});
 }

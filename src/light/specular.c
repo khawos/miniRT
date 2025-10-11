@@ -41,6 +41,8 @@ void	specular_util(t_specular *var, t_objet obj, double is_cap, double t)
 	}
 	else if (cy == obj.type && t == is_cap)
 		var->normal = obj.vec_dir;
+	else if (tr == obj.type)
+		var->normal = obj.tr_normal;
 }
 
 t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)

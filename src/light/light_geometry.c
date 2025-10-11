@@ -48,6 +48,22 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 					mini->sc.light[1].ratio)), dot));
 }
 
+t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+{
+	t_vec3	p;
+	t_vec3	to_light;
+	double	dot;
+
+	//if (shadow_ray(mini, ray_dir, t))
+	//	return ((t_color){0, 0, 0, 1});
+	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
+	to_light = vec_substact(mini->sc.light[1].pos, p);
+	dot = fabs(vec_dot(obj.tr_normal, vec_normalize(to_light)));
+	return (color_scalar(color_multiplie(obj.color,
+				color_scalar(mini->sc.light[1].color,
+					mini->sc.light[1].ratio)), dot));
+}
+
 void	light_cy_util(double *dot, t_vec3 *normal, t_objet obj, t_vec3 to_light)
 {
 	*normal = obj.vec_dir;

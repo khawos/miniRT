@@ -2,13 +2,13 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 240
+# define WIDTH 310
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 5
+# define BLOCK_SIZE_MAX 30
 # define BLOCK_SIZE_MIN 1
 # include <unistd.h>
 # include <semaphore.h>
@@ -24,15 +24,28 @@
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include <float.h>1.461727,-1.220011,-0.242970 
+# include <float.h>
 # include <limits.h>
 
-typedef	enum	s_inter
+
+typedef	struct s_bvh
 {
-	in,
-	out,
-	edge,
-}				t_inter;
+
+	double		p0_up;
+	double		p1_up;
+	double		p2_up;
+	double		p3_up;
+	double		p0_down;
+	double		p1_down;
+	double		p2_down;
+	double		p3_down;
+	int			*indexs_obj;
+	int			n_obj;
+	struct s_bvh *zone_1; 
+	struct s_bvh *zone_2; 
+	
+}	t_bvh;
+
 
 typedef struct	s_color
 {
@@ -41,7 +54,6 @@ typedef struct	s_color
 	unsigned char	b;
 	t_boolean		hit;
 }				t_color;
-
 
 typedef enum s_type
 {
@@ -370,5 +382,6 @@ t_boolean	init(t_mini *mini, char **av);
 t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 #endif
