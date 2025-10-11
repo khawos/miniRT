@@ -10,6 +10,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 30
 # define BLOCK_SIZE_MIN 1
+# define DEEPTH	8
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -27,10 +28,8 @@
 # include <float.h>
 # include <limits.h>
 
-
-typedef	struct s_bvh
+typedef struct s_bounds
 {
-
 	double		p0_up;
 	double		p1_up;
 	double		p2_up;
@@ -39,6 +38,13 @@ typedef	struct s_bvh
 	double		p1_down;
 	double		p2_down;
 	double		p3_down;
+
+}		t_bounds;
+
+
+typedef	struct s_bvh
+{
+	t_bounds	bounds;
 	int			*indexs_obj;
 	int			n_obj;
 	struct s_bvh *zone_1; 
