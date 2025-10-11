@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 int	handle_key_input_bis(int keysym, t_mini *mini, t_cam *cam)
 {

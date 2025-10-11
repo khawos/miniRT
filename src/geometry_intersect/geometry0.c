@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_equation	inters_sp_init(t_vec3 ray_d, t_objet obj, t_vec3 cam_to_obj)
 {

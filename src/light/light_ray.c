@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
 {

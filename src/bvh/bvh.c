@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_bvh   *bvh_fill(t_bounds bounds, int deepth)
 {
@@ -36,3 +36,4 @@ t_bvh   *bvh_fill(t_bounds bounds, int deepth)
 		return (NULL);							// protect
 	return (bvh); 
 }
+

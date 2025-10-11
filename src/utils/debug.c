@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 void	printVec(t_vec3	Ray)
 {
 	printf(" x: %f, y: %f, z: %f\n", Ray.x, Ray.y, Ray.z);

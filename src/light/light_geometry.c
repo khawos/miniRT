@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {

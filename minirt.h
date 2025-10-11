@@ -28,16 +28,18 @@
 # include <float.h>
 # include <limits.h>
 
+
+typedef struct	s_vec3
+{
+	double	x;
+	double	y;
+	double	z;
+}				t_vec3;
+
 typedef struct s_bounds
 {
-	double		p0_up;
-	double		p1_up;
-	double		p2_up;
-	double		p3_up;
-	double		p0_down;
-	double		p1_down;
-	double		p2_down;
-	double		p3_down;
+	t_vec3	max;
+	t_vec3	min;
 
 }		t_bounds;
 
@@ -73,12 +75,7 @@ typedef enum s_type
 }				t_type;				
 
 
-typedef struct	s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}				t_vec3;
+
 
 typedef	struct s_equation
 {
@@ -195,6 +192,7 @@ typedef struct	s_mini
 	t_vec3	left_corner;
 	sem_t	*m_cast;
 	sem_t	*s_img;
+	t_bvh	*bvh;
 	int		max;
 	int		min;
 	int		cam_lock;
@@ -389,5 +387,12 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+
+// BOUNDS
+
+t_bounds	found_first_bound(t_mini *mini);
+
+
+// BVH
 
 #endif

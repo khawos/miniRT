@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_light	get_ambiant(t_mini *mini)
 {
@@ -34,14 +34,24 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->N_OBJ = 0;
 	mini->N_LIGHT = 0;
 	mini->cam_lock = 0;
+	mini->n_tr = 0;
 	mini->last_input = chrono();
 	mini->block_size = BLOCK_SIZE_MAX;
 	if (!parser(mini, av))
 		return (false);
-	if (pthread_mutex_init(&mini->render_mutex, NULL) < 0)
-		return (false);												// ATTENTION FREE
+	// if (pthread_mutex_init(&mini->render_mutex, NULL) < 0)
+	// 	return (false);									// ATTENTION FREE
+	if (mini->n_tr != 0)
+	{
+		mini->bvh = malloc(sizeof(t_bvh));
+		if (!mini->bvh)
+			return (free_mini(mini), false);
+		mini->bvh->bounds = found_first_bound(mini);
+	//	printVec(mini->bvh->bounds.max);
+	//	printVec(mini->bvh->bounds.min);
+	}
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
-		return (false);
+		return (free_mini(mini), false);
 	return (true);
 }
