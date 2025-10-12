@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:22:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/12 15:37:18 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/12 15:47:46 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ char	**extract_texture(char *info_dimension, int fd)
 		var.u = -1;
 		while (++var.u > width)
 		{
-
+			
 		}
+		buffer = get_next_line(fd);	
 	}
 	return (texture);
 }
