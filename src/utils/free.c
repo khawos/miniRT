@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/12 15:24:14 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:53:21 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,16 @@ void	free_double_array(char **dest)
 	while (dest[i])
 		free(dest[i++]);
 	free(dest);
+}
+
+void	free_double_array_error(void **array, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		free(array[i]);
+	}
+	free(array);
 }

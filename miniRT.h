@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 240
-# define WIDTH 310
+# define HEIGHT 1080
+# define WIDTH 1920
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
@@ -26,6 +26,13 @@
 # include <X11/keysym.h>
 # include <float.h>
 # include <limits.h>
+
+
+typedef struct s_texture
+{
+	char	**base_color;
+	char	**normal;
+};
 
 
 typedef	struct s_bvh
@@ -73,6 +80,13 @@ typedef struct	s_vec3
 	double	y;
 	double	z;
 }				t_vec3;
+
+typedef struct	s_vec2
+{
+	double	u;
+	double	v;
+}				t_vec2;
+
 
 typedef	struct s_equation
 {
@@ -383,5 +397,8 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+
+
+void	free_double_array_error(void **array, int n);
 
 #endif

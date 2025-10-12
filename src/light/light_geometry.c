@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_geometry.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-09 17:56:31 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/12 12:46:54 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	to_light;
 	double	dot;
 
-	//if (shadow_ray(mini, ray_dir, t))
-	//	return ((t_color){0, 0, 0, 1});
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, p);
 	dot = fabs(vec_dot(obj.tr_normal, vec_normalize(to_light)));

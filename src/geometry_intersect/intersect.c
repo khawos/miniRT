@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/06 12:15:27 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/12 12:45:07 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 	else if (tr == var.objet.type)
 	{
 		var.tmp = intersect_tr(origin, ray_dir, var.objet);
-		if (var.tmp > 0.0000000001)
+		if (var.tmp != 0)
 			if (var.tmp < var.intersect_to_light)
 				return (true);
 	}

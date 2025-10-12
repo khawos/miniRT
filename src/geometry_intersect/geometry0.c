@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   geometry.c                                         :+:      :+:    :+:   */
+/*   geometry0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/08 16:35:23 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/12 12:43:38 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,44 +73,6 @@ double	compute_tr_area(t_vec3 a, t_vec3 b, t_vec3 c)
 	return (area);
 }
 
-// double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
-// {
-// 	double	t;
-// 	double	dot;
-
-// 	t_vec3	p;
-// 	t_vec3	p0_to_p1;
-// 	t_vec3	p0_to_p2;
-// 	t_vec3	p1_to_p2;
-// 	t_vec3	p0_to_p;
-// 	t_vec3	p1_to_p;
-// 	t_vec3	p2_to_p;
-
-// 	double	dot0;
-// 	double	dot1;
-// 	double	dot2;
-
-// 	dot = vec_dot(ray_direction, object.tr_normal);
-// 	object.vec_dir = vec_normalize(object.tr_normal);
-// 	if (dot == 0)
-// 		return (0);
-// 	t = vec_dot(vec_substact(object.p1, origin), object.vec_dir) / dot;
-// 	p = vec_add(origin, vec_scale(ray_direction, t));
-// 	p0_to_p1 = vec_substact(object.p1, object.p0);
-// 	p0_to_p2 = vec_substact(object.p2, object.p0);
-// 	p1_to_p2 = vec_substact(object.p2, object.p1);
-// 	p0_to_p = vec_substact(p, object.p0);
-// 	p1_to_p = vec_substact(p, object.p1);
-// 	p2_to_p = vec_substact(p, object.p2);
-// 	if (vec_dot(object.tr_normal, vec_cross(p0_to_p1, p0_to_p)) > 0 
-// 	&& vec_dot(object.tr_normal, vec_cross(p1_to_p2, p1_to_p)) > 0 
-// 	&& vec_dot(object.tr_normal, vec_cross(p0_to_p2, p2_to_p)) > 0)
-// 		return (t);
-// 	return (0);
-// }
-
-// GTPTO
-
 double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 {
 	double	t;
@@ -122,32 +84,27 @@ double	intersect_tr(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 	t_vec3	p0_to_p;
 	t_vec3	p1_to_p;
 	t_vec3	p2_to_p;
+	double 	c0;
+	double 	c1;
+	double 	c2;
 
 	dot = vec_dot(ray_direction, object.tr_normal);
 	object.vec_dir = vec_normalize(object.tr_normal);
 	if (fabs(dot) < 1e-6)
-		return (0); // rayon parallèle au plan
-
+		return (0);
 	t = vec_dot(vec_substact(object.p0, origin), object.vec_dir) / dot;
 	p = vec_add(origin, vec_scale(ray_direction, t));
-
-	// Arêtes
 	p0_to_p1 = vec_substact(object.p1, object.p0);
 	p1_to_p2 = vec_substact(object.p2, object.p1);
 	p2_to_p0 = vec_substact(object.p0, object.p2);
-
-	// Vecteurs point -> sommets
 	p0_to_p = vec_substact(p, object.p0);
 	p1_to_p = vec_substact(p, object.p1);
 	p2_to_p = vec_substact(p, object.p2);
-
-	double c0 = vec_dot(object.tr_normal, vec_cross(p0_to_p1, p0_to_p));
-	double c1 = vec_dot(object.tr_normal, vec_cross(p1_to_p2, p1_to_p));
-	double c2 = vec_dot(object.tr_normal, vec_cross(p2_to_p0, p2_to_p));
-
+	c0 = vec_dot(object.tr_normal, vec_cross(p0_to_p1, p0_to_p));
+	c1 = vec_dot(object.tr_normal, vec_cross(p1_to_p2, p1_to_p));
+	c2 = vec_dot(object.tr_normal, vec_cross(p2_to_p0, p2_to_p));
 	if ((c0 >= 0 && c1 >= 0 && c2 >= 0) || (c0 <= 0 && c1 <= 0 && c2 <= 0))
 		return (t);
-
 	return (0);
 }
 
