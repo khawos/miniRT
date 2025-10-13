@@ -131,5 +131,16 @@ void	printObject(t_objet obj)
 			if (obj.type == cy)
 				printf("height : %f\n",obj.height);
 		}
+		if (obj.type == tr)
+		{
+			printf("p1 = ");
+			printVec(obj.p0);
+			printf("p2 = ");
+			printVec(obj.p1);
+			printf("p3 = ");
+			printVec(obj.p2);
+			printColor(obj.color);
+			printf("spec = %f\n",obj.spec);
+		}
 		printf("\n");
 }

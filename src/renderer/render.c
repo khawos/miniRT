@@ -19,7 +19,7 @@ static void	run_thread_utils(t_mini *mini, int *h)
 	mini->left_corner = get_left_corner_viewport(*mini);
 	*h = HEIGHT / N_THREAD;
 	mini->min = 0;
-	mini->max = h;
+	mini->max = *h;
 }
 
 t_boolean	run_thread(t_mini *mini)
@@ -64,4 +64,5 @@ int	render_loop(t_mini *mini)
 			mini->block_size -= 2;
 	}
 	run_thread(mini);
+	return (0);
 }

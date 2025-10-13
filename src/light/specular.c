@@ -54,6 +54,7 @@ t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	double		spec;
 
 	spec = 15;
+	is_cap = 0;
 	if (obj.spec != -1)
 		spec = obj.spec;
 	if (obj.type == cy)

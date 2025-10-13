@@ -45,7 +45,7 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else if (obj.type == cy)
 		diffuse_direct = light_cy(mini, obj, ray_dir, t);
-	else if (obj.type == tr)
+	else 
 		diffuse_direct = light_tr(mini, obj, ray_dir, t);
 	if (!is_hard_shadow(diffuse_direct))
 		spec = specular(mini, obj, ray_dir, t);

@@ -14,6 +14,7 @@
 
 int	handle_key_input_bis(int keysym, t_mini *mini, t_cam *cam)
 {
+	(void)mini;
 	if (keysym == 0xff52)
 		cam->pos = vec_add(cam->pos, vec_scale(cam->vec_dir, 6));
 	if (keysym == 0xff54)
@@ -39,6 +40,8 @@ int	handle_key_input(int keysym, t_mini *mini)
 
 int	handle_mouse_input(int keysym, int x, int y, t_mini *mini)
 {
+	(void)x;
+	(void)y;
 	if (keysym == 4)
 	{
 		mini->last_input = chrono();

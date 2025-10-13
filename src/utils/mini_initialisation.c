@@ -23,6 +23,35 @@ t_light	get_ambiant(t_mini *mini)
 	return ((t_light){0});
 }
 
+t_boolean	bvh_init(t_mini *mini)
+{
+	t_bvh	*head;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	head = malloc(sizeof(t_bvh));
+	if (!head)
+		return (false);
+	head->bounds.deepth = 0;
+	head->idx_tr_hbv = malloc(sizeof(int)* mini->n_tr);
+	if (!head->idx_tr_hbv)
+		return (false);
+	//head->idx_tr_hbv = NULL;
+	head->n_obj = mini->n_tr;
+	while (++i < mini->N_OBJ)
+	{
+		if (tr == mini->sc.objet[i].type)
+		{
+			head->idx_tr_hbv[j] = i;
+			j++; 
+		}
+	}
+	mini->bvh = bvh_fill(mini, 0, head);
+	return (true);
+}
+
 t_boolean	init(t_mini *mini, char **av)
 {
 	mini->n_a = 0;
@@ -43,14 +72,12 @@ t_boolean	init(t_mini *mini, char **av)
 	// 	return (false);									// ATTENTION FREE
 	if (mini->n_tr != 0)
 	{
-		mini->bvh = malloc(sizeof(t_bvh));
-		if (!mini->bvh)
-			return (free_mini(mini), false);
-		mini->bvh->bounds = found_first_bound(mini);
 	//	printVec(mini->bvh->bounds.max);
 	//	printVec(mini->bvh->bounds.min);
 	}
 	mini->sc.ambiant = get_ambiant(mini);
+	if (!bvh_init(mini))
+		return (false);	// aled free
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

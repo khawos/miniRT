@@ -10,7 +10,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 30
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	8
+# define DEEPTH	4
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -40,6 +40,7 @@ typedef struct s_bounds
 {
 	t_vec3	max;
 	t_vec3	min;
+	int		deepth;
 
 }		t_bounds;
 
@@ -47,10 +48,11 @@ typedef struct s_bounds
 typedef	struct s_bvh
 {
 	t_bounds	bounds;
-	int			*indexs_obj;
+	int			*idx_tr_hbv;
 	int			n_obj;
-	struct s_bvh *zone_1; 
+	struct s_bvh *zone_1;
 	struct s_bvh *zone_2; 
+	struct s_bvh *previous; 
 	
 }	t_bvh;
 
@@ -102,8 +104,8 @@ typedef struct s_var_trace
 	unsigned int	j;
 	double	delta_u;
 	double	delta_v;
-	int		max;
-	int		block_size;
+	unsigned int		max;
+	unsigned int		block_size;
 }				t_var_trace;
 
 typedef struct	s_data {
@@ -391,8 +393,13 @@ t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 // BOUNDS
 
 t_bounds	found_first_bound(t_mini *mini);
+t_boolean	tr_is_in_bounds(t_objet	tr, t_bounds bounds);
+t_bounds	find_bounds(t_bounds old_bounds, int direction);
+
 
 
 // BVH
+t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old);
+int	*in_view_realloc(int *old, int add, int nb);
 
 #endif
