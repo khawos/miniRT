@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 240
-# define WIDTH 310
+# define HEIGHT 720
+# define WIDTH 1080
 # define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000

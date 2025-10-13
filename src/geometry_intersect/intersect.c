@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/06 12:15:27 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/13 10:08:27 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 			*t = tmp;
 			closest = i;
 		}
+	}
+	if (mini->bvh)
+	{
+		// savoir si le rayon touche la bound 1, si oui deployer recusivement et recheck.
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));
