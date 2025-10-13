@@ -72,113 +72,113 @@ t_bounds	found_first_bound(t_mini *mini)
 /*	0 == left, up, forward
 	1 == right, down, backward
 */
-t_bounds	find_bounds(t_bounds old_bounds, int direction)
-{
-	t_bounds	new_bounds;
-
-	printf("%d\n", old_bounds.deepth);
-	if (old_bounds.max.x - old_bounds.min.x > old_bounds.max.y - old_bounds.min.y && old_bounds.max.y - old_bounds.min.y > old_bounds.max.z - old_bounds.min.z)
-	{
-		if (0 == direction)
-		{
-			new_bounds.max = (t_vec3){old_bounds.max.x / 2, old_bounds.max.y, old_bounds.max.z};
-			new_bounds.min = old_bounds.min;
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-		else
-		{
-			new_bounds.max = old_bounds.max;
-			new_bounds.min = (t_vec3){old_bounds.max.x / 2, old_bounds.min.y, old_bounds.min.z};
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-	}
-	else if (old_bounds.max.x - old_bounds.min.x < old_bounds.max.y - old_bounds.min.y && old_bounds.max.y - old_bounds.min.y > old_bounds.max.z - old_bounds.min.z)
-	{
-		if (0 == direction)
-		{
-			new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y / 2, old_bounds.max.z};
-			new_bounds.min = old_bounds.min;
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-		else
-		{
-			new_bounds.max = old_bounds.max;
-			new_bounds.min = (t_vec3){old_bounds.max.x, old_bounds.min.y / 2, old_bounds.min.z};
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-	}
-	else
-	{
-		if (0 == direction)
-		{
-			new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y, old_bounds.max.z / 2};
-			new_bounds.min = old_bounds.min;
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-		else
-		{
-			new_bounds.max = old_bounds.max;
-			new_bounds.min = (t_vec3){old_bounds.max.x, old_bounds.min.y, old_bounds.min.z / 2};
-			new_bounds.deepth = old_bounds.deepth + 1;
-		}
-	}
-	return (new_bounds);
-}
-
-// t_bounds find_bounds(t_bounds old_bounds, int direction)
+// t_bounds	find_bounds(t_bounds old_bounds, int direction)
 // {
-//     t_bounds new_bounds;
-//     double mid_x = (old_bounds.min.x + old_bounds.max.x) / 2.0;
-//     double mid_y = (old_bounds.min.y + old_bounds.max.y) / 2.0;
-//     double mid_z = (old_bounds.min.z + old_bounds.max.z) / 2.0;
+// 	t_bounds	new_bounds;
 
-//     double dx = old_bounds.max.x - old_bounds.min.x;
-//     double dy = old_bounds.max.y - old_bounds.min.y;
-//     double dz = old_bounds.max.z - old_bounds.min.z;
-
-//     if (dx >= dy && dx >= dz) // couper selon X
-//     {
-//         if (direction == 0)
-//         {
-//             new_bounds.min = old_bounds.min;
-//             new_bounds.max = (t_vec3){mid_x, old_bounds.max.y, old_bounds.max.z};
-//         }
-//         else
-//         {
-//             new_bounds.min = (t_vec3){mid_x, old_bounds.min.y, old_bounds.min.z};
-//             new_bounds.max = old_bounds.max;
-//         }
-//     }
-//     else if (dy >= dx && dy >= dz) // couper selon Y
-//     {
-//         if (direction == 0)
-//         {
-//             new_bounds.min = old_bounds.min;
-//             new_bounds.max = (t_vec3){old_bounds.max.x, mid_y, old_bounds.max.z};
-//         }
-//         else
-//         {
-//             new_bounds.min = (t_vec3){old_bounds.min.x, mid_y, old_bounds.min.z};
-//             new_bounds.max = old_bounds.max;
-//         }
-//     }
-//     else // couper selon Z
-//     {
-//         if (direction == 0)
-//         {
-//             new_bounds.min = old_bounds.min;
-//             new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y, mid_z};
-//         }
-//         else
-//         {
-//             new_bounds.min = (t_vec3){old_bounds.min.x, old_bounds.min.y, mid_z};
-//             new_bounds.max = old_bounds.max;
-//         }
-//     }
-
-//     new_bounds.deepth = old_bounds.deepth + 1;
-//     return new_bounds;
+// 	printf("%d\n", old_bounds.deepth);
+// 	if (old_bounds.max.x - old_bounds.min.x > old_bounds.max.y - old_bounds.min.y && old_bounds.max.y - old_bounds.min.y > old_bounds.max.z - old_bounds.min.z)
+// 	{
+// 		if (0 == direction)
+// 		{
+// 			new_bounds.max = (t_vec3){old_bounds.max.x / 2, old_bounds.max.y, old_bounds.max.z};
+// 			new_bounds.min = old_bounds.min;
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 		else
+// 		{
+// 			new_bounds.max = old_bounds.max;
+// 			new_bounds.min = (t_vec3){old_bounds.max.x / 2, old_bounds.min.y, old_bounds.min.z};
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 	}
+// 	else if (old_bounds.max.x - old_bounds.min.x < old_bounds.max.y - old_bounds.min.y && old_bounds.max.y - old_bounds.min.y > old_bounds.max.z - old_bounds.min.z)
+// 	{
+// 		if (0 == direction)
+// 		{
+// 			new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y / 2, old_bounds.max.z};
+// 			new_bounds.min = old_bounds.min;
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 		else
+// 		{
+// 			new_bounds.max = old_bounds.max;
+// 			new_bounds.min = (t_vec3){old_bounds.max.x, old_bounds.min.y / 2, old_bounds.min.z};
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (0 == direction)
+// 		{
+// 			new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y, old_bounds.max.z / 2};
+// 			new_bounds.min = old_bounds.min;
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 		else
+// 		{
+// 			new_bounds.max = old_bounds.max;
+// 			new_bounds.min = (t_vec3){old_bounds.max.x, old_bounds.min.y, old_bounds.min.z / 2};
+// 			new_bounds.deepth = old_bounds.deepth + 1;
+// 		}
+// 	}
+// 	return (new_bounds);
 // }
+
+t_bounds find_bounds(t_bounds old_bounds, int direction)
+{
+    t_bounds new_bounds;
+    double mid_x = (old_bounds.min.x + old_bounds.max.x) / 2.0;
+    double mid_y = (old_bounds.min.y + old_bounds.max.y) / 2.0;
+    double mid_z = (old_bounds.min.z + old_bounds.max.z) / 2.0;
+
+    double dx = old_bounds.max.x - old_bounds.min.x;
+    double dy = old_bounds.max.y - old_bounds.min.y;
+    double dz = old_bounds.max.z - old_bounds.min.z;
+
+    if (dx >= dy && dx >= dz) // couper selon X
+    {
+        if (direction == 0)
+        {
+            new_bounds.min = old_bounds.min;
+            new_bounds.max = (t_vec3){mid_x, old_bounds.max.y, old_bounds.max.z};
+        }
+        else
+        {
+            new_bounds.min = (t_vec3){mid_x, old_bounds.min.y, old_bounds.min.z};
+            new_bounds.max = old_bounds.max;
+        }
+    }
+    else if (dy >= dx && dy >= dz) // couper selon Y
+    {
+        if (direction == 0)
+        {
+            new_bounds.min = old_bounds.min;
+            new_bounds.max = (t_vec3){old_bounds.max.x, mid_y, old_bounds.max.z};
+        }
+        else
+        {
+            new_bounds.min = (t_vec3){old_bounds.min.x, mid_y, old_bounds.min.z};
+            new_bounds.max = old_bounds.max;
+        }
+    }
+    else // couper selon Z
+    {
+        if (direction == 0)
+        {
+            new_bounds.min = old_bounds.min;
+            new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y, mid_z};
+        }
+        else
+        {
+            new_bounds.min = (t_vec3){old_bounds.min.x, old_bounds.min.y, mid_z};
+            new_bounds.max = old_bounds.max;
+        }
+    }
+
+    new_bounds.deepth = old_bounds.deepth + 1;
+    return new_bounds;
+}
 
 
 t_boolean	tr_is_in_bounds(t_objet	tr, t_bounds bounds)

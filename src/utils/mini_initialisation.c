@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_initalisation.c                               :+:      :+:    :+:   */
+/*   mini_initialisation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-09 17:22:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-09 17:22:09 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/09 17:22:09 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/13 08:31:50 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ t_boolean	init(t_mini *mini, char **av)
 	// 	return (false);									// ATTENTION FREE
 	if (mini->n_tr != 0)
 	{
-	//	printVec(mini->bvh->bounds.max);
-	//	printVec(mini->bvh->bounds.min);
+		if (!bvh_init(mini))
+			return (false);	// aled free
 	}
+	printBounds(mini);
 	mini->sc.ambiant = get_ambiant(mini);
-	if (!bvh_init(mini))
-		return (false);	// aled free
+
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

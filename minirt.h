@@ -267,6 +267,7 @@ void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
 void		printObject(t_objet obj);
 void		printColor(t_color color);
+void		printBounds(t_mini *mini);
 
 //RAY 
 

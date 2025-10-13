@@ -40,7 +40,7 @@ int	*in_view_realloc(int *old, int add, int nb)
 	if (!new)
 		return (free(old), NULL);
 	i = 0;
-	while(i < nb - 1)
+	while(i < nb)
 	{
 		new[i] = old[i];
 		i++;
@@ -60,7 +60,7 @@ t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
 	i = 0;
 	if (old->bounds.deepth > DEEPTH)
 		return (NULL);
-	printf("%d\n", old->bounds.deepth);
+	//printf("%d\n", old->bounds.deepth);
 	bvh = malloc(sizeof(t_bvh));
 	if (!bvh)
 		return (NULL);				// protect ... attention a free recursivement + kill window
@@ -75,8 +75,8 @@ t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
 	else
 	{
 		bvh->bounds = find_bounds(old->bounds, dir);
-		printVec(bvh->bounds.max);
-		printVec(bvh->bounds.min);
+		//printVec(bvh->bounds.max);
+		//printVec(bvh->bounds.min);
 		bvh->previous = old;
 		bvh->idx_tr_hbv = NULL;
 		bvh->n_obj = 0;
