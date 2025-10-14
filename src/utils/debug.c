@@ -145,22 +145,12 @@ void	printObject(t_objet obj)
 		printf("\n");
 }
 
-void	printBounds(t_mini *mini)
+void	printBounds(t_bvh *bvh)
 {
-	printf("nb tr noeud 1:%d\n", mini->bvh->zone_1->zone_1->zone_1->zone_1->n_obj);
-	printf("nb tr noeud 2:%d\n", mini->bvh->zone_1->zone_1->zone_1->zone_2->n_obj);
-	printf("nb tr noeud 3:%d\n", mini->bvh->zone_1->zone_1->zone_2->zone_1->n_obj);
-	printf("nb tr noeud 4:%d\n", mini->bvh->zone_1->zone_1->zone_2->zone_2->n_obj);
-	printf("nb tr noeud 5:%d\n", mini->bvh->zone_1->zone_2->zone_1->zone_1->n_obj);
-	printf("nb tr noeud 6:%d\n", mini->bvh->zone_1->zone_2->zone_1->zone_2->n_obj);
-	printf("nb tr noeud 7:%d\n", mini->bvh->zone_1->zone_2->zone_2->zone_1->n_obj);
-	printf("nb tr noeud 8:%d\n", mini->bvh->zone_1->zone_2->zone_2->zone_2->n_obj);
-	printf("nb tr noeud 9:%d\n", mini->bvh->zone_2->zone_1->zone_1->zone_1->n_obj);
-	printf("nb tr noeud 10:%d\n", mini->bvh->zone_2->zone_1->zone_1->zone_2->n_obj);
-	printf("nb tr noeud 11:%d\n", mini->bvh->zone_2->zone_1->zone_2->zone_1->n_obj);
-	printf("nb tr noeud 12:%d\n", mini->bvh->zone_2->zone_1->zone_2->zone_2->n_obj);
-	printf("nb tr noeud 13:%d\n", mini->bvh->zone_2->zone_2->zone_1->zone_1->n_obj);
-	printf("nb tr noeud 14:%d\n", mini->bvh->zone_2->zone_2->zone_1->zone_2->n_obj);
-	printf("nb tr noeud 15:%d\n", mini->bvh->zone_2->zone_2->zone_2->zone_1->n_obj);
-	printf("nb tr noeud 16:%d\n", mini->bvh->zone_2->zone_2->zone_2->zone_2->n_obj);
+	if (!bvh)
+		return ;
+	if (bvh->bounds.deepth == DEEPTH)
+		printf("deepth : %d, tr : %d\n", bvh->bounds.deepth, bvh->n_obj);
+	printBounds(bvh->zone_1);
+	printBounds(bvh->zone_2);
 }

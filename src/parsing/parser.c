@@ -33,7 +33,8 @@ t_boolean	parser(t_mini *mini, char **av)
 		return (write(2, "Error\nMiniRT:Wrong file name.\n", 31), false);
 	//if (!checker(av[1]))
 	//	return (false);
-	count_line(mini, av[1]);
+	if (!count_line(mini, av[1]))
+		return (false);
 	fill_mini(mini, av[1]);
 	return (true);
 }

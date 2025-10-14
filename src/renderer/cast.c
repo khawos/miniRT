@@ -39,6 +39,8 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	unsigned int	color_int;
 
 	color = intersect_loop(mini, ray_direction, &t);
+	if (t == -1)
+		return ;									// error kill ici
 	if (t == RENDER_DISTANCE)
 		color = put_background(x, y);
 	color_int = color_shift(color);

@@ -10,7 +10,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 30
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	4
+# define DEEPTH	8
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -195,6 +195,7 @@ typedef struct	s_mini
 	sem_t	*m_cast;
 	sem_t	*s_img;
 	t_bvh	*bvh;
+	t_bvh	**bvh_deepest;
 	int		max;
 	int		min;
 	int		cam_lock;
@@ -267,7 +268,7 @@ void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
 void		printObject(t_objet obj);
 void		printColor(t_color color);
-void		printBounds(t_mini *mini);
+void		printBounds(t_bvh *bvh);
 
 //RAY 
 
@@ -393,14 +394,29 @@ t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 // BOUNDS
 
+typedef struct s_var_bounds
+{
+	double	mid_x;
+    double	mid_y;
+    double	mid_z;
+	double	dx; 
+	double	dy; 
+	double	dz; 
+} 			t_var_bounds;
+
 t_bounds	found_first_bound(t_mini *mini);
 t_boolean	tr_is_in_bounds(t_objet	tr, t_bounds bounds);
 t_bounds	find_bounds(t_bounds old_bounds, int direction);
+void		find_bounds_utils(t_var_bounds *var, t_bounds old_bounds);
+t_vec3		try_max_bound(t_objet obj, t_vec3 max);
+t_vec3		try_min_bound(t_objet obj, t_vec3 max);
 
 
 
 // BVH
 t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old);
-int	*in_view_realloc(int *old, int add, int nb);
+int		*in_view_realloc(int *old, int add, int nb);
+void	bvh_free(t_bvh *bvh);
+int		 *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size);
 
 #endif

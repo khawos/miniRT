@@ -12,58 +12,39 @@
 
 #include "minirt.h"
 
-static int	*first_init(int add)
+void	bvh_free(t_bvh *bvh)
 {
-	int	*new;
+	t_bvh	*z1;
+	t_bvh	*z2;
 
-	new = malloc(sizeof(int) * 1);
-	if (!new)
-		return (NULL);
-	new[0] = add;
-	// new[1] = 0;
-	return (new);
+	z1 = bvh->zone_1;
+	z2 = bvh->zone_2;
+	free(bvh->idx_tr_hbv);
+	free(bvh);
+	bvh = NULL;
+	if (z1)
+		bvh_free(z1);
+	if (z2)
+		bvh_free(z2);
 }
 
-int	*in_view_realloc(int *old, int add, int nb)
+void	*bvh_recursive_free(t_bvh *bvh)
 {
-	int	*new;
-	int	i;
-
-	if (!old)
-	{
-		old = first_init(add);
-		if (!old)
-			return (NULL);
-		return (old);
-	}
-	new = malloc(sizeof(int) * (nb + 1));
-	if (!new)
-		return (free(old), NULL);
-	i = 0;
-	while(i < nb)
-	{
-		new[i] = old[i];
-		i++;
-	}
-	new[i] = add;
-	// new[i + 1] = 0;
-	return (new);
+	if (bvh == NULL)
+		return (NULL);
+	while (bvh->previous != NULL)
+		bvh = bvh->previous;
+	bvh_free(bvh);
+	return (NULL);
 }
 
-
-
-t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
+t_bvh *bvh_alloc(t_bvh *old, int dir, t_mini *mini)
 {
-	t_bvh       *bvh;
-	int			i;
+	t_bvh *bvh;
 
-	i = 0;
-	if (old->bounds.deepth > DEEPTH)
-		return (NULL);
-	//printf("%d\n", old->bounds.deepth);
 	bvh = malloc(sizeof(t_bvh));
 	if (!bvh)
-		return (NULL);				// protect ... attention a free recursivement + kill window
+		return (NULL);	
 	if (0 == old->bounds.deepth)
 	{
 		bvh->bounds = found_first_bound(mini);
@@ -75,33 +56,53 @@ t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
 	else
 	{
 		bvh->bounds = find_bounds(old->bounds, dir);
-		//printVec(bvh->bounds.max);
-		//printVec(bvh->bounds.min);
 		bvh->previous = old;
 		bvh->idx_tr_hbv = NULL;
 		bvh->n_obj = 0;
 	}
+	return (bvh);
+}
+
+void	*bvh_recurse(t_mini *mini, t_bvh *old, t_bvh *bvh)
+{
+	if (bvh->bounds.deepth == DEEPTH)
+	{
+		bvh->zone_1 = NULL;
+		bvh->zone_2 = NULL;
+	}
+	else
+	{
+		bvh->zone_1 = bvh_fill(mini, 0, bvh);
+		if (!bvh)
+			return (bvh_recursive_free(old));
+		bvh->zone_2 = bvh_fill(mini, 1, bvh);
+		if (!bvh)
+			return (bvh_recursive_free(old));
+	}
+	return (NULL);
+}
+
+t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
+{
+	t_bvh       *bvh;
+	int			i;
+
+	i = 0;
+	bvh = bvh_alloc(old, dir, mini);
+	if (!bvh)
+		return (bvh_recursive_free(old));
 	while (i < old->n_obj)
 	{
-		// printObject(mini->sc.objet[old->idx_tr_hbv[i]]);
-		// printVec(bvh->bounds.max);
-		// printVec(bvh->bounds.min);
-		// printf("%d\n", old->n_obj);
 		if (tr_is_in_bounds(mini->sc.objet[old->idx_tr_hbv[i]], bvh->bounds))
 		{
 			bvh->idx_tr_hbv = in_view_realloc(bvh->idx_tr_hbv, old->idx_tr_hbv[i], bvh->n_obj);
 			if (!bvh->idx_tr_hbv)
-				return (NULL);					// protect... attention a free recursivement + kill window
+				return (bvh_recursive_free(old));
 			bvh->n_obj++;;
 		}
 		i++;
 	}
-	bvh->zone_1 = bvh_fill(mini, 0, bvh);
-	if (!bvh)
-		return (NULL);							// protect ... attention a free recursivement + kill window
-	bvh->zone_2 = bvh_fill(mini, 1, bvh);
-	if (!bvh)
-		return (NULL);							// protect ... attention a free recursivement + kill window
+	bvh_recurse(mini, old, bvh);
 	return (bvh); 
 }
 

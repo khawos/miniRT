@@ -96,6 +96,34 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 	return (t);
 }
 
+double	get_nearest_triangle(int *closest, double *t, t_vec3 ray_dir, t_mini *mini)
+{
+	double	tmp;
+	int		*tr_index;
+	int		size;
+	int		i;
+
+	tr_index = search_tr_in_tree(mini->bvh, mini->sc.cam[mini->cam_lock].pos, ray_dir, &size);
+	if (size == -1)
+		return (*t = -1, *t);
+	i = 0;
+	if (tr_index)
+	{
+		while (i < size)
+		{
+			tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos,
+				ray_dir, mini->sc.objet[tr_index[i]]);
+			if (tmp < *t)
+			{
+				*t = tmp;
+				*closest = i;
+			}
+			i++;
+		}
+		free(tr_index);
+	}
+	return (*t);
+}
 t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 {
 	int		i;
@@ -114,9 +142,12 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 			closest = i;
 		}
 	}
+	i = -1; 
 	if (mini->bvh)
 	{
-		// savoir si le rayon touche la bound 1, si oui deployer recusivement et recheck.
+		// *t = get_nearest_triangle(&closest, t, ray_dir, mini);
+		// if (*t == -1)
+		// 	return ((t_color){0, 0, 0, 0});
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));

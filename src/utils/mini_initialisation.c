@@ -38,7 +38,6 @@ t_boolean	bvh_init(t_mini *mini)
 	head->idx_tr_hbv = malloc(sizeof(int)* mini->n_tr);
 	if (!head->idx_tr_hbv)
 		return (false);
-	//head->idx_tr_hbv = NULL;
 	head->n_obj = mini->n_tr;
 	while (++i < mini->N_OBJ)
 	{
@@ -49,6 +48,8 @@ t_boolean	bvh_init(t_mini *mini)
 		}
 	}
 	mini->bvh = bvh_fill(mini, 0, head);
+	if (!mini->bvh)
+		return (false);
 	return (true);
 }
 
@@ -73,13 +74,11 @@ t_boolean	init(t_mini *mini, char **av)
 	if (mini->n_tr != 0)
 	{
 		if (!bvh_init(mini))
-			return (false);	// aled free
+			return (free_mini(mini), false);
 	}
 	else
 		mini->bvh = NULL;
-	//printBounds(mini);
 	mini->sc.ambiant = get_ambiant(mini);
-
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

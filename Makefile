@@ -22,6 +22,7 @@ SRC =	main.c \
 		geometry_intersect/geometry0.c \
 		geometry_intersect/geometry1.c \
 		geometry_intersect/geometry2.c \
+		geometry_intersect/geometry3.c \
 		utils/horloge.c \
 		utils/cast_utils.c \
 		utils/free.c \
@@ -37,8 +38,11 @@ SRC =	main.c \
 		parsing/parser_buffer.c \
 		parsing/parser_fill_mini.c \
 		parsing/parser_utils.c \
-		bvh/bounds.c \
+		bvh/init_bounds.c \
+		bvh/search_bounds.c \
+		bvh/bounds_utils.c \
 		bvh/bvh.c \
+		bvh/bvh_utils.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
