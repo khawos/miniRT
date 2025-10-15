@@ -4,13 +4,12 @@
 # define MINIRT_H
 # define HEIGHT 720
 # define WIDTH 1080
-# define OBJ_MAX 20
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 30
+# define BLOCK_SIZE_MAX 16
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	8
+# define DEEPTH	2
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -417,6 +416,6 @@ t_vec3		try_min_bound(t_objet obj, t_vec3 max);
 t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old);
 int		*in_view_realloc(int *old, int add, int nb);
 void	bvh_free(t_bvh *bvh);
-int		 *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size);
+int		 *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view);
 
 #endif

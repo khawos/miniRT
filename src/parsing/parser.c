@@ -26,9 +26,6 @@ t_boolean	check_rt(char *file_name)
 
 t_boolean	parser(t_mini *mini, char **av)
 {
-	int	n_cam;
-
-	n_cam = 0;
 	if (!check_rt(av[1]))
 		return (write(2, "Error\nMiniRT:Wrong file name.\n", 31), false);
 	//if (!checker(av[1]))

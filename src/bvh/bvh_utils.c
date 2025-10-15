@@ -45,5 +45,6 @@ int	*in_view_realloc(int *old, int add, int nb)
 		i++;
 	}
 	new[i] = add;
+	free(old);
 	return (new);
 }

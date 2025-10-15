@@ -89,8 +89,8 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 		if (tmp > 0 && tmp < t)
 			return (tmp);
 	}
-	else if (obj.type == tr)
-		tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
+	// else if (obj.type == tr)
+	// 	tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
 	if (tmp > 0 && tmp < t)
 		return (tmp);
 	return (t);
@@ -103,7 +103,9 @@ double	get_nearest_triangle(int *closest, double *t, t_vec3 ray_dir, t_mini *min
 	int		size;
 	int		i;
 
-	tr_index = search_tr_in_tree(mini->bvh, mini->sc.cam[mini->cam_lock].pos, ray_dir, &size);
+	size = 0;
+	tr_index = NULL;
+	tr_index = search_tr_in_tree(mini->bvh, mini->sc.cam[mini->cam_lock].pos, ray_dir, &size, tr_index);
 	if (size == -1)
 		return (*t = -1, *t);
 	i = 0;
@@ -111,9 +113,11 @@ double	get_nearest_triangle(int *closest, double *t, t_vec3 ray_dir, t_mini *min
 	{
 		while (i < size)
 		{
+			//printObject(mini->sc.objet[tr_index[1]]);
 			tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos,
 				ray_dir, mini->sc.objet[tr_index[i]]);
-			if (tmp < *t)
+			//printf("%f\n", tmp);
+			if (tmp > 0 && tmp < *t)
 			{
 				*t = tmp;
 				*closest = i;
@@ -145,9 +149,9 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 	i = -1; 
 	if (mini->bvh)
 	{
-		// *t = get_nearest_triangle(&closest, t, ray_dir, mini);
-		// if (*t == -1)
-		// 	return ((t_color){0, 0, 0, 0});
+		*t = get_nearest_triangle(&closest, t, ray_dir, mini);
+		if (*t == -1)
+		 	return ((t_color){0, 0, 0, 0});
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));

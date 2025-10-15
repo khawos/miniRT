@@ -73,9 +73,9 @@ void	set_normal_tr(t_mini *mini)
 		{
 			obj->tr_normal = vec_cross(vec_substact(obj->p1, obj->p0), vec_substact(obj->p2, obj->p0));
 			obj->tr_normal = vec_normalize(obj->tr_normal);
-			obj->p0 = vec_scale(obj->p0, 3);
-			obj->p1 = vec_scale(obj->p1, 3);
-			obj->p2 = vec_scale(obj->p2, 3);
+			//obj->p0 = vec_scale(obj->p0, 3);
+			//obj->p1 = vec_scale(obj->p1, 3);
+			//obj->p2 = vec_scale(obj->p2, 3);
 		}
 		i++;
 	}

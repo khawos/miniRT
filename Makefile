@@ -1,7 +1,7 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g3 #-fsanitize=address#-O3 -flto
-LFLAGS = -lXext -lX11 -lm -lz -lbsd #-flto
+CFLAGS = -Wall -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address #-O3 -flto
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt #-flto
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
@@ -38,35 +38,35 @@ SRC =	main.c \
 		parsing/parser_buffer.c \
 		parsing/parser_fill_mini.c \
 		parsing/parser_utils.c \
+		bvh/bounds_utils.c \
 		bvh/init_bounds.c \
 		bvh/search_bounds.c \
-		bvh/bounds_utils.c \
 		bvh/bvh.c \
 		bvh/bvh_utils.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
-all : $(NAME)
+all: $(NAME)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
-$(NAME) : $(OBJS)
+$(NAME): $(OBJS)
 	$(MAKE) -C minilibx-linux/
 	$(MAKE) -C libft/
 	$(CC) $(CFLAGS) $(OBJS) libft/libft.a minilibx-linux/libmlx.a minilibx-linux/libmlx_Linux.a $(LFLAGS) -o $(NAME)
 
-clean :
-	rm -f -r $(OBJ_DIR)
+clean:
+	rm -rf $(OBJ_DIR)
 	$(MAKE) clean -C libft/
 
-fclean : clean
+fclean: clean
 	$(MAKE) fclean -C libft/
-	$(MAKE) clean minilibx-linux/
+	$(MAKE) clean -C minilibx-linux/
 	rm -f $(NAME)
 
-re : fclean all
+re: fclean all
 
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re
