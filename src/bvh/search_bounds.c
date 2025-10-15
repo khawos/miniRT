@@ -52,15 +52,55 @@ int *cat_int_array(int *a, int *b, int size_a, int size_b)
 
 t_boolean	is_in_bounds(t_bounds bounds, t_vec3 origin, t_vec3 dir)
 {
-	
+	double	tmin;
+	double	tmax;
+	double	tx1;
+	double	tx2;
+	double	ty1;
+	double	ty2;
+	double	tz1;
+	double	tz2;
+
+	if (dir.x != 0)
+	{
+		tx1 = (bounds.min.x - origin.x) / dir.x;
+		tx2 = (bounds.max.x - origin.x) / dir.x;
+	}
+	else
+	{
+		tx1 = -RENDER_DISTANCE;
+		tx2 = RENDER_DISTANCE;
+	}
+	if (dir.y != 0)
+	{
+		ty1 = (bounds.min.y - origin.y) / dir.y;
+		ty2 = (bounds.max.y - origin.y) / dir.y;
+	}
+	else
+	{
+		ty1 = -RENDER_DISTANCE;
+		ty2 = RENDER_DISTANCE;
+	}
+	if (dir.z != 0)
+	{
+		tz1 = (bounds.min.z - origin.z) / dir.z;
+		tz2 = (bounds.max.z - origin.z) / dir.z;
+	}
+	else
+	{
+		tz1 = -RENDER_DISTANCE;
+		tz2 = RENDER_DISTANCE;
+	}
+	tmin = fmax(fmax(fmin(tx1, tx2), fmin(ty1, ty2)), fmin(tz1, tz2));
+	tmax = fmin(fmin(fmax(tx1, tx2), fmax(ty1, ty2)), fmax(tz1, tz2));
+	if (tmax < 0 || tmin > tmax)
+		return (false);
+	return (true);
 }
 
 
 int *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view)
 {
-	int i;
-
-	i = 0;
 	if (is_in_bounds(bvh->bounds, origin, ray_direction))
 	{
 		if (bvh->bounds.deepth == DEEPTH)

@@ -113,14 +113,13 @@ double	get_nearest_triangle(int *closest, double *t, t_vec3 ray_dir, t_mini *min
 	{
 		while (i < size)
 		{
-			//printObject(mini->sc.objet[tr_index[1]]);
 			tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos,
-				ray_dir, mini->sc.objet[tr_index[i]]);
-			//printf("%f\n", tmp);
+				ray_dir, mini->sc.objet_tr[tr_index[i]]);
+
 			if (tmp > 0 && tmp < *t)
 			{
 				*t = tmp;
-				*closest = i;
+				*closest = tr_index[i];
 			}
 			i++;
 		}
@@ -133,6 +132,7 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 	int		i;
 	int		closest;
 	double	tmp;
+	int		tmp_tr;
 
 	*t = RENDER_DISTANCE;
 	closest = 0;
@@ -149,9 +149,13 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 	i = -1; 
 	if (mini->bvh)
 	{
+		tmp_tr = *t;
 		*t = get_nearest_triangle(&closest, t, ray_dir, mini);
+		//if (*t != 0)printf("%f\n", *t);
 		if (*t == -1)
 		 	return ((t_color){0, 0, 0, 0});
+		if (tmp_tr > *t)
+			return (light_ray(mini, ray_dir, *t, mini->sc.objet_tr[closest]));
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));

@@ -66,9 +66,9 @@ void	set_normal_tr(t_mini *mini)
 	t_objet	*obj;
 
 	i = 0;
-	while (i < mini->N_OBJ)
+	while (i < mini->n_tr)
 	{
-		obj = &mini->sc.objet[i];
+		obj = &mini->sc.objet_tr[i];
 		if (obj->type == tr)
 		{
 			obj->tr_normal = vec_cross(vec_substact(obj->p1, obj->p0), vec_substact(obj->p2, obj->p0));

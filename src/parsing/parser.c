@@ -36,7 +36,7 @@ t_boolean	parser(t_mini *mini, char **av)
 	return (true);
 }
 
-t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light)
+t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light, int n_tr)
 {
 	int	i;
 
@@ -61,18 +61,26 @@ t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light)
 	while (++i < n_light)
 		mini->sc.light[i].name = NULL;
 	mini->sc.nb_light = n_light;
+	i = -1;
+	mini->sc.objet_tr = malloc(sizeof(t_objet) * n_tr);
+	if (!mini->sc.objet_tr)
+		return (free(mini->sc.objet), free(mini->sc.cam), free(mini->sc.light), false);
+	while (++i < n_tr)
+		mini->sc.objet_tr[i].name = NULL;
 	return (true);
 }
 
-static void	count_elements(char *buffer, int *n_cam, int *n_obj, int *n_light)
+static void	count_elements(char *buffer, int *n_cam, int *n_obj, int *n_light, int *n_tr)
 {
 	if (ft_strncmp(buffer, "C", 1) == 0)
 		(*n_cam)++;
 	else if (ft_strncmp(buffer, "L", 1) == 0
 		|| ft_strncmp(buffer, "A", 1) == 0)
 		(*n_light)++;
-	else if (*buffer != '\n')
+	else if (*buffer != '\n' && *buffer != 't')
 		(*n_obj)++;
+	else if (*buffer != '\n' && *buffer == 't')
+		(*n_tr)++;		
 }
 
 t_boolean	count_line(t_mini *mini, char *file)
@@ -81,10 +89,12 @@ t_boolean	count_line(t_mini *mini, char *file)
 	int		fd;
 	int		n_cam;
 	int		n_obj;
+	int		n_tr;
 	int		n_light;
 
 	n_cam = 0;
 	n_obj = 0;
+	n_tr = 0;
 	n_light = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -92,11 +102,11 @@ t_boolean	count_line(t_mini *mini, char *file)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		count_elements(buffer, &n_cam, &n_obj, &n_light);
+		count_elements(buffer, &n_cam, &n_obj, &n_light, &n_tr);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
-	if (!alloc_mini(mini, n_cam, n_obj, n_light))
+	if (!alloc_mini(mini, n_cam, n_obj, n_light, n_tr))
 		return (false);
 	close(fd);
 	return (true);

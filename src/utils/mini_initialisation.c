@@ -27,10 +27,8 @@ t_boolean	bvh_init(t_mini *mini)
 {
 	t_bvh	*head;
 	int		i;
-	int		j;
 
 	i = -1;
-	j = 0;
 	head = malloc(sizeof(t_bvh));
 	if (!head)
 		return (false);
@@ -39,14 +37,8 @@ t_boolean	bvh_init(t_mini *mini)
 	if (!head->idx_tr_hbv)
 		return (false);
 	head->n_obj = mini->n_tr;
-	while (++i < mini->N_OBJ)
-	{
-		if (tr == mini->sc.objet[i].type)
-		{
-			head->idx_tr_hbv[j] = i;
-			j++; 
-		}
-	}
+	while (++i < mini->n_tr)
+			head->idx_tr_hbv[i] = i;
 	mini->bvh = bvh_fill(mini, 0, head);
 	if (!mini->bvh)
 		return (false);
@@ -78,6 +70,8 @@ t_boolean	init(t_mini *mini, char **av)
 	}
 	else
 		mini->bvh = NULL;
+	//printAllObject(mini);
+	printBounds(mini->bvh);
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (free_mini(mini), false);

@@ -22,16 +22,16 @@ t_bounds	found_first_bound(t_mini *mini)
 	i = 0;
 	max = vec_create(-RENDER_DISTANCE, -RENDER_DISTANCE, -RENDER_DISTANCE);
 	min = vec_create(RENDER_DISTANCE, RENDER_DISTANCE, RENDER_DISTANCE);
-	while (i < mini->N_OBJ)
+	while (i < mini->n_tr)
 	{
-		obj = mini->sc.objet[i];
-		if (tr == obj.type)
-		{
-			max = try_max_bound(obj, max);
-			min = try_min_bound(obj, min);
-		}
+		obj = mini->sc.objet_tr[i];
+		//printObject(obj);
+		max = try_max_bound(obj, max);
+		min = try_min_bound(obj, min);
 		i++;
 	}
+	//printVec(min);
+	//printVec(max);
 	return ((t_bounds){max, min, 0});
 }
 

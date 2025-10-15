@@ -8,8 +8,8 @@
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 16
-# define BLOCK_SIZE_MIN 1
-# define DEEPTH	2
+# define BLOCK_SIZE_MIN 2
+# define DEEPTH	4
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -138,6 +138,7 @@ typedef struct	s_objet
 	t_vec3			tr_normal;
 }				t_objet;
 
+
 typedef struct	s_camera
 {
 	char			*name;
@@ -170,6 +171,7 @@ typedef struct	s_sc
 	t_cam			*cam;
 	unsigned char	nb_cam;
 	t_objet			*objet;
+	t_objet			*objet_tr;
 	unsigned char	nb_objet;
 	t_light			*light;
 	unsigned char	nb_light;

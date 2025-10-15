@@ -67,6 +67,7 @@ void	*bvh_recurse(t_mini *mini, t_bvh *old, t_bvh *bvh)
 {
 	if (bvh->bounds.deepth == DEEPTH)
 	{
+		//printf("%d\n", bvh->n_obj);
 		bvh->zone_1 = NULL;
 		bvh->zone_2 = NULL;
 	}
@@ -93,7 +94,7 @@ t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
 		return (bvh_recursive_free(old));
 	while (i < old->n_obj)
 	{
-		if (tr_is_in_bounds(mini->sc.objet[old->idx_tr_hbv[i]], bvh->bounds))
+		if (tr_is_in_bounds(mini->sc.objet_tr[old->idx_tr_hbv[i]], bvh->bounds))
 		{
 			bvh->idx_tr_hbv = in_view_realloc(bvh->idx_tr_hbv, old->idx_tr_hbv[i], bvh->n_obj);
 			if (!bvh->idx_tr_hbv)

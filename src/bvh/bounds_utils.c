@@ -68,15 +68,35 @@ t_vec3	try_min_bound(t_objet obj, t_vec3 min)
 	return (min);
 }
 
-t_boolean	tr_is_in_bounds(t_objet	tr, t_bounds bounds)
+// t_boolean	tr_is_in_bounds(t_objet	tr, t_bounds bounds)
+// {
+// 	return ((tr.p0.x >= bounds.min.x  && tr.p0.x <= bounds.max.x)
+// 		&& (tr.p0.y >= bounds.min.y  && tr.p0.y <= bounds.max.y)
+// 		&& (tr.p0.z >= bounds.min.z  && tr.p0.z <= bounds.max.z)) ||
+// 		((tr.p1.x >= bounds.min.x  && tr.p1.x <= bounds.max.x)
+// 		&& (tr.p1.y >= bounds.min.y  && tr.p1.y <= bounds.max.y)
+// 		&& (tr.p1.z >= bounds.min.z  && tr.p1.z <= bounds.max.z)) ||
+// 		((tr.p2.x >= bounds.min.x  && tr.p2.x <= bounds.max.x)
+// 		&& (tr.p2.y >= bounds.min.y  && tr.p2.y <= bounds.max.y)
+// 		&& (tr.p2.z >= bounds.min.z  && tr.p2.z <= bounds.max.z));
+// }
+
+t_boolean	tr_is_in_bounds(t_objet tr, t_bounds bounds)
 {
-	return ((tr.p0.x >= bounds.min.x  && tr.p0.x <= bounds.max.x)
-		&& tr.p0.y >= bounds.min.y  && tr.p0.y <= bounds.max.y
-		&& tr.p0.z >= bounds.min.z  && tr.p0.z <= bounds.max.z) ||
-		((tr.p1.x >= bounds.min.x  && tr.p1.x <= bounds.max.x)
-		&& tr.p1.y >= bounds.min.y  && tr.p1.y <= bounds.max.y
-		&& tr.p1.z >= bounds.min.z  && tr.p1.z <= bounds.max.z) ||
-		((tr.p2.x >= bounds.min.x  && tr.p2.x <= bounds.max.x)
-		&& tr.p2.y >= bounds.min.y  && tr.p2.y <= bounds.max.y
-		&& tr.p2.z >= bounds.min.z  && tr.p2.z <= bounds.max.z);
+	t_boolean	in_p0;
+	t_boolean	in_p1;
+	t_boolean	in_p2;
+
+	//printVec(tr.p0);
+
+	in_p0 = (tr.p0.x >= bounds.min.x && tr.p0.x <= bounds.max.x)
+		&& (tr.p0.y >= bounds.min.y && tr.p0.y <= bounds.max.y)
+		&& (tr.p0.z >= bounds.min.z && tr.p0.z <= bounds.max.z);
+	in_p1 = (tr.p1.x >= bounds.min.x && tr.p1.x <= bounds.max.x)
+		&& (tr.p1.y >= bounds.min.y && tr.p1.y <= bounds.max.y)
+		&& (tr.p1.z >= bounds.min.z && tr.p1.z <= bounds.max.z);
+	in_p2 = (tr.p2.x >= bounds.min.x && tr.p2.x <= bounds.max.x)
+		&& (tr.p2.y >= bounds.min.y && tr.p2.y <= bounds.max.y)
+		&& (tr.p2.z >= bounds.min.z && tr.p2.z <= bounds.max.z);
+	return (in_p0 || in_p1 || in_p2);
 }

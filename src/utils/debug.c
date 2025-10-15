@@ -80,21 +80,19 @@ void	printAllObject(t_mini *mini){
 			if (mini->sc.objet[i].type == cy)
 				printf("height : %f\n", mini->sc.objet[i].height);
 		}
-		if (mini->sc.objet[i].type == tr)
+		for (int i = 0;  i < mini->n_tr; i++)
 		{
-			printf("p1 = ");
-			printVec(mini->sc.objet[i].p0);
-			printf("p2 = ");
-			printVec(mini->sc.objet[i].p1);
-			printf("p3 = ");
-			printVec(mini->sc.objet[i].p2);
-			printColor(mini->sc.objet[i].color);
-			printf("spec = %f\n",mini->sc.objet[i].spec);
+			printf("index %d\n", i);
+			printVec(mini->sc.objet_tr[i].p0);
+			printVec(mini->sc.objet_tr[i].p1);
+			printVec(mini->sc.objet_tr[i].p2);
 		}
 		printf("\n");
 
 	}
 }
+
+
 
 // void	printVec(t_vec3	Ray)
 // {
@@ -150,7 +148,11 @@ void	printBounds(t_bvh *bvh)
 	if (!bvh)
 		return ;
 	if (bvh->bounds.deepth == DEEPTH)
+	{
 		printf("deepth : %d, tr : %d\n", bvh->bounds.deepth, bvh->n_obj);
+		printVec(bvh->bounds.min);
+		printVec(bvh->bounds.max);
+	}
 	printBounds(bvh->zone_1);
 	printBounds(bvh->zone_2);
 }

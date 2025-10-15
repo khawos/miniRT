@@ -82,15 +82,14 @@ void	parse_pl(t_mini *mini, char *buffer)
 
 void	parse_tr(t_mini *mini, char *buffer)
 {
-	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
-	mini->sc.objet[mini->N_OBJ].type = tr;
+	mini->sc.objet_tr[mini->n_tr].id = mini->n_tr;
+	mini->sc.objet_tr[mini->n_tr].type = tr;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->sc.objet[mini->N_OBJ].p0 = get_point(&buffer);
-	mini->sc.objet[mini->N_OBJ].p1 = get_point(&buffer);
-	mini->sc.objet[mini->N_OBJ].p2 = get_point(&buffer);
-	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
-	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
+	mini->sc.objet_tr[mini->n_tr].p0 = get_point(&buffer);
+	mini->sc.objet_tr[mini->n_tr].p1 = get_point(&buffer);
+	mini->sc.objet_tr[mini->n_tr].p2 = get_point(&buffer);
+	mini->sc.objet_tr[mini->n_tr].color = get_color(&buffer);
+	mini->sc.objet_tr[mini->n_tr].spec = get_spec(buffer);
 	mini->n_tr++;
-	mini->N_OBJ++;
 }
