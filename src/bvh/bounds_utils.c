@@ -81,22 +81,40 @@ t_vec3	try_min_bound(t_objet obj, t_vec3 min)
 // 		&& (tr.p2.z >= bounds.min.z  && tr.p2.z <= bounds.max.z));
 // }
 
+// t_boolean	tr_is_in_bounds(t_objet tr, t_bounds bounds)
+// {
+// 	t_boolean	in_p0;
+// 	t_boolean	in_p1;
+// 	t_boolean	in_p2;
+
+// 	//printVec(tr.p0);
+
+// 	in_p0 = (tr.p0.x >= bounds.min.x && tr.p0.x <= bounds.max.x)
+// 		&& (tr.p0.y >= bounds.min.y && tr.p0.y <= bounds.max.y)
+// 		&& (tr.p0.z >= bounds.min.z && tr.p0.z <= bounds.max.z);
+// 	in_p1 = (tr.p1.x >= bounds.min.x && tr.p1.x <= bounds.max.x)
+// 		&& (tr.p1.y >= bounds.min.y && tr.p1.y <= bounds.max.y)
+// 		&& (tr.p1.z >= bounds.min.z && tr.p1.z <= bounds.max.z);
+// 	in_p2 = (tr.p2.x >= bounds.min.x && tr.p2.x <= bounds.max.x)
+// 		&& (tr.p2.y >= bounds.min.y && tr.p2.y <= bounds.max.y)
+// 		&& (tr.p2.z >= bounds.min.z && tr.p2.z <= bounds.max.z);
+// 	return (in_p0 || in_p1 || in_p2);
+// }
+
 t_boolean	tr_is_in_bounds(t_objet tr, t_bounds bounds)
 {
-	t_boolean	in_p0;
-	t_boolean	in_p1;
-	t_boolean	in_p2;
+	t_vec3 tri_min;
+	t_vec3 tri_max;
 
-	//printVec(tr.p0);
+	tri_min.x = fmin(fmin(tr.p0.x, tr.p1.x), tr.p2.x);
+	tri_min.y = fmin(fmin(tr.p0.y, tr.p1.y), tr.p2.y);
+	tri_min.z = fmin(fmin(tr.p0.z, tr.p1.z), tr.p2.z);
 
-	in_p0 = (tr.p0.x >= bounds.min.x && tr.p0.x <= bounds.max.x)
-		&& (tr.p0.y >= bounds.min.y && tr.p0.y <= bounds.max.y)
-		&& (tr.p0.z >= bounds.min.z && tr.p0.z <= bounds.max.z);
-	in_p1 = (tr.p1.x >= bounds.min.x && tr.p1.x <= bounds.max.x)
-		&& (tr.p1.y >= bounds.min.y && tr.p1.y <= bounds.max.y)
-		&& (tr.p1.z >= bounds.min.z && tr.p1.z <= bounds.max.z);
-	in_p2 = (tr.p2.x >= bounds.min.x && tr.p2.x <= bounds.max.x)
-		&& (tr.p2.y >= bounds.min.y && tr.p2.y <= bounds.max.y)
-		&& (tr.p2.z >= bounds.min.z && tr.p2.z <= bounds.max.z);
-	return (in_p0 || in_p1 || in_p2);
+	tri_max.x = fmax(fmax(tr.p0.x, tr.p1.x), tr.p2.x);
+	tri_max.y = fmax(fmax(tr.p0.y, tr.p1.y), tr.p2.y);
+	tri_max.z = fmax(fmax(tr.p0.z, tr.p1.z), tr.p2.z);
+
+	return (!(tri_max.x < bounds.min.x || tri_min.x > bounds.max.x
+		|| tri_max.y < bounds.min.y || tri_min.y > bounds.max.y
+		|| tri_max.z < bounds.min.z || tri_min.z > bounds.max.z));
 }

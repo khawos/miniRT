@@ -7,9 +7,9 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 16
-# define BLOCK_SIZE_MIN 2
-# define DEEPTH	4
+# define BLOCK_SIZE_MAX 1
+# define BLOCK_SIZE_MIN 1
+# define DEEPTH	15
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
