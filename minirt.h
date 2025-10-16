@@ -9,7 +9,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 1
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	15
+# define DEEPTH	8
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -74,9 +74,6 @@ typedef enum s_type
 	cy,
 	tr,
 }				t_type;				
-
-
-
 
 typedef	struct s_equation
 {
