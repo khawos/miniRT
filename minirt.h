@@ -9,7 +9,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 1
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	8
+# define DEEPTH	1
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>

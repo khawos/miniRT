@@ -71,7 +71,7 @@ t_boolean	init(t_mini *mini, char **av)
 	else
 		mini->bvh = NULL;
 	//printAllObject(mini);
-	printBounds(mini->bvh);
+	//printBounds(mini->bvh);
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (free_mini(mini), false);

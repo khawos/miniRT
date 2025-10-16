@@ -14,6 +14,7 @@
 
 void	parse_cam(t_mini *mini, char *buffer)
 {
+	printf("mini->n_cam : %d\n", mini->n_cam);
 	mini->sc.cam[mini->n_cam].id = mini->n_cam;
 	while (ft_isalpha(*buffer))
 		buffer++;

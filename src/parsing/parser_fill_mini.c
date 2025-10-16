@@ -14,22 +14,23 @@
 
 t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
 {
-	if (!ft_strncmp(buffer, "C", i))
+	if (!ft_strncmp(buffer, "C", 1))
 	{
+		printf("buffer : '%s'\n", buffer);
 		parse_cam(mini, buffer);
 		return (true);
 	}
-	if (!ft_strncmp(buffer, "A", i))
+	if (!ft_strncmp(buffer, "A", 1))
 		return (parse_a(mini, buffer), true);
-	if (!ft_strncmp(buffer, "L", i))
+	if (!ft_strncmp(buffer, "L", 1))
 		return (parse_l(mini, buffer), true);
-	if (!ft_strncmp(buffer, "sp", i))
+	if (!ft_strncmp(buffer, "sp", 2))
 		return (parse_sp(mini, buffer), true);
-	if (!ft_strncmp(buffer, "pl", i))
+	if (!ft_strncmp(buffer, "pl", 2))
 		return (parse_pl(mini, buffer), true);
-	if (!ft_strncmp(buffer, "cy", i))
+	if (!ft_strncmp(buffer, "cy", 2))
 		return (parse_cy(mini, buffer), true);
-	if (!ft_strncmp(buffer, "tr", i))
+	if (!ft_strncmp(buffer, "tr", 2))
 		return (parse_tr(mini, buffer), true);
 	return (false);
 }

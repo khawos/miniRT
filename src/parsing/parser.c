@@ -44,6 +44,7 @@ t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light, int n_tr)
 	mini->sc.cam = malloc(sizeof(t_cam) * n_cam);
 	if (!mini->sc.cam)
 		return (false);
+	printf("n_cam : %d\n", n_cam);
 	while (++i < n_cam)
 		mini->sc.cam[i].name = NULL;
 	mini->sc.nb_cam = n_cam;
@@ -62,6 +63,7 @@ t_boolean	alloc_mini(t_mini *mini, int n_cam, int n_obj, int n_light, int n_tr)
 		mini->sc.light[i].name = NULL;
 	mini->sc.nb_light = n_light;
 	i = -1;
+	printf("n_tr = %d\n", n_tr);
 	mini->sc.objet_tr = malloc(sizeof(t_objet) * n_tr);
 	if (!mini->sc.objet_tr)
 		return (free(mini->sc.objet), free(mini->sc.cam), free(mini->sc.light), false);
@@ -79,8 +81,8 @@ static void	count_elements(char *buffer, int *n_cam, int *n_obj, int *n_light, i
 		(*n_light)++;
 	else if (*buffer != '\n' && *buffer != 't')
 		(*n_obj)++;
-	else if (*buffer != '\n' && *buffer == 't')
-		(*n_tr)++;		
+	else if (ft_strncmp(buffer, "tr", 2) == 0)
+		(*n_tr)++;
 }
 
 t_boolean	count_line(t_mini *mini, char *file)
@@ -106,6 +108,7 @@ t_boolean	count_line(t_mini *mini, char *file)
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
+	printf("ncam count line : %d\n", n_cam);
 	if (!alloc_mini(mini, n_cam, n_obj, n_light, n_tr))
 		return (false);
 	close(fd);
