@@ -67,7 +67,6 @@ void	*bvh_recurse(t_mini *mini, t_bvh *old, t_bvh *bvh)
 {
 	if (bvh->bounds.deepth == DEEPTH)
 	{
-		//printf("%d\n", bvh->n_obj);
 		bvh->zone_1 = NULL;
 		bvh->zone_2 = NULL;
 	}

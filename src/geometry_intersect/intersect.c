@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/13 10:08:27 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:00:26 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ static double	handle_object(t_mini *mini, t_vec3 ray_dir, int i, double t)
 		if (tmp > 0 && tmp < t)
 			return (tmp);
 	}
-	// else if (obj.type == tr)
-	// 	tmp = intersect_tr(mini->sc.cam[mini->cam_lock].pos, ray_dir, obj);
 	if (tmp > 0 && tmp < t)
 		return (tmp);
 	return (t);
@@ -132,7 +130,6 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 	int		i;
 	int		closest;
 	double	tmp;
-	int		tmp_tr;
 
 	*t = RENDER_DISTANCE;
 	closest = 0;
@@ -149,13 +146,14 @@ t_color	intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t)
 	i = -1; 
 	if (mini->bvh)
 	{
-		tmp_tr = *t;
+		tmp = *t;
 		*t = get_nearest_triangle(&closest, t, ray_dir, mini);
-		//if (*t != 0)printf("%f\n", *t);
 		if (*t == -1)
 		 	return ((t_color){0, 0, 0, 0});
-		if (tmp_tr > *t)
+		if (tmp > *t)
 			return (light_ray(mini, ray_dir, *t, mini->sc.objet_tr[closest]));
+		else
+			*t = tmp;
 	}
 	if (*t != RENDER_DISTANCE)
 		return (light_ray(mini, ray_dir, *t, mini->sc.objet[closest]));

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bounds.c                                           :+:      :+:    :+:   */
+/*   init_bounds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-14 09:31:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-14 09:31:00 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/14 09:31:00 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/17 11:52:29 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@ t_bounds	found_first_bound(t_mini *mini)
 	while (i < mini->n_tr)
 	{
 		obj = mini->sc.objet_tr[i];
-		//printObject(obj);
 		max = try_max_bound(obj, max);
 		min = try_min_bound(obj, min);
 		i++;
 	}
-	//printVec(min);
-	//printVec(max);
 	return ((t_bounds){max, min, 0});
 }
 

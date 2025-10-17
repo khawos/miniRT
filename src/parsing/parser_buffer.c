@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 00:28:07 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:34:10 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:09:06 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	parse_cam(t_mini *mini, char *buffer)
 {
-	printf("mini->n_cam : %d\n", mini->n_cam);
 	mini->sc.cam[mini->n_cam].id = mini->n_cam;
 	while (ft_isalpha(*buffer))
 		buffer++;

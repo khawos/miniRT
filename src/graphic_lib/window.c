@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:24 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/28 11:16:25 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:04:11 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int	close_window(t_mini *mini)
 	mlx_destroy_window(mini->display.mlx, mini->display.mlx_win);
 	mlx_destroy_display(mini->display.mlx);
 	free(mini->display.mlx);
+	if (mini->bvh)
+	{
+		bvh_free(mini->bvh);
+		bvh_free(mini->tmp);
+	}
 	free_mini(mini);
 	exit(0);
 	return (0);

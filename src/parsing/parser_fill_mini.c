@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_mini.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:33:32 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:09:02 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
 {
 	if (!ft_strncmp(buffer, "C", 1))
 	{
-		printf("buffer : '%s'\n", buffer);
 		parse_cam(mini, buffer);
 		return (true);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-14 10:09:47 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-14 10:09:47 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/14 10:09:47 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/17 11:12:27 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,8 @@ void	set_normal_tr(t_mini *mini)
 	while (i < mini->n_tr)
 	{
 		obj = &mini->sc.objet_tr[i];
-		if (obj->type == tr)
-		{
 			obj->tr_normal = vec_cross(vec_substact(obj->p1, obj->p0), vec_substact(obj->p2, obj->p0));
 			obj->tr_normal = vec_normalize(obj->tr_normal);
-			//obj->p0 = vec_scale(obj->p0, 3);
-			//obj->p1 = vec_scale(obj->p1, 3);
-			//obj->p2 = vec_scale(obj->p2, 3);
-		}
 		i++;
 	}
 }

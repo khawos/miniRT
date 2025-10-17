@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_initialisation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:22:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/13 10:05:17 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:20:26 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ t_boolean	bvh_init(t_mini *mini)
 	mini->bvh = bvh_fill(mini, 0, head);
 	if (!mini->bvh)
 		return (false);
+	head->zone_1 = NULL;
+	head->zone_2 = NULL;
+	mini->tmp = head;
 	return (true);
 }
 
@@ -67,11 +70,10 @@ t_boolean	init(t_mini *mini, char **av)
 	{
 		if (!bvh_init(mini))
 			return (free_mini(mini), false);
+	
 	}
 	else
 		mini->bvh = NULL;
-	//printAllObject(mini);
-	//printBounds(mini->bvh);
 	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (free_mini(mini), false);

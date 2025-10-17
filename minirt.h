@@ -9,7 +9,7 @@
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 1
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	1
+# define DEEPTH	15
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -175,7 +175,8 @@ typedef struct	s_sc
 	t_light			ambiant;
 }				t_sc;
 
-// GENERAL AND MLX
+// GENERAL AND MLX	bvh_free(mini->bvh);
+
 
 typedef struct	s_mlx
 {
@@ -193,7 +194,7 @@ typedef struct	s_mini
 	sem_t	*m_cast;
 	sem_t	*s_img;
 	t_bvh	*bvh;
-	t_bvh	**bvh_deepest;
+	t_bvh	*tmp;
 	int		max;
 	int		min;
 	int		cam_lock;
