@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic_draw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 12:30:55 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:35:45 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:23:50 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,14 @@ int	my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color)
 unsigned int	color_shift(t_color rgb)
 {
 	return ((unsigned int)(0 << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b));
+}
+
+t_color	color_shift_revert(unsigned int color)
+{
+	t_color	rgb;
+
+	rgb.b = color & 0x000000FF;
+	rgb.g = color & 0x0000FF00;
+	rgb.g = color & 0x00FF0000;
+	return (rgb);
 }

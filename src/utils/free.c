@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/17 10:20:46 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/19 11:54:04 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_mini(t_mini *mini)
 	free(mini->sc.light);
 }
 
-void	free_double_array(char **dest)
+void	free_double_array(void **dest)
 {
 	int	i;
 
@@ -47,4 +47,17 @@ void	free_double_array(char **dest)
 	while (dest[i])
 		free(dest[i++]);
 	free(dest);
+}
+
+
+void	free_double_array_error(void **array, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		free(array[i]);
+	}
+	free(array);
 }

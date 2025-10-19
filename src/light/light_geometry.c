@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_geometry.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-09 17:56:31 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/19 15:24:39 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	t_vec3	to_light;
 	t_vec3	normal;
 	double	dot;
-
+	t_vec2	uv;
+	
 	if (shadow_ray(mini, ray_dir, t))
 		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
@@ -27,6 +28,13 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
+	if (obj.mat.albedo)
+	{
+		uv = get_uv_sp(p, obj);
+		return (color_scalar(color_multiplie(color_shift_revert(obj.mat.albedo[uv.v][uv.u]),
+			color_scalar(mini->sc.light[1].color,
+				mini->sc.light[1].ratio)), dot));
+	} 
 	return (color_scalar(color_multiplie(obj.color,
 				color_scalar(mini->sc.light[1].color,
 					mini->sc.light[1].ratio)), dot));

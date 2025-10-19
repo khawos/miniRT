@@ -28,12 +28,19 @@
 # include <limits.h>
 
 
+typedef struct s_material
+{
+	double	reflection;   //0 = mat  1 = miroir
+	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
+	double	ior;
+	int		**albedo;
+}	t_material;
+
 typedef struct s_vec2
 {
-	double u;
-	double v;
+	int u;
+	int v;
 }				t_vec2;
-
 
 typedef struct	s_vec3
 {
@@ -49,7 +56,6 @@ typedef struct s_bounds
 	int		deepth;
 
 }		t_bounds;
-
 
 typedef	struct s_bvh
 {
@@ -131,6 +137,7 @@ typedef struct	s_objet
 	t_vec3			pos;
 	t_vec3			vec_dir;
 	t_color			color;
+	t_material		mat;
 	double			ratio;
 	double			diameter;
 	double			height;
@@ -224,6 +231,7 @@ typedef struct	s_mini
 
 int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
 unsigned int	color_shift(t_color rgb);
+t_color			color_shift_revert(unsigned int color);
 
 
 // WINDOW
@@ -242,6 +250,7 @@ double		__atoi_double(char **str);
 // FREE
 
 void 		free_mini(t_mini *mini);
+void		free_double_array_error(void **array, int n);
 
 
 // -------- PARSING -------- 
@@ -325,7 +334,7 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
 // INTERSEC
 
 t_color		intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t);
-void		free_double_array(char **dest);
+void		free_double_array(void **dest);
 
 
 // PARSER
@@ -403,8 +412,8 @@ t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 typedef struct s_var_bounds
 {
 	double	mid_x;
-    double	mid_y;
-    double	mid_z;
+	double	mid_y;
+	double	mid_z;
 	double	dx; 
 	double	dy; 
 	double	dz; 
@@ -420,9 +429,29 @@ t_vec3		try_min_bound(t_objet obj, t_vec3 max);
 
 
 // BVH
-t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old);
+t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old);
 int		*in_view_realloc(int *old, int add, int nb);
 void	bvh_free(t_bvh *bvh);
-int		 *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view);
+int		*search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view);
+
+
+// GET_UV
+
+t_vec2	get_uv_sp(t_vec3 p, t_objet sp);
+
+// PARSER TXT
+
+t_boolean		is_digit_or_space_str(char *str);
+t_boolean		is_on_xpm_pixel_info(char *str);
+char			**realloc_add_to_tab(char **tab, char *new);
+t_boolean		is_digit_or_space_str(char *str);
+t_boolean		is_on_xpm_pixel_info(char *str);
+void			get_texture_dimension(int fd, t_vec2 *dimension);
+char			*go_to_pixel_info(int fd);
+char			**get_color_tab(int fd);
+unsigned int	**get_texture(char *file);
+unsigned int	ft_atoi_base(char *str, char *base);
+unsigned int	search_color(char *buffer, char **tab_color);
+t_boolean		get_material(t_objet *obj, char *buffer);
 
 #endif

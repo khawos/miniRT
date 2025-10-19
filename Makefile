@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux  -g3 -fsanitize=address # -O3 -flto
 LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto
 OBJ_DIR = obj
 SRC_DIR = src
@@ -29,12 +29,17 @@ SRC =	main.c \
 		utils/utils.c \
 		utils/mini_initialisation.c \
 		utils/debug.c \
+		utils/realloc_tab.c \
+		utils/parser_texture_utils.c \
+		utils/atoi_base.c \
 		checker/arg_checker.c \
 		checker/arg_checker2.c \
 		checker/parser_checker.c \
 		checker/parser_checker_utils.c \
 		checker/parser_checker_utils2.c \
 		parsing/parser.c \
+		parsing/parser_texture0.c \
+		parsing/parser_texture1.c \
 		parsing/parser_buffer.c \
 		parsing/parser_fill_mini.c \
 		parsing/parser_utils.c \
@@ -43,6 +48,7 @@ SRC =	main.c \
 		bvh/search_bounds.c \
 		bvh/bvh.c \
 		bvh/bvh_utils.c \
+		texture/uv_mapping.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
