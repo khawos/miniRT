@@ -7,9 +7,9 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 1
+# define BLOCK_SIZE_MAX 5
 # define BLOCK_SIZE_MIN 1
-# define DEEPTH	15
+# define DEEPTH	8
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -26,6 +26,13 @@
 # include <X11/keysym.h>
 # include <float.h>
 # include <limits.h>
+
+
+typedef struct s_vec2
+{
+	double u;
+	double v;
+}				t_vec2;
 
 
 typedef struct	s_vec3
