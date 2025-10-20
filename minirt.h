@@ -116,6 +116,15 @@ typedef struct	s_data {
 
 // OBJECT AND CAMERA PROPERTIES
 
+typedef struct s_material
+{
+	double	reflection;   //0 = mat  1 = miroir
+	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
+	double	ior;
+	t_color	color;
+}	t_material;
+
+
 typedef struct	s_objet
 {
 	t_boolean		cap;
