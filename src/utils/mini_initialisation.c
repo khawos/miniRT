@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:22:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/17 10:20:26 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/25 20:22:26 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_boolean	init(t_mini *mini, char **av)
 	else
 		mini->bvh = NULL;
 	mini->sc.ambiant = get_ambiant(mini);
-	printColorMap(mini->sc.objet[0].mat.albedo, mini->sc.objet[0].mat.texture_dimnesion);
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

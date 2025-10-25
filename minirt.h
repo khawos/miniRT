@@ -47,7 +47,8 @@ typedef struct s_material
 	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
 	double	ior;
 	t_vec2	texture_dimnesion;
-	int		**albedo;
+	unsigned int		**albedo;
+	unsigned int		**normal_map;
 }	t_material;
 
 typedef struct s_bounds
@@ -445,6 +446,7 @@ t_vec2	get_uv_sp(t_vec3 p, t_objet sp);
 
 // PARSER TXT
 
+unsigned int	**get_texture(char *file, t_objet *obj);
 t_boolean		is_digit_or_space_str(char *str);
 t_boolean		is_on_xpm_pixel_info(char *str);
 char			**realloc_add_to_tab(char **tab, char *new);
@@ -453,9 +455,7 @@ t_boolean		is_on_xpm_pixel_info(char *str);
 t_vec2			get_texture_dimension(int fd);
 char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
-unsigned int	**get_texture(char *file, t_objet *obj);
-unsigned int	ft_atoi_base(char *str, char *base);
-unsigned int	search_color(char *buffer, char **tab_color);
 t_boolean		get_material(t_objet *obj, char *buffer);
+char			*get_texture_path(char *str);
 
 #endif

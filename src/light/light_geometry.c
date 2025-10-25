@@ -6,37 +6,64 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 15:24:39 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/25 20:02:28 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+typedef struct s_var_texture{
+	
+	t_vec2	uv;
+	t_color color;
+	t_vec3	normal;
+}				t_var_texture;
+
+t_vec3	get_normal_from_map(unsigned int color)
+{
+	t_vec3	normal;
+
+	normal.z  = color & 0x000000FF;
+	normal.y = (color & 0x0000FF00) >> 8;
+	normal.x = (color & 0x00FF0000) >> 16;
+	normal = vec_normalize(normal);
+	return (normal);
+}
+
+t_var_texture	find_ray_texture(t_objet obj, t_vec3 p)
+{
+	t_vec3			n;
+	t_var_texture	info;
+	
+	n = vec_normalize(vec_substact(p, obj.pos));
+	info.uv = get_uv_sp(n, obj);
+	if (obj.mat.albedo)
+		info.color = color_shift_revert(obj.mat.albedo[info.uv.v][info.uv.u]);
+	else
+		info.color = obj.color;
+	if (obj.mat.normal_map)
+		info.normal = get_normal_from_map(obj.mat.normal_map[info.uv.v][info.uv.u]);
+	else
+		info.normal = n;
+	return (info);
+}
+
 t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 {
 	t_vec3	p;
 	t_vec3	to_light;
-	t_vec3	normal;
 	double	dot;
-	t_vec2	uv;
+	t_var_texture	var;
 	
 	//if (shadow_ray(mini, ray_dir, t))
 	//	return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
-	normal = vec_normalize(vec_substact(p, obj.pos));
-	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
+	var = find_ray_texture(obj, p);
+	dot = vec_dot(vec_normalize(var.normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
-	if (obj.mat.albedo)
-	{
-		uv = get_uv_sp(normal, obj);
-		//return (color_scalar(color_multiplie(color_shift_revert(obj.mat.albedo[uv.v][uv.u]),
-		//	color_scalar(mini->sc.light[1].color,
-		//		mini->sc.light[1].ratio)), dot));
-		return (color_shift_revert(obj.mat.albedo[uv.v][uv.u]));
-	} 
-	return (color_scalar(color_multiplie(obj.color,
+	return (color_scalar(color_multiplie(var.color,
 				color_scalar(mini->sc.light[1].color,
 					mini->sc.light[1].ratio)), dot));
 }

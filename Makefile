@@ -41,6 +41,7 @@ SRC =	main.c \
 		parsing/parser_texture0.c \
 		parsing/parser_texture1.c \
 		parsing/parser_buffer.c \
+		parsing/parser_get_material.c \
 		parsing/parser_fill_mini.c \
 		parsing/parser_utils.c \
 		bvh/bounds_utils.c \
