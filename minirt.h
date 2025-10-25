@@ -28,14 +28,6 @@
 # include <limits.h>
 
 
-typedef struct s_material
-{
-	double	reflection;   //0 = mat  1 = miroir
-	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
-	double	ior;
-	int		**albedo;
-}	t_material;
-
 typedef struct s_vec2
 {
 	int u;
@@ -48,6 +40,15 @@ typedef struct	s_vec3
 	double	y;
 	double	z;
 }				t_vec3;
+
+typedef struct s_material
+{
+	double	reflection;   //0 = mat  1 = miroir
+	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
+	double	ior;
+	t_vec2	texture_dimnesion;
+	int		**albedo;
+}	t_material;
 
 typedef struct s_bounds
 {
@@ -279,11 +280,14 @@ void		parse_tr(t_mini *mini, char *buffer);
 // DEBUG
 
 void		printAllCam(t_mini *mini);
+void		printVec2(t_vec2 vec);
 void		printAllObject(t_mini *mini);
 void		printVec(t_vec3	Ray);
 void		printObject(t_objet obj);
 void		printColor(t_color color);
 void		printBounds(t_bvh *bvh);
+void 		printColorMap(unsigned int **map, t_vec2 size);
+void 		printCharTab(char **tab);
 
 //RAY 
 
@@ -446,10 +450,10 @@ t_boolean		is_on_xpm_pixel_info(char *str);
 char			**realloc_add_to_tab(char **tab, char *new);
 t_boolean		is_digit_or_space_str(char *str);
 t_boolean		is_on_xpm_pixel_info(char *str);
-void			get_texture_dimension(int fd, t_vec2 *dimension);
+t_vec2			get_texture_dimension(int fd);
 char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
-unsigned int	**get_texture(char *file);
+unsigned int	**get_texture(char *file, t_objet *obj);
 unsigned int	ft_atoi_base(char *str, char *base);
 unsigned int	search_color(char *buffer, char **tab_color);
 t_boolean		get_material(t_objet *obj, char *buffer);

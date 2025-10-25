@@ -156,3 +156,23 @@ void	printBounds(t_bvh *bvh)
 	printBounds(bvh->zone_1);
 	printBounds(bvh->zone_2);
 }
+
+void	printVec2(t_vec2 vec)
+{
+	printf("u : %d, v : %d\n", vec.u, vec.v);
+}
+
+void printColorMap(unsigned int **map, t_vec2 size)
+{
+	for (int i = 0; i < 1; i++)
+	{
+		for (int j = 0; j <10; j++)
+			printf("[%d][%d] color : %u\n", i, j, map[i][j]);
+	}
+}
+
+void printCharTab(char **tab)
+{
+	for (int i = 0; tab[i] ; i++)
+		printf("tab[%d] : '%s'\n", i, tab[i]);
+}

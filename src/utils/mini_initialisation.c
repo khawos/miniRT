@@ -64,17 +64,15 @@ t_boolean	init(t_mini *mini, char **av)
 	mini->block_size = BLOCK_SIZE_MAX;
 	if (!parser(mini, av))
 		return (false);
-	// if (pthread_mutex_init(&mini->render_mutex, NULL) < 0)
-	// 	return (false);									// ATTENTION FREE
 	if (mini->n_tr != 0)
 	{
 		if (!bvh_init(mini))
 			return (free_mini(mini), false);
-	
 	}
 	else
 		mini->bvh = NULL;
 	mini->sc.ambiant = get_ambiant(mini);
+	printColorMap(mini->sc.objet[0].mat.albedo, mini->sc.objet[0].mat.texture_dimnesion);
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

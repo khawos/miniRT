@@ -36,7 +36,7 @@ t_boolean get_material(t_objet *obj, char *buffer)
 	str = ft_strnstr(buffer, "albedo=", ft_strlen(buffer));
 	if (str)
 	{
-		obj->mat.albedo = get_texture(get_texture_path(str + 8));
+		obj->mat.albedo = get_texture(get_texture_path(str + 8), obj);
 		if (!obj->mat.albedo)
 			return (false);
 	}
@@ -52,23 +52,27 @@ char	**get_color_tab(int fd)
 	tab = NULL;
 	while (!is_on_xpm_pixel_info(buffer))
 	{
-		buffer = get_next_line(fd);
 		tab = realloc_add_to_tab(tab, buffer);
 		if (!tab)
 			return(free(buffer), NULL);
+		buffer = get_next_line(fd);
 	}
 	return (tab);
 }
 
 unsigned int	search_color(char *buffer, char **tab_color)
 {
-	int	i;
+	int				i;
+	unsigned int	color;
 
 	i = 0;
 	while (tab_color[i])
 	{
 		if (ft_strncmp(buffer, tab_color[i] + 1, 2) == 0)
-			return(ft_atoi_base(buffer, "0123456789ABCDEF"));
+		{
+			color = ft_atoi_base(tab_color[i] + 7, "0123456789ABCDEF");
+			return (color);
+		}
 		i++;
 	}
 	return (0);

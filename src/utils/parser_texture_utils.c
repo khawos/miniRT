@@ -28,21 +28,21 @@ t_boolean	is_on_xpm_pixel_info(char *str)
 	return (false);
 }
 
-void	get_texture_dimension(int fd, t_vec2 *dimension)
+t_vec2	get_texture_dimension(int fd)
 {
 	char	*buffer;
+	t_vec2	dimension;
 
 	buffer = get_next_line(fd);
-	printf("buffer : %s\n", buffer);
 	while (!is_digit_or_space_str(buffer))
 	{
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	buffer++;
-	dimension->u = __atoi_double(&buffer);
-	dimension->v = __atoi_double(&buffer);
-	printf("u : %d, v : %d\n", dimension->u,dimension->v);
+	dimension.u = __atoi_double(&buffer);
+	dimension.v = __atoi_double(&buffer);
+	return (dimension);
 }	
 
 char	*go_to_pixel_info(int fd)

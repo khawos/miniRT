@@ -54,16 +54,17 @@ unsigned int	ft_atoi_base(char *str, char *base)
 {
 	int	base_length;
 	int	i;
-	int	res;
+	unsigned int res;
 
 	i = 0;
 	res = 0;
 	base_length = ft_strlen(base);
 	if (!check_base(base))
 		return (0);
+//	printf("%s\n", str);
 	while ((str[i] >= 9 && str[i] <= 13 || str[i] == ' ' || str[i] == '#'))
 		i++;
-	while (str[i] != '\0')
+	while (str[i] != '"')
 	{
 		if (base_index(str[i], base) == -1)
 			return (0);

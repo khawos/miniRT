@@ -63,6 +63,7 @@ void	parse_sp(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
 	if (!get_material(&mini->sc.objet[mini->N_OBJ], buffer));
+	//printColorMap(mini->sc.objet[mini->N_OBJ].mat.albedo, mini->sc.objet[mini->N_OBJ].mat.texture_dimnesion);
 	mini->n_sp++;
 	mini->N_OBJ++;
 }

@@ -36,7 +36,8 @@ t_color	color_shift_revert(unsigned int color)
 	t_color	rgb;
 
 	rgb.b = color & 0x000000FF;
-	rgb.g = color & 0x0000FF00;
-	rgb.g = color & 0x00FF0000;
+	rgb.g = (color & 0x0000FF00) >> 8;
+	rgb.r = (color & 0x00FF0000) >> 16;
+
 	return (rgb);
 }

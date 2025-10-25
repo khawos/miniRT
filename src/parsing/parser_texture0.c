@@ -42,13 +42,13 @@ unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color)
 	if (!texture)
 		return (NULL);
 	var.v = -1;
-	while (++var.v > dimension.v)
+	while (++var.v < dimension.v)
 	{
 		var.u = -1;
 		buffer = get_next_line(fd);
 		tmp = buffer;
 		buffer = buffer + 1;
-		while (++var.u > dimension.u)
+		while (++var.u < dimension.u)
 		{
 			texture[var.v][var.u] = search_color(buffer, tab_color);
 			buffer = buffer + 2;
@@ -58,12 +58,11 @@ unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color)
 	return (texture);
 }
 
-unsigned int	**get_texture(char *file)
+unsigned int	**get_texture(char *file, t_objet *obj)
 {
 	int 			fd;
 	unsigned int	**texture;
 	char			**tab_color;
-	t_vec2			dimension;
     char			*buffer;
 	
 	if (!file)
@@ -73,12 +72,11 @@ unsigned int	**get_texture(char *file)
 		return (printf("open failed\n"), NULL);
 	free(file);
 	buffer = get_next_line(fd);
-	printf("buffer : %s\n", buffer);
-	get_texture_dimension(fd, &dimension);
+	obj->mat.texture_dimnesion = get_texture_dimension(fd);
 	tab_color = get_color_tab(fd);
 	if (!tab_color)
 		return (NULL);
-    texture = extract_texture(fd, dimension, tab_color);
+    texture = extract_texture(fd, obj->mat.texture_dimnesion, tab_color);
 	if (!texture)
 		return (free_double_array(tab_color), NULL);
 	close(fd);

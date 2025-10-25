@@ -1,10 +1,9 @@
 A  0.5 255,255,255
 
-C 0,50,50 0,1,0 80
+C 50,0,50 -1,0,0 80
 
 
-L 0,50,50 1 255,255,255
+L -100,100,200 1 255,255,255
 
-sp 0,150,50 70 150,150,150 spec=50 albedo="/home/jbayonne/42/minirt/texture_file/earth_color.xpm"
+sp 0,150,50 200 150,150,150 spec=10 albedo="texture_file/earth_color.xpm"
 
-pl 0,0,-10 0,0,1 255,255,255

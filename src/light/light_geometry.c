@@ -20,8 +20,8 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	double	dot;
 	t_vec2	uv;
 	
-	if (shadow_ray(mini, ray_dir, t))
-		return ((t_color){0, 0, 0, 1});
+	//if (shadow_ray(mini, ray_dir, t))
+	//	return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
 	normal = vec_normalize(vec_substact(p, obj.pos));
@@ -30,10 +30,11 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 		dot = 0;
 	if (obj.mat.albedo)
 	{
-		uv = get_uv_sp(p, obj);
-		return (color_scalar(color_multiplie(color_shift_revert(obj.mat.albedo[uv.v][uv.u]),
-			color_scalar(mini->sc.light[1].color,
-				mini->sc.light[1].ratio)), dot));
+		uv = get_uv_sp(normal, obj);
+		//return (color_scalar(color_multiplie(color_shift_revert(obj.mat.albedo[uv.v][uv.u]),
+		//	color_scalar(mini->sc.light[1].color,
+		//		mini->sc.light[1].ratio)), dot));
+		return (color_shift_revert(obj.mat.albedo[uv.v][uv.u]));
 	} 
 	return (color_scalar(color_multiplie(obj.color,
 				color_scalar(mini->sc.light[1].color,
