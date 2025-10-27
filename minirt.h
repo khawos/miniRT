@@ -229,6 +229,13 @@ typedef struct	s_mini
 	unsigned long	last_input;
 }				t_mini;
 
+typedef struct s_var_texture{
+	
+	t_vec2	uv;
+	t_color color;
+	t_vec3	normal;
+}				t_var_texture;
+
 // DRAW BASIC
 
 int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
@@ -335,7 +342,7 @@ void		set_normal_tr(t_mini *mini);
 // LIGHT_RAY
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
-
+t_var_texture	find_ray_texture(t_objet obj, t_vec3 p);
 // INTERSEC
 
 t_color		intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t);
@@ -457,5 +464,9 @@ char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
 t_boolean		get_material(t_objet *obj, char *buffer);
 char			*get_texture_path(char *str);
+
+// reflection
+
+t_color	refration(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj, t_color first_ray_color);
 
 #endif

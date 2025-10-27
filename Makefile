@@ -50,6 +50,7 @@ SRC =	main.c \
 		bvh/bvh.c \
 		bvh/bvh_utils.c \
 		texture/uv_mapping.c \
+		refraction/refraction.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

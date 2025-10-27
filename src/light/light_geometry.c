@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   light_geometry.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/25 20:02:28 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:12:12 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-typedef struct s_var_texture{
+// typedef struct s_var_texture{
 	
-	t_vec2	uv;
-	t_color color;
-	t_vec3	normal;
-}				t_var_texture;
+// 	t_vec2	uv;
+// 	t_color color;
+// 	t_vec3	normal;
+// }				t_var_texture;
 
 t_vec3	get_normal_from_map(unsigned int color)
 {

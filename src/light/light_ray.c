@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/07 17:31:13 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:56:03 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 	ambiant = apply_ambiant(mini, obj.color);
 	final = mix_colors(diffuse_direct, ambiant);
 	//final = mix_layer(final, spec);
+	// refraction is only for 1 once for testing issue
+	final = refration(mini, ray_dir, t, obj, final);
 	return (final);
 }
