@@ -58,7 +58,7 @@ unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color)
 	return (texture);
 }
 
-unsigned int	**get_texture(char *file, t_objet *obj)
+unsigned int	**get_texture(char *file, t_t_map *map)
 {
 	int 			fd;
 	unsigned int	**texture;
@@ -72,11 +72,13 @@ unsigned int	**get_texture(char *file, t_objet *obj)
 		return (printf("open failed\n"), NULL);
 	free(file);
 	buffer = get_next_line(fd);
-	obj->mat.texture_dimnesion = get_texture_dimension(fd);
+	map->size = get_texture_dimension(fd);
+	printf("get texture : ");
+	printVec2(map->size);
 	tab_color = get_color_tab(fd);
 	if (!tab_color)
 		return (NULL);
-    texture = extract_texture(fd, obj->mat.texture_dimnesion, tab_color);
+    texture = extract_texture(fd, map->size, tab_color);
 	if (!texture)
 		return (free_double_array(tab_color), NULL);
 	close(fd);

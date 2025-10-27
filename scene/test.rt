@@ -1,9 +1,9 @@
 A  0.5 255,255,255
 
-C 50,0,50 -1,0,0 80
+C -50,0,50 1,0,0 80
 
 
 L -100,100,200 1 255,255,255
 
-sp 0,150,50 200 150,150,150 spec=10 normal="texture_file/brick_normal.xpm"
+sp 0,150,50 200 150,150,150 spec=10 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm"
 

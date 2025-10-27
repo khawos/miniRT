@@ -16,22 +16,23 @@ t_boolean get_material(t_objet *obj, char *buffer)
 {
 	char	*str;
 
-	obj->mat.albedo = NULL;
+	obj->mat.albedo.map = NULL;
+	obj->mat.normal.map = NULL;
 	str = ft_strnstr(buffer, "albedo=", ft_strlen(buffer));
 	if (str)
 	{
-		obj->mat.albedo = get_texture(get_texture_path(str + 8), obj);
-		if (!obj->mat.albedo)
+		obj->mat.albedo.map = get_texture(get_texture_path(str + 8), &obj->mat.albedo);
+		if (!obj->mat.albedo.map)
 			return (false);
 		printf("albedo ok\n");
 	}
 	str = ft_strnstr(buffer, "normal=", ft_strlen(buffer));
 	if (str)
 	{
-		obj->mat.normal_map = get_texture(get_texture_path(str + 8), obj);
-		if (!obj->mat.normal_map)
-			return (free_double_array_error(obj->mat.albedo,
-				obj->mat.texture_dimnesion.v), false);
+		obj->mat.normal.map = get_texture(get_texture_path(str + 8),  &obj->mat.normal);
+		if (!obj->mat.normal.map)
+			return (free_double_array_error(obj->mat.albedo.map,
+				obj->mat.normal.size.v), false);
 		printf("normal ok\n");
 	}
 	return (true);

@@ -16,33 +16,46 @@ typedef struct s_var_texture{
 	
 	t_vec2	uv;
 	t_color color;
+	t_vec3	normal_texture;
 	t_vec3	normal;
 }				t_var_texture;
 
-t_vec3	get_normal_from_map(unsigned int color)
+t_vec3	get_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world)
 {
 	t_vec3	normal;
+	t_vec3	tangeante;
+	t_vec3	bitangente;
 
-	normal.z  = color & 0x000000FF;
-	normal.y = (color & 0x0000FF00) >> 8;
+	normal.z = color & 0x000000FF;
+	//normal.z = normal.z * 2 - 1;
+ 	normal.y = (color & 0x0000FF00) >> 8;
+	//normal.y = normal.y * 2 - 1;
 	normal.x = (color & 0x00FF0000) >> 16;
-	normal = vec_normalize(normal);
+	//normal.x = normal.x * 2 - 1;
+	//tangeante = vec_normalize(vec_cross(up_world, n));
+	//bitangente = vec_cross(n, tangeante);
+	//normal = vec_normalize(vec_add(vec_add(vec_scale(tangeante, normal.x), vec_scale(bitangente, normal.y)), vec_scale(normal, normal.z)));
 	return (normal);
 }
 
-t_var_texture	find_ray_texture(t_objet obj, t_vec3 p)
+t_var_texture	find_ray_texture(t_objet obj, t_vec3 p, t_vec3 up_world)
 {
 	t_vec3			n;
 	t_var_texture	info;
 	
 	n = vec_normalize(vec_substact(p, obj.pos));
-	info.uv = get_uv_sp(n, obj);
-	if (obj.mat.albedo)
-		info.color = color_shift_revert(obj.mat.albedo[info.uv.v][info.uv.u]);
+	if (obj.mat.albedo.map)
+	{	
+		info.uv = get_uv_sp(n, obj.mat.albedo.size);
+		info.color = color_shift_revert(obj.mat.albedo.map[info.uv.v][info.uv.u]);
+	}
 	else
 		info.color = obj.color;
-	if (obj.mat.normal_map)
-		info.normal = get_normal_from_map(obj.mat.normal_map[info.uv.v][info.uv.u]);
+	if (obj.mat.normal.map)
+	{
+		info.uv = get_uv_sp(n, obj.mat.normal.size);
+		info.normal = get_normal_from_map(obj.mat.normal.map[info.uv.v][info.uv.u], n, up_world);
+	}
 	else
 		info.normal = n;
 	return (info);
@@ -59,7 +72,7 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	//	return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
-	var = find_ray_texture(obj, p);
+	var = find_ray_texture(obj, p, mini->up_world);
 	dot = vec_dot(vec_normalize(var.normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;

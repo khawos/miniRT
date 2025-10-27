@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_vec2	get_uv_sp(t_vec3 normal, t_objet sp)
+t_vec2	get_uv_sp(t_vec3 normal, t_vec2 size)
 {
 	t_vec2	texture;
 	double	phi;
@@ -21,7 +21,7 @@ t_vec2	get_uv_sp(t_vec3 normal, t_objet sp)
 
 	phi = atan2(normal.z, normal.x);
 	theta = acos(normal.y);
-	texture.u = ((-phi + M_PI) / (2 * M_PI)) * sp.mat.texture_dimnesion.u;
-	texture.v = (theta / M_PI) * sp.mat.texture_dimnesion.v;
+	texture.u = ((-phi + M_PI) / (2 * M_PI)) * size.u;
+	texture.v = (theta / M_PI) * size.v;
 	return (texture);
 }

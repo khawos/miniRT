@@ -29,6 +29,7 @@ void	get_right_local_vector(t_mini *mini, int i)
 	up_world = (t_vec3){0, 0, 1};
 	if (vec_dot(up_world, mini->sc.cam[i].vec_dir) == 1)
 		up_world = (t_vec3){0, 1, 0};
+	mini->up_world = up_world;
 	mini->sc.cam[i].right = vec_cross(mini->sc.cam[i].vec_dir, up_world);
 	mini->sc.cam[i].right = vec_abs(vec_normalize(mini->sc.cam[i].right));
 }

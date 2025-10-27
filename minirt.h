@@ -34,6 +34,12 @@ typedef struct s_vec2
 	int v;
 }				t_vec2;
 
+typedef struct s_t_map
+{
+	unsigned int	**map;
+	t_vec2			size;
+}				t_t_map;
+
 typedef struct	s_vec3
 {
 	double	x;
@@ -46,9 +52,8 @@ typedef struct s_material
 	double	reflection;   //0 = mat  1 = miroir
 	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
 	double	ior;
-	t_vec2	texture_dimnesion;
-	unsigned int		**albedo;
-	unsigned int		**normal_map;
+	t_t_map	albedo;
+	t_t_map	normal;
 }	t_material;
 
 typedef struct s_bounds
@@ -224,8 +229,7 @@ typedef struct	s_mini
 	int		N_OBJ;
 	int		N_LIGHT;
 	int		block_size;
-	t_boolean is_rendering;
-	pthread_mutex_t render_mutex;
+	t_vec3	up_world;
 	unsigned long	last_input;
 }				t_mini;
 
@@ -442,11 +446,11 @@ int		*search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *si
 
 // GET_UV
 
-t_vec2	get_uv_sp(t_vec3 p, t_objet sp);
+t_vec2	get_uv_sp(t_vec3 p, t_vec2 size);
 
 // PARSER TXT
 
-unsigned int	**get_texture(char *file, t_objet *obj);
+unsigned int	**get_texture(char *file, t_t_map *map);
 t_boolean		is_digit_or_space_str(char *str);
 t_boolean		is_on_xpm_pixel_info(char *str);
 char			**realloc_add_to_tab(char **tab, char *new);
