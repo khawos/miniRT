@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/09 15:03:05 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:55:44 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,27 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
 	t_color			color;
 	double			t;
-	int				i;
-	int				j;
+	t_vec2			index;
+	t_ray			ray;
 	unsigned int	color_int;
 
-	color = intersect_loop(mini, ray_direction, &t);
+	ray.origin = mini->sc.cam[mini->cam_lock].pos;
+	ray.dir = ray_direction;
+	color = intersect_loop(mini, ray, &t);
 	if (t == -1)
-		return ;									// error kill ici
+		return;									// error kill ici
 	if (t == RENDER_DISTANCE)
 		color = put_background(x, y);
 	color_int = color_shift(color);
 	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
 		return ;
-	i = 0;
-	while (i < mini->block_size)
+	index.u = 0;
+	while (index.u < mini->block_size)
 	{
-		j = -1;
-		while (++j < mini->block_size)
-			my_mlx_pixel_put(mini, x + j, y + i, color_int);
-		i++;
+		index.v = -1;
+		while (++index.v < mini->block_size)
+			my_mlx_pixel_put(mini, x + index.v, y + index.u, color_int);
+		index.u++;
 	}
 }
 
