@@ -2,14 +2,15 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 100
+# define WIDTH 200
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 3
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
+# define BOUNCE_MAX 15
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -242,18 +243,12 @@ typedef struct	s_mini
 	unsigned long	last_input;
 }				t_mini;
 
-typedef struct s_var_texture{
-	
-	t_vec2	uv;
-	t_color color;
-	t_vec3	normal;
-}				t_var_texture;
-
 typedef	struct s_ray
 {
 	t_vec3		dir;
 	t_vec3		origin;
 	t_color		color;
+	int			bounce;
 }			t_ray;
 
 

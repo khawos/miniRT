@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   light_geometry.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 17:20:05 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:36:54 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+t_color	light_sp(t_mini *mini, t_objet obj, t_ray ray, double t)
 {
 	t_vec3	p;
 	t_vec3	to_light;

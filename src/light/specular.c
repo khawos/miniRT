@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specular.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/27 19:13:09 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:39:50 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ t_color	specular(t_mini *mini, t_objet obj, t_ray ray, double t)
 	if (obj.spec != -1)
 		spec = obj.spec;
 	if (obj.type == cy)
-		is_cap = intersect_cap(mini->sc.cam[0].pos, ray_dir, obj);
+		is_cap = intersect_cap(mini->sc.cam[0].pos, ray.dir, obj);
 	var.up_world = mini->up_world;
-	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray_dir, t));
+	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray.dir, t));
 	specular_util(&var, obj, is_cap, t);
 	var.to_light = vec_normalize(vec_substact(mini->sc.light[1].pos,
 				var.intersect));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/27 18:55:44 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:47:56 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 
 	ray.origin = mini->sc.cam[mini->cam_lock].pos;
 	ray.dir = ray_direction;
+	ray.bounce = 0;
 	color = intersect_loop(mini, ray, &t);
 	if (t == -1)
 		return;									// error kill ici

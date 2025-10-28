@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 16:19:53 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:03:16 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj)
 	
 	if (obj.type == sp)
 	{
-		obj.normal = get_normal_from_map(mini, obj, t, ray_dir);
-		diffuse_direct = light_sp(mini, obj, ray_dir, t);
+		obj.normal = get_normal_from_map(mini, obj, t, ray.dir);
+		diffuse_direct = light_sp(mini, obj, ray, t);
 	}
 	else if (obj.type == pl)
 		diffuse_direct = light_pl(mini, obj, ray, t);
@@ -56,7 +56,7 @@ t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj)
 		spec = (t_color){0, 0, 0, 0};
 	ambiant = apply_ambiant(mini, obj.color);
 	final = mix_colors(diffuse_direct, ambiant);
-	//final = mix_layer(final, spec);
+	final = mix_layer(final, spec);
 	// refraction is only for 1 once for testing issue
 	final = refration(mini, ray, t, obj, final);
 	return (final);

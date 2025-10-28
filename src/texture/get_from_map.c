@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 17:17:12 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:17:49 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
 
 	roughness = spec;
 	grey_scale = 0;
-	if (obj.mat.roughness.map && obj.type == sp)
+	if (obj.type == sp && obj.mat.roughness.map)
 	{
 		info.uv = get_uv_sp(geometric_normal, obj.mat.roughness.size);
 		grey_scale = obj.mat.roughness.map[info.uv.v][info.uv.u] & 0x000000FF;
