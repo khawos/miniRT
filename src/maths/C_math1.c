@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   C_math1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-09 17:34:41 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-09 17:34:41 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/09 17:34:41 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/27 19:18:16 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,22 @@ t_color	mix_colors(t_color c1, t_color c2)
 	result.r = (c1.r + c2.r) / 2;
 	result.g = (c1.g + c2.g) / 2;
 	result.b = (c1.b + c2.b) / 2;
+	return (result);
+}
+
+t_color	mix_colors_ratio(t_color c1, t_color c2, double ratio)
+{
+	t_color	result;
+
+	double r1;
+	double r2;
+
+	r1 = ratio;
+	r2 = 1 - ratio;
+
+	result.r = (c1.r * r1 + c2.r * r2);
+	result.g = (c1.g * r1 + c2.g * r2);
+	result.b = (c1.b * r1 + c2.b * r2);
 	return (result);
 }
 

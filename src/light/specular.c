@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specular.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 17:11:18 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:13:09 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	specular_util(t_specular *var, t_objet obj, double is_cap, double t)
 		var->normal = obj.normal;
 }
 
-t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
+t_color	specular(t_mini *mini, t_objet obj, t_ray ray, double t)
 {
 	t_specular	var;
 	t_color		light_color;
@@ -68,7 +68,7 @@ t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 				var.intersect));
 	light_color = color_scalar(mini->sc.light[1].color,
 			mini->sc.light[1].ratio);
-	var.to_cam = vec_normalize(vec_substact(mini->sc.cam[0].pos,
+	var.to_cam = vec_normalize(vec_substact(ray.origin,
 				var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);

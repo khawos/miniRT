@@ -12,14 +12,14 @@
 
 #include "minirt.h"
 
-t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t)
+t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t)
 {
 	t_vec3		secondary_ray;
 	t_vec3		p_intersect;
 	t_boolean	result;
 
-	p_intersect = vec_add(mini->sc.cam[mini->cam_lock].pos,
-			vec_scale(ray_direction, t));
+	p_intersect = vec_add(ray.origin,
+			vec_scale(ray.dir, t));
 	secondary_ray = vec_substact(mini->sc.light[1].pos, p_intersect);
 	result = is_intersect(mini, vec_normalize(secondary_ray), p_intersect);
 	return (result);
@@ -32,7 +32,7 @@ t_boolean	is_hard_shadow(t_color c)
 	return (false);
 }
 
-t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
+t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj)
 {
 	t_color	diffuse_direct;
 	t_color	ambiant;
@@ -45,17 +45,19 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 		diffuse_direct = light_sp(mini, obj, ray_dir, t);
 	}
 	else if (obj.type == pl)
-		diffuse_direct = light_pl(mini, obj, ray_dir, t);
+		diffuse_direct = light_pl(mini, obj, ray, t);
 	else if (obj.type == cy)
-		diffuse_direct = light_cy(mini, obj, ray_dir, t);
+		diffuse_direct = light_cy(mini, obj, ray, t);
 	else 
-		diffuse_direct = light_tr(mini, obj, ray_dir, t);
+		diffuse_direct = light_tr(mini, obj, ray, t);
 	if (!is_hard_shadow(diffuse_direct))
-		spec = specular(mini, obj, ray_dir, t);
+		spec = specular(mini, obj, ray, t);
 	else
 		spec = (t_color){0, 0, 0, 0};
 	ambiant = apply_ambiant(mini, obj.color);
 	final = mix_colors(diffuse_direct, ambiant);
-	final = mix_layer(final, spec);
+	//final = mix_layer(final, spec);
+	// refraction is only for 1 once for testing issue
+	final = refration(mini, ray, t, obj, final);
 	return (final);
 }

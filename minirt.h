@@ -7,7 +7,7 @@
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 5
+# define BLOCK_SIZE_MAX 3
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # include <unistd.h>
@@ -242,6 +242,21 @@ typedef struct	s_mini
 	unsigned long	last_input;
 }				t_mini;
 
+typedef struct s_var_texture{
+	
+	t_vec2	uv;
+	t_color color;
+	t_vec3	normal;
+}				t_var_texture;
+
+typedef	struct s_ray
+{
+	t_vec3		dir;
+	t_vec3		origin;
+	t_color		color;
+}			t_ray;
+
+
 // DRAW BASIC
 
 int				my_mlx_pixel_put(t_mini *mini, int x, int y, unsigned int color);
@@ -335,6 +350,7 @@ t_color	color_add(t_color i, t_color j);
 t_color	color_scalar(t_color i, double ratio);
 t_color mix_colors(t_color c1, t_color c2);
 t_color	mix_layer(t_color c1, t_color c2);
+t_color	mix_colors_ratio(t_color c1, t_color c2, double ratio);
 
 // INTERSECT
 
@@ -348,11 +364,11 @@ void		set_normal_tr(t_mini *mini);
 
 // LIGHT_RAY
 
-t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
-
+t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj);
+t_var_texture	find_ray_texture(t_objet obj, t_vec3 p);
 // INTERSEC
 
-t_color		intersect_loop(t_mini *mini, t_vec3 ray_dir, double *t);
+t_color		intersect_loop(t_mini *mini, t_ray ray, double *t);
 void		free_double_array(void **dest);
 
 
@@ -393,8 +409,8 @@ t_vec3	get_left_corner_viewport(t_mini mini);
 
 // SPECULAR
 
-t_boolean	shadow_ray(t_mini *mini, t_vec3 ray_direction, double t);
-t_color 	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t);
+t_color 	specular(t_mini *mini, t_objet obj, t_ray ray , double t);
 
 //THREAD
 
@@ -421,10 +437,10 @@ t_boolean	init(t_mini *mini, char **av);
 
 // LIGHT
 
-t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
-t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
-t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
-t_color	light_tr(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_sp(t_mini *mini, t_objet obj, t_ray ray, double t);
+t_color	light_pl(t_mini *mini, t_objet obj, t_ray ray, double t);
+t_color	light_cy(t_mini *mini, t_objet obj, t_ray ray, double t);
+t_color	light_tr(t_mini *mini, t_objet obj, t_ray ray, double t);
 
 // BOUNDS
 
@@ -478,5 +494,8 @@ t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
 t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
 t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_vec3 ray_dir);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
+// reflection
+
+t_color	refration(t_mini *mini, t_ray ray_dir, double t, t_objet obj, t_color first_ray_color);
 
 #endif
