@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/25 20:02:28 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:07:33 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,28 @@ typedef struct s_var_texture{
 
 t_vec3	get_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world)
 {
-	t_vec3	normal;
+	t_vec3	normal_tangent;
 	t_vec3	tangeante;
 	t_vec3	bitangente;
+	t_vec3	normal_world;
 
-	normal.z = color & 0x000000FF;
-	//normal.z = normal.z * 2 - 1;
- 	normal.y = (color & 0x0000FF00) >> 8;
-	//normal.y = normal.y * 2 - 1;
-	normal.x = (color & 0x00FF0000) >> 16;
-	//normal.x = normal.x * 2 - 1;
-	//tangeante = vec_normalize(vec_cross(up_world, n));
-	//bitangente = vec_cross(n, tangeante);
-	//normal = vec_normalize(vec_add(vec_add(vec_scale(tangeante, normal.x), vec_scale(bitangente, normal.y)), vec_scale(normal, normal.z)));
-	return (normal);
+	normal_tangent.z = (color & 0x000000FF) / 255.0;
+	normal_tangent.y = ((color & 0x0000FF00) >> 8) / 255.0;
+	normal_tangent.x = ((color & 0x00FF0000) >> 16) / 255.0;
+	normal_tangent.x = normal_tangent.x * 2.0 - 1.0;
+	normal_tangent.y = normal_tangent.y * 2.0 - 1.0;
+	normal_tangent.z = normal_tangent.z * 2.0 - 1.0;
+	normal_tangent = vec_normalize(normal_tangent);
+	if (fabs(vec_dot(up_world, n)) > 0.999)
+		up_world = (t_vec3){0.0, 0.0, 1.0};
+	tangeante = vec_normalize(vec_cross(up_world, n));
+	bitangente = vec_normalize(vec_cross(n, tangeante));
+	normal_world = vec_add(vec_add(vec_scale(tangeante, normal_tangent.x),
+				vec_scale(bitangente, normal_tangent.y)),
+					vec_scale(n, normal_tangent.z));
+	return (vec_normalize(normal_world));
 }
+
 
 t_var_texture	find_ray_texture(t_objet obj, t_vec3 p, t_vec3 up_world)
 {
