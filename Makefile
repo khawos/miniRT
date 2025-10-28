@@ -1,7 +1,7 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -g3 #-fsanitize=address #-O3 -flto
-LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt #-flto
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto #-g3 #-fsanitize=address #
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
@@ -51,7 +51,7 @@ SRC =	main.c \
 		bvh/bvh_utils.c \
 		texture/uv_mapping.c \
 		texture/get_from_map.c \
-		refraction/refraction.c
+		refraction_reflection/reflection.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

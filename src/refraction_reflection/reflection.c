@@ -9,7 +9,7 @@ t_color	refration(t_mini *mini, t_ray old_ray, double t, t_objet obj, t_color fi
 	t_vec3	normal;
 	t_ray	ray_bounce;
 
-	if (old_ray.bounce == BOUNCE_MAX)
+	if (old_ray.bounce >= BOUNCE_MAX)
 		return (first_ray_color);
 	if (obj.type != sp)
 		return (first_ray_color);

@@ -2,15 +2,15 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 100
-# define WIDTH 200
+# define HEIGHT 1080
+# define WIDTH 1920
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 3
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
-# define BOUNCE_MAX 15
+# define BOUNCE_MAX 5000
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
