@@ -10,7 +10,7 @@
 # define BLOCK_SIZE_MAX 3
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
-# define BOUNCE_MAX 5000
+# define BOUNCE_MAX 3
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -487,7 +487,7 @@ char			*get_texture_path(char *str);
 
 t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
 t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
-t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_vec3 ray_dir);
+t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_ray ray);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 // reflection
 

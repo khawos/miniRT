@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 19:17:49 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:43:44 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
 		return (roughness);
 }
 
-t_vec3	get_normal_from_map(t_mini *mini, t_objet obj, double t, t_vec3 ray_dir)
+t_vec3	get_normal_from_map(t_mini *mini, t_objet obj, double t, t_ray ray)
 {
 	t_vec3			intersect;
 	t_vec3			normal;
 	t_var_texture	info;
 	
-	intersect = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
+	intersect = vec_add(ray.origin, vec_scale(ray.dir, t));
 	normal = vec_normalize(vec_substact(intersect, obj.pos));
 	if (obj.mat.normal.map)
 	{
