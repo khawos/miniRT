@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 19:43:44 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:41:44 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,22 @@ double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
 		return (roughness);
 }
 
-t_vec3	get_normal_from_map(t_mini *mini, t_objet obj, double t, t_ray ray)
+t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 {
 	t_vec3			intersect;
-	t_vec3			normal;
+	t_normal		normal;
 	t_var_texture	info;
 	
-	intersect = vec_add(ray.origin, vec_scale(ray.dir, t));
-	normal = vec_normalize(vec_substact(intersect, obj.pos));
+	intersect = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	normal.geometric = vec_normalize(vec_substact(intersect, obj.pos));
 	if (obj.mat.normal.map)
 	{
-		info.uv = get_uv_sp(normal, obj.mat.normal.size);
-		info.normal_texture = transform_normal_from_map(obj.mat.normal.map[info.uv.v][info.uv.u], normal, mini->up_world);
-        return (info.normal_texture);
+		info.uv = get_uv_sp(normal.geometric, obj.mat.normal.size);
+		normal.texture = transform_normal_from_map(obj.mat.normal.map[info.uv.v][info.uv.u], normal.geometric, mini->up_world);
 	}
 	else
-		info.normal = normal;
-	return (info.normal);
+		normal.texture = vec_create(222, 0, 0);
+	return (normal);
 }
 
 t_color	get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world)

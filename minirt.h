@@ -245,11 +245,20 @@ typedef struct	s_mini
 
 typedef	struct s_ray
 {
+	double		t;
 	t_vec3		dir;
 	t_vec3		origin;
 	t_color		color;
 	int			bounce;
 }			t_ray;
+
+
+typedef struct s_normal
+{
+	t_vec3 geometric;
+	t_vec3 texture;
+	
+}			t_normal;
 
 
 // DRAW BASIC
@@ -271,6 +280,7 @@ int			handle_mouse_input(int keysym, int x, int y, t_mini *mini);
 t_boolean	is_space(char c);
 double		atoi_double(char *str);
 double		__atoi_double(char **str);
+t_boolean	is_null_vector(t_vec3 normal);
 
 // FREE
 
@@ -359,11 +369,11 @@ void		set_normal_tr(t_mini *mini);
 
 // LIGHT_RAY
 
-t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj);
+t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj);
 t_var_texture	find_ray_texture(t_objet obj, t_vec3 p);
 // INTERSEC
 
-t_color		intersect_loop(t_mini *mini, t_ray ray, double *t);
+t_color		intersect_loop(t_mini *mini, t_ray *ray);
 void		free_double_array(void **dest);
 
 
@@ -405,7 +415,7 @@ t_vec3	get_left_corner_viewport(t_mini mini);
 // SPECULAR
 
 t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t);
-t_color 	specular(t_mini *mini, t_objet obj, t_ray ray , double t);
+t_color 	specular(t_mini *mini, t_objet obj, t_ray *ray, t_normal n);
 
 //THREAD
 
@@ -432,10 +442,10 @@ t_boolean	init(t_mini *mini, char **av);
 
 // LIGHT
 
-t_color	light_sp(t_mini *mini, t_objet obj, t_ray ray, double t);
-t_color	light_pl(t_mini *mini, t_objet obj, t_ray ray, double t);
-t_color	light_cy(t_mini *mini, t_objet obj, t_ray ray, double t);
-t_color	light_tr(t_mini *mini, t_objet obj, t_ray ray, double t);
+t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_normal normal);
+t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray);
+t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray);
+t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray);
 
 // BOUNDS
 
@@ -487,10 +497,9 @@ char			*get_texture_path(char *str);
 
 t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
 t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
-t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_ray ray);
+t_normal		get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 // reflection
 
-t_color	refration(t_mini *mini, t_ray ray_dir, double t, t_objet obj, t_color first_ray_color);
-
+t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
 #endif

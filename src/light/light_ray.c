@@ -6,11 +6,53 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 19:44:15 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:42:42 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+
+t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
+{
+	t_normal	normal;
+	t_vec3		base_cy;
+	t_vec3		p;
+	
+	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	if (obj.type == sp)
+	{
+		normal = get_normal_sp_from_map(mini, obj, ray);
+		return (normal);
+	}
+	if (obj.type == tr)
+	{
+		normal.geometric = obj.normal;
+		normal.texture = vec_create(0,0,0);
+		return (normal);		
+	}
+	if (obj.type == pl)
+	{
+		normal.geometric = obj.vec_dir;
+		normal.texture = vec_create(0,0,0);
+		return (normal);
+	}
+	if (obj.type == cy && ray->t != intersect_cap(ray->origin, ray->dir, obj))
+	{
+		base_cy = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
+		normal.geometric = vec_normalize(vec_substact(p,
+			vec_add(base_cy, vec_scale(obj.vec_dir,
+					vec_dot(vec_substact(p, base_cy), obj.vec_dir)))));
+		normal.texture = vec_create(222, 0, 0);
+		return (normal);
+	}
+	else
+	{
+		normal.geometric = obj.vec_dir;
+		normal.texture = vec_create(222, 0, 0);
+		return (normal);
+	}
+}
 
 t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t)
 {
@@ -32,32 +74,31 @@ t_boolean	is_hard_shadow(t_color c)
 	return (false);
 }
 
-t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj)
+t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 {
-	t_color	diffuse_direct;
-	t_color	ambiant;
-	t_color	spec;
-	t_color	final;
+	t_color		diffuse_direct;
+	t_color		ambiant;
+	t_color		spec;
+	t_color		final;
+	t_normal	normal;
 	
+	normal = get_object_normals(mini, obj, ray);
 	if (obj.type == sp)
-	{
-		obj.normal = get_normal_from_map(mini, obj, t, ray);
-		diffuse_direct = light_sp(mini, obj, ray, t);
-	}
+		diffuse_direct = light_sp(mini, obj, ray, normal);
 	else if (obj.type == pl)
-		diffuse_direct = light_pl(mini, obj, ray, t);
+		diffuse_direct = light_pl(mini, obj, ray);
 	else if (obj.type == cy)
-		diffuse_direct = light_cy(mini, obj, ray, t);
+		diffuse_direct = light_cy(mini, obj, ray);
 	else 
-		diffuse_direct = light_tr(mini, obj, ray, t);
+		diffuse_direct = light_tr(mini, obj, ray);
 	if (!is_hard_shadow(diffuse_direct))
-		spec = specular(mini, obj, ray, t);
+		spec = specular(mini, obj, ray, normal); 
 	else
 		spec = (t_color){0, 0, 0, 0};
 	ambiant = apply_ambiant(mini, obj.color);
 	final = mix_colors(diffuse_direct, ambiant);
 	final = mix_layer(final, spec);
-	// refraction is only for 1 once for testing issue
-	final = refration(mini, ray, t, obj, final);
+	ray->color = final;
+	final = reflection(mini, ray, obj, normal);
 	return (final);
 }

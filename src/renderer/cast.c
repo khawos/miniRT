@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 18:47:56 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:46:23 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 {
 	t_color			color;
-	double			t;
 	t_vec2			index;
 	t_ray			ray;
 	unsigned int	color_int;
@@ -41,10 +40,11 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	ray.origin = mini->sc.cam[mini->cam_lock].pos;
 	ray.dir = ray_direction;
 	ray.bounce = 0;
-	color = intersect_loop(mini, ray, &t);
-	if (t == -1)
+	ray.t == RENDER_DISTANCE;
+	color = intersect_loop(mini, &ray);
+	if (ray.t == -1)
 		return;									// error kill ici
-	if (t == RENDER_DISTANCE)
+	if (ray.t == RENDER_DISTANCE)
 		color = put_background(x, y);
 	color_int = color_shift(color);
 	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)

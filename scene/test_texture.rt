@@ -6,7 +6,7 @@ L -50,100,200 1 255,255,255
 
 sp 0,-600,50 200 150,150,150 spec=10 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm"
 
-sp 0,-300,50 200 150,150,150 spec=10 roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
+sp 0,-300,50 200 255,0,0 spec=10 roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
 
 sp 0,0,50 200 150,150,150 spec=10 albedo="texture_file/snow_03_diff_2k.xpm" normal="texture_file/snow_03_nor_dx_2k.xpm"
 

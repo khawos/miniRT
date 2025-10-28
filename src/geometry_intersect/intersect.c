@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 14:22:50 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:48:42 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static double	handle_object(t_mini *mini, t_ray ray, int i, double t)
 	return (t);
 }
 
-double	get_nearest_triangle(int *closest, double *t, t_ray ray, t_mini *mini)
+double	get_nearest_triangle(int *closest, t_ray *ray, t_mini *mini)
 {
 	double	tmp;
 	int		*tr_index;
@@ -103,59 +103,60 @@ double	get_nearest_triangle(int *closest, double *t, t_ray ray, t_mini *mini)
 
 	size = 0;
 	tr_index = NULL;
-	tr_index = search_tr_in_tree(mini->bvh, ray.origin, ray.dir, &size, tr_index);
+	tr_index = search_tr_in_tree(mini->bvh, ray->origin, ray->dir, &size, tr_index);
 	if (size == -1)
-		return (*t = -1, *t);
+		return (ray->t = -1, ray->t);
 	i = 0;
 	if (tr_index)
 	{
 		while (i < size)
 		{
-			tmp = intersect_tr(ray.origin,
-				ray.dir, mini->sc.objet_tr[tr_index[i]]);
+			tmp = intersect_tr(ray->origin,
+				ray->dir, mini->sc.objet_tr[tr_index[i]]);
 
-			if (tmp > 0 && tmp < *t)
+			if (tmp > 0 && tmp < ray->t)
 			{
-				*t = tmp;
+				ray->t = tmp;
 				*closest = tr_index[i];
 			}
 			i++;
 		}
 		free(tr_index);
 	}
-	return (*t);
+	return (ray->t);
 }
-t_color	intersect_loop(t_mini *mini, t_ray ray, double *t)
+
+t_color	intersect_loop(t_mini *mini, t_ray *ray)
 {
 	int		i;
 	int		closest;
 	double	tmp;
 
-	*t = RENDER_DISTANCE;
 	closest = 0;
 	i = -1;
+	ray->t = RENDER_DISTANCE;
 	while (++i < mini->N_OBJ)
 	{
-		tmp = handle_object(mini, ray, i, *t);
-		if (tmp < *t)
+		tmp = handle_object(mini, *ray, i, ray->t);
+		if (tmp < ray->t)
 		{
-			*t = tmp;
+			ray->t = tmp;
 			closest = i;
 		}
 	}
 	i = -1; 
 	if (mini->bvh)
 	{
-		tmp = *t;
-		*t = get_nearest_triangle(&closest, t, ray, mini);
-		if (*t == -1)
+		tmp = ray->t;
+		ray->t = get_nearest_triangle(&closest, ray, mini);
+		if (ray->t == -1)
 		 	return ((t_color){0, 0, 0, 0});
-		if (tmp > *t)
-			return (light_ray(mini, ray, *t, mini->sc.objet_tr[closest]));
+		if (tmp > ray->t)
+			return (light_ray(mini, ray, mini->sc.objet_tr[closest]));
 		else
-			*t = tmp;
+			ray->t = tmp;
 	}
-	if (*t != RENDER_DISTANCE)
-		return (light_ray(mini, ray, *t, mini->sc.objet[closest]));
+	if (ray->t != RENDER_DISTANCE)
+		return (light_ray(mini, ray, mini->sc.objet[closest]));
 	return ((t_color){0, 0, 0, 0});
 }

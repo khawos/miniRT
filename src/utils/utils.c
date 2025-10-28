@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-16 08:39:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-09-16 08:39:00 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/09/16 08:39:00 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/28 22:42:09 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ typedef struct s__atoi_utils{
 	int		neg;
 
 }				t_au;
+
+t_boolean	is_null_vector(t_vec3 normal)
+{
+	if (normal.x == 222)
+		return (true);
+	return (false);
+}
 
 void	init_atoi_var(t_au *au, char **str)
 {
