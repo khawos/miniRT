@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1080
+# define HEIGHT 1080
+# define WIDTH 1920
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
@@ -34,6 +34,12 @@ typedef struct s_vec2
 	int v;
 }				t_vec2;
 
+typedef struct s_t_map
+{
+	unsigned int	**map;
+	t_vec2			size;
+}				t_t_map;
+
 typedef struct	s_vec3
 {
 	double	x;
@@ -46,9 +52,9 @@ typedef struct s_material
 	double	reflection;   //0 = mat  1 = miroir
 	double	refraction;   //0 = opaque 1 = complètement transparent  a voir si on garde mais c le plus logique
 	double	ior;
-	t_vec2	texture_dimnesion;
-	unsigned int		**albedo;
-	unsigned int		**normal_map;
+	t_t_map	albedo;
+	t_t_map	normal;
+	t_t_map roughness;
 }	t_material;
 
 typedef struct s_bounds
@@ -78,6 +84,14 @@ typedef struct	s_color
 	unsigned char	b;
 	t_boolean		hit;
 }				t_color;
+
+typedef struct s_var_texture{
+	
+	t_vec2	uv;
+	t_color color;
+	t_vec3	normal_texture;
+	t_vec3	normal;
+}				t_var_texture;
 
 typedef enum s_type
 {
@@ -148,7 +162,7 @@ typedef struct	s_objet
 	t_vec3			p0;
 	t_vec3			p1;
 	t_vec3			p2;
-	t_vec3			tr_normal;
+	t_vec3			normal;
 }				t_objet;
 
 
@@ -224,8 +238,7 @@ typedef struct	s_mini
 	int		N_OBJ;
 	int		N_LIGHT;
 	int		block_size;
-	t_boolean is_rendering;
-	pthread_mutex_t render_mutex;
+	t_vec3	up_world;
 	unsigned long	last_input;
 }				t_mini;
 
@@ -348,6 +361,7 @@ double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
 void		set_normal_tr(t_mini *mini);
 
+
 // LIGHT_RAY
 
 t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj);
@@ -458,11 +472,11 @@ int		*search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *si
 
 // GET_UV
 
-t_vec2	get_uv_sp(t_vec3 p, t_objet sp);
+t_vec2	get_uv_sp(t_vec3 p, t_vec2 size);
 
 // PARSER TXT
 
-unsigned int	**get_texture(char *file, t_objet *obj);
+unsigned int	**get_texture(char *file, t_t_map *map);
 t_boolean		is_digit_or_space_str(char *str);
 t_boolean		is_on_xpm_pixel_info(char *str);
 char			**realloc_add_to_tab(char **tab, char *new);
@@ -474,6 +488,12 @@ char			**get_color_tab(int fd);
 t_boolean		get_material(t_objet *obj, char *buffer);
 char			*get_texture_path(char *str);
 
+// GET FROM MAP
+
+t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
+t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
+t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_vec3 ray_dir);
+double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 // reflection
 
 t_color	refration(t_mini *mini, t_ray ray_dir, double t, t_objet obj, t_color first_ray_color);

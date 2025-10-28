@@ -4,6 +4,7 @@
 		"minirt.h": "c",
 		"unistd.h": "c",
 		"limits.h": "c",
-		"float.h": "c"
+		"float.h": "c",
+		"initializer_list": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/27 19:17:40 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:19:53 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ t_color	light_ray(t_mini *mini, t_ray ray, double t, t_objet obj)
 	t_color	ambiant;
 	t_color	spec;
 	t_color	final;
-
+	
 	if (obj.type == sp)
-		diffuse_direct = light_sp(mini, obj, ray, t);
+	{
+		obj.normal = get_normal_from_map(mini, obj, t, ray_dir);
+		diffuse_direct = light_sp(mini, obj, ray_dir, t);
+	}
 	else if (obj.type == pl)
 		diffuse_direct = light_pl(mini, obj, ray, t);
 	else if (obj.type == cy)

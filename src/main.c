@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/09 14:56:22 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/28 10:56:30 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ int	main(int ac, char **av)
 	mlx_loop(mini.display.mlx);
 	sem_close(mini.m_cast);
 	sem_unlink("/cast_init");
-	pthread_mutex_destroy(&mini.render_mutex);
 	return (0);
 }

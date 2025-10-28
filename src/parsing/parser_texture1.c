@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:07:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/25 19:31:15 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:25:44 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,6 @@ char	*get_texture_path(char *str)
 	printf("texture path : %s\n", path);
 	return (path);
 }
-
-// t_boolean get_material(t_objet *obj, char *buffer)
-// {
-// 	char	*str;
-
-// 	obj->mat.albedo = NULL;
-// 	str = ft_strnstr(buffer, "albedo=", ft_strlen(buffer));
-// 	if (str)
-// 	{
-// 		obj->mat.albedo = get_texture(get_texture_path(str + 8), obj);
-// 		if (!obj->mat.albedo)
-// 			return (false);
-// 	}
-// 	return (true);
-// }
 
 char	**get_color_tab(int fd)
 {

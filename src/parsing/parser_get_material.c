@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:11:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/25 20:23:08 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:02:40 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,35 @@ t_boolean get_material(t_objet *obj, char *buffer)
 {
 	char	*str;
 
-	obj->mat.albedo = NULL;
+	obj->mat.albedo.map = NULL;
+	obj->mat.normal.map = NULL;
+	obj->mat.roughness.map = NULL;
 	str = ft_strnstr(buffer, "albedo=", ft_strlen(buffer));
 	if (str)
 	{
-		obj->mat.albedo = get_texture(get_texture_path(str + 8), obj);
-		if (!obj->mat.albedo)
+		obj->mat.albedo.map = get_texture(get_texture_path(str + 8), &obj->mat.albedo);
+		if (!obj->mat.albedo.map)
 			return (false);
-		printf("albedo ok\n");
+		printf("\033[1;32mAlbedo ok\033[0m\n");
 	}
 	str = ft_strnstr(buffer, "normal=", ft_strlen(buffer));
 	if (str)
 	{
-		obj->mat.normal_map = get_texture(get_texture_path(str + 8), obj);
-		if (!obj->mat.normal_map)
-			return (free_double_array_error(obj->mat.albedo,
-				obj->mat.texture_dimnesion.v), false);
-		printf("normal ok\n");
+		obj->mat.normal.map = get_texture(get_texture_path(str + 8),  &obj->mat.normal);
+		if (!obj->mat.normal.map)
+			return (free_double_array_error(obj->mat.albedo.map,
+				obj->mat.albedo.size.v), false);
+		printf("\033[1;32mNormal ok\033[0m\n");
+	}
+	str = ft_strnstr(buffer, "roughness=", ft_strlen(buffer));
+	if (str)
+	{
+		obj->mat.roughness.map = get_texture(get_texture_path(str + 11), &obj->mat.roughness);
+		if (!obj->mat.roughness.map)
+			return (free_double_array_error(obj->mat.albedo.map,
+				obj->mat.albedo.size.v), free_double_array_error(obj->mat.normal.map,
+					obj->mat.normal.size.v), false);
+		printf("\033[1;32mRoughness ok\033[0m\n", obj->mat.roughness.size);
 	}
 	return (true);
 }
