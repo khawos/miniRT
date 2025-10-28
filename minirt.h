@@ -84,6 +84,14 @@ typedef struct	s_color
 	t_boolean		hit;
 }				t_color;
 
+typedef struct s_var_texture{
+	
+	t_vec2	uv;
+	t_color color;
+	t_vec3	normal_texture;
+	t_vec3	normal;
+}				t_var_texture;
+
 typedef enum s_type
 {
 	A,
@@ -336,6 +344,7 @@ double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
 void		set_normal_tr(t_mini *mini);
 
+
 // LIGHT_RAY
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
@@ -461,5 +470,6 @@ char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
 t_boolean		get_material(t_objet *obj, char *buffer);
 char			*get_texture_path(char *str);
+t_var_texture	find_ray_texture(t_objet obj, t_vec3 p, t_vec3 up_world);
 
 #endif

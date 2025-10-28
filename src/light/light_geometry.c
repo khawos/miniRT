@@ -6,19 +6,11 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 12:07:33 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:47:33 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-typedef struct s_var_texture{
-	
-	t_vec2	uv;
-	t_color color;
-	t_vec3	normal_texture;
-	t_vec3	normal;
-}				t_var_texture;
 
 t_vec3	get_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world)
 {
@@ -61,7 +53,7 @@ t_var_texture	find_ray_texture(t_objet obj, t_vec3 p, t_vec3 up_world)
 	if (obj.mat.normal.map)
 	{
 		info.uv = get_uv_sp(n, obj.mat.normal.size);
-		info.normal = get_normal_from_map(obj.mat.normal.map[info.uv.v][info.uv.u], n, up_world);
+		info.normal_texture = get_normal_from_map(obj.mat.normal.map[info.uv.v][info.uv.u], n, up_world);
 	}
 	else
 		info.normal = n;
@@ -75,8 +67,8 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 	double	dot;
 	t_var_texture	var;
 	
-	//if (shadow_ray(mini, ray_dir, t))
-	//	return ((t_color){0, 0, 0, 1});
+	if (shadow_ray(mini, ray_dir, t))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(ray_dir, t));
 	to_light = vec_substact(mini->sc.light[1].pos, obj.pos);
 	var = find_ray_texture(obj, p, mini->up_world);

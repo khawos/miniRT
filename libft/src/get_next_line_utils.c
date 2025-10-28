@@ -3,114 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 23:02:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/03 05:02:00 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:43:13 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
-int	line_detected(t_liste *list)
+size_t	len(char *str)
 {
 	int	i;
 
-	if (!list)
+	if (!str)
 		return (0);
-	while (list)
-	{
-		i = 0;
-		while (list->str_buf[i])
-		{
-			if (list->str_buf[i] == '\n')
-				return (1);
-			i++;
-		}
-		list = list->next;
-	}
-	return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-int	count_line_gnl(t_liste *list)
+char	*ft_next_line_init(char *read)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		j;
+	char	*next_line;
 
-	len = 0;
-	if (!list)
-		return (0);
-	while (list)
-	{
-		i = 0;
-		while (list->str_buf[i])
-		{
-			if (list->str_buf[i] == '\n')
-			{
-				len++;
-				return (len);
-			}
-			i++;
-			len++;
-		}
-		list = list->next;
-	}
-	return (len);
-}
-
-t_liste	*give_last_node(t_liste *list)
-{
-	if (!list)
+	i = 0;
+	j = 0;
+	while (read[i] != '\n' && read[i] != '\0')
+		i++;
+	next_line = malloc(sizeof(char) * (i + 2));
+	if (!next_line)
 		return (NULL);
-	while (list->next)
-		list = list->next;
-	return (list);
+	i = 0;
+	while (read[i + j] != '\n' && read[i + j] != '\0')
+	{
+		next_line[j] = read[i + j];
+		j++;
+	}
+	if (read[i + j] == '\n')
+	{
+		next_line[j] = '\n';
+		j++;
+	}
+	next_line[j] = '\0';
+	return (next_line);
 }
 
-void	copy_line(t_liste *list, char *line)
+static char	*ft_cpy(char *tmp, char *buffer, char *read)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	while (list)
+	i = 0;
+	if (tmp != 0)
 	{
-		i = 0;
-		while (list->str_buf[i])
+		while (tmp[i])
 		{
-			line[j] = list->str_buf[i];
-			if (list->str_buf[i] == '\n')
-			{
-				line[++j] = '\0';
-				return ;
-			}
+			read[i] = tmp[i];
 			i++;
-			j++;
 		}
-		list = list->next;
 	}
-	line[j] = '\0';
+	while (buffer[j])
+	{
+		read[i + j] = buffer[j];
+		j++;
+	}
+	read[i + j] = '\0';
+	return (read);
 }
 
-void	free_list(t_liste **list, t_liste *clean_node, char *buf)
+char	*ft_read_update(char *read, char *next_line)
 {
-	t_liste	*tmp;
+	char	*tmp;
+	int		i;
 
-	if (NULL == *list)
-		return ;
-	while (*list)
+	i = 1;
+	if (len(read) - len(next_line) == 0)
+		i = 2;
+	tmp = malloc(sizeof(char) * (len(read) - len(next_line) + i));
+	if (!tmp)
+		return (ft_free(read));
+	read += len(next_line);
+	tmp = ft_cpy(0, read, tmp);
+	read -= len(next_line);
+	read = ft_free(read);
+	return (tmp);
+}
+
+char	*ft_read_init(char *buffer, char *read, ssize_t i)
+{
+	char	*tmp;
+
+	tmp = 0;
+	if (i < 0)
 	{
-		tmp = (*list)->next;
-		free((*list)->str_buf);
-		free(*list);
-		*list = tmp;
+		read = NULL;
+		return (read);
 	}
-	*list = NULL;
-	if (clean_node->str_buf[0])
-		*list = clean_node;
-	else
-	{
-		free(buf);
-		free(clean_node);
-	}
+	if (len(read))
+		tmp = read;
+	read = malloc(sizeof(char) * (len(buffer) + len(read) + 1));
+	if (!read)
+		return (NULL);
+	read = ft_cpy(tmp, buffer, read);
+	if (tmp != 0)
+		tmp = ft_free(tmp);
+	return (read);
 }
