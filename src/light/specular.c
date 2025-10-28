@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 14:47:48 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:11:18 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,9 @@ typedef struct s_specular
 void	specular_util(t_specular *var, t_objet obj, double is_cap, double t)
 {
 	t_vec3			base;
-	t_var_texture	texture;
-	
-	(void)texture;
+
 	if (sp == obj.type)
-	{
-		texture = find_ray_texture(obj, var->intersect, var->up_world);
-		if (obj.mat.normal.map)
-			var->normal = texture.normal_texture;
-		else
-			var->normal = texture.normal;
-	}
+		var->normal = obj.normal;
 	else if (pl == obj.type)
 	{
 		var->normal = obj.vec_dir;
@@ -52,7 +44,7 @@ void	specular_util(t_specular *var, t_objet obj, double is_cap, double t)
 	else if (cy == obj.type && t == is_cap)
 		var->normal = obj.vec_dir;
 	else
-		var->normal = obj.tr_normal;
+		var->normal = obj.normal;
 }
 
 t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
@@ -80,6 +72,6 @@ t_color	specular(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t)
 				var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);
-	var.specular = color_scalar(light_color, pow(fmax(dot, 0), 10));
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), get_roughness_from_map(obj, spec, vec_normalize(vec_substact(var.intersect, obj.pos)))));
 	return (var.specular);
 }

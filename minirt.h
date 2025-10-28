@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1080
+# define HEIGHT 1080
+# define WIDTH 1920
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
@@ -54,6 +54,7 @@ typedef struct s_material
 	double	ior;
 	t_t_map	albedo;
 	t_t_map	normal;
+	t_t_map roughness;
 }	t_material;
 
 typedef struct s_bounds
@@ -161,7 +162,7 @@ typedef struct	s_objet
 	t_vec3			p0;
 	t_vec3			p1;
 	t_vec3			p2;
-	t_vec3			tr_normal;
+	t_vec3			normal;
 }				t_objet;
 
 
@@ -470,6 +471,12 @@ char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
 t_boolean		get_material(t_objet *obj, char *buffer);
 char			*get_texture_path(char *str);
-t_var_texture	find_ray_texture(t_objet obj, t_vec3 p, t_vec3 up_world);
+
+// GET FROM MAP
+
+t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
+t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
+t_vec3			get_normal_from_map(t_mini *mini, t_objet obj, double t, t_vec3 ray_dir);
+double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 
 #endif

@@ -160,6 +160,7 @@ void	printBounds(t_bvh *bvh)
 void	printVec2(t_vec2 vec)
 {
 	printf("u : %d, v : %d\n", vec.u, vec.v);
+	fflush(stdout);
 }
 
 void printColorMap(unsigned int **map, t_vec2 size)

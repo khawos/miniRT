@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 14:37:31 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:19:53 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj)
 	t_color	ambiant;
 	t_color	spec;
 	t_color	final;
-
+	
 	if (obj.type == sp)
+	{
+		obj.normal = get_normal_from_map(mini, obj, t, ray_dir);
 		diffuse_direct = light_sp(mini, obj, ray_dir, t);
+	}
 	else if (obj.type == pl)
 		diffuse_direct = light_pl(mini, obj, ray_dir, t);
 	else if (obj.type == cy)

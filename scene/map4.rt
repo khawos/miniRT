@@ -23,7 +23,9 @@ pl 0,0,-50       0,0,1   255,255,255 spec=10
 
 sp 0,100,0        35 255,10,5
 sp 0,0,100         15 5,255,255 spec=7
-sp 10,170,0        35 5,10,255 spec=55 albedo="/home/jbayonne/42/minirt/texture_file/earth_color.xpm"
+sp 10,170,0        35 5,10,255 spec=55 albedo="/home/jbayonne/42/minirt/texture_file/earth_color.xpm" roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
+sp 0,300,50 100 150,150,150 spec=100 albedo="texture_file/aerial_rocks_04_diff_2k1761649439.xpm" normal="texture_file/aerial_rocks_04_nor_dx_2k1761649440.xpm" roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
+
 sp 200,150,0        30 30,10,255  spec=2
 sp 200,150,70        30 30,10,255
 sp 200,150,-70        30 30,10,255

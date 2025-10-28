@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:47:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 15:33:08 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:52:01 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**texture_map_alloc(int height, int width)
 	int	**texture;
 	int		i;
 
-	texture = malloc(sizeof(unsigned int *) * (height));
+	texture = malloc(sizeof(unsigned int *) * (height + 1));
 	if (!texture)
 		return (NULL);
 	i = 0;
@@ -28,6 +28,7 @@ char	**texture_map_alloc(int height, int width)
 			return (free_double_array_error(texture, i), NULL);
 		i++;
 	}
+	texture[i] = NULL;
 	return (texture);
 }
 
