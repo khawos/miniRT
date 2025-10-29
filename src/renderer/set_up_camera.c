@@ -55,6 +55,8 @@ void	set_up_cam(t_mini *mini)
 				(double)WIDTH / (double)HEIGHT);
 		mini->sc.cam[i].up = vec_normalize(mini->sc.cam[i].up);
 		mini->sc.cam[i].right = vec_normalize(mini->sc.cam[i].right);
+		mini->sc.cam[i].yaw = 0;
+		mini->sc.cam[i].pitch = 0;
 		i++;
 	}
 }

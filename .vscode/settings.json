@@ -5,6 +5,7 @@
 		"unistd.h": "c",
 		"limits.h": "c",
 		"float.h": "c",
-		"initializer_list": "c"
+		"initializer_list": "c",
+		"mlx.h": "c"
 	}
 }

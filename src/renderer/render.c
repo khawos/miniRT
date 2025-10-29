@@ -56,6 +56,8 @@ int	render_loop(t_mini *mini)
 	time = 0;
 	limit = 250;
 	time = chrono() - mini->last_input;
+	if (mini->block_size == 1)
+		return (0);
 	if (mini->block_size > 1 && time >= limit && mini->block_size > BLOCK_SIZE_MIN)
 	{
 		if (mini->block_size == 2)

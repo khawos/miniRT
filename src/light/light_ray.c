@@ -28,13 +28,13 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 	if (obj.type == tr)
 	{
 		normal.geometric = obj.normal;
-		normal.texture = vec_create(0,0,0);
+		normal.texture = vec_create(222,0,0);
 		return (normal);		
 	}
 	if (obj.type == pl)
 	{
 		normal.geometric = obj.vec_dir;
-		normal.texture = vec_create(0,0,0);
+		normal.texture = vec_create(222,0,0);
 		return (normal);
 	}
 	if (obj.type == cy && ray->t != intersect_cap(ray->origin, ray->dir, obj))

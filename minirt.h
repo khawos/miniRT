@@ -2,13 +2,13 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 720
+# define WIDTH 1080
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
 # define BLOCK_SIZE_MAX 3
-# define BLOCK_SIZE_MIN 1
+# define BLOCK_SIZE_MIN 2
 # define DEEPTH	8
 # define BOUNCE_MAX 3
 # include <unistd.h>
@@ -27,6 +27,17 @@
 # include <X11/keysym.h>
 # include <float.h>
 # include <limits.h>
+
+
+typedef struct s_mouse
+{
+	int		x;
+	int		y;
+	int		prev_x;
+	int		prev_y;
+	int		mid_pressed;
+	int		shift_pressed;
+}	t_mouse;
 
 
 typedef struct s_vec2
@@ -179,6 +190,8 @@ typedef struct	s_camera
 	int				fov;
 	double			h;
 	double			w;
+	double	yaw;
+	double	pitch;
 }				t_cam;
 
 typedef	struct	s_light
@@ -241,6 +254,7 @@ typedef struct	s_mini
 	int		block_size;
 	t_vec3	up_world;
 	unsigned long	last_input;
+	t_mouse	mouse;
 }				t_mini;
 
 typedef	struct s_ray
@@ -502,4 +516,14 @@ double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_norma
 // reflection
 
 t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+
+// mouse controls
+int		handle_mouse_press(int button, int x, int y, t_mini *mini);
+int		handle_mouse_release(int button, int x, int y, t_mini *mini);
+int		handle_mouse_move(int x, int y, t_mini *mini);
+int		handle_key_press(int keycode, t_mini *mini);
+int		handle_key_release(int keycode, t_mini *mini);
+void	update_camera_vectors(t_cam *cam);
+int	handle_mouse_scroll(int button, int x, int y, t_mini *mini);
+
 #endif
