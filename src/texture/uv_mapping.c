@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:40:06 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 11:40:30 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:06:58 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec2	get_uv_sp(t_vec3 normal, t_vec2 size)
 
 	phi = atan2(normal.z, normal.x);
 	theta = acos(normal.y);
-	texture.u = ((-phi + M_PI) / (2 * M_PI)) * size.u;
-	texture.v = (theta / M_PI) * size.v;
+	texture.u = ((-phi + M_PI) / (2 * M_PI)) * (size.u - 1);
+	texture.v = (theta / M_PI) * (size.v - 1);
 	return (texture);
 }

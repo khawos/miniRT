@@ -6,11 +6,41 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 11:54:04 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:00:19 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	free_map(t_objet obj)
+{
+	int	i;
+
+	i = -1;
+	if (obj.mat.albedo.map)
+	{
+		while (++i < obj.mat.albedo.size.v)
+			free(obj.mat.albedo.map[i]);
+		printf("albedo : %p\n", obj.mat.albedo.map);
+		free(obj.mat.albedo.map);
+	}
+	i = -1;
+	if (obj.mat.normal.map)
+	{
+		while (++i < obj.mat.normal.size.v)
+			free(obj.mat.normal.map[i]);
+		printf("normal : %p\n", obj.mat.normal.map);
+		free(obj.mat.normal.map);
+	}
+	i = -1;
+	if (obj.mat.roughness.map)
+	{
+		while (++i < obj.mat.roughness.size.v)
+			free(obj.mat.roughness.map[i]);
+		printf("roughness : %p\n", obj.mat.roughness.map);
+		free(obj.mat.roughness.map);
+	}
+}
 
 void	free_mini(t_mini *mini)
 {
@@ -27,6 +57,8 @@ void	free_mini(t_mini *mini)
 	while (i < mini->sc.nb_objet)
 	{
 		free(mini->sc.objet[i].name);
+		if (mini->sc.objet[i].type == sp)
+			free_map(mini->sc.objet[i]);
 		i++;
 	}
 	free(mini->sc.objet);

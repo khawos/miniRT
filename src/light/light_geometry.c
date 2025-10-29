@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 00:32:47 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 01:36:12 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 		normal = utils.normal.geometric;
 	else
 		normal = utils.normal.texture;		
-	//if (shadow_ray(mini, *ray, ray->t, utils.i))
-	//	return ((t_color){0, 0, 0, 1});
+	if (shadow_ray(mini, *ray, ray->t, utils.i))
+		return ((t_color){0, 0, 0, 1});
 	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, obj.pos);
 	texture.color = get_color_from_map(obj, p, mini->up_world);
