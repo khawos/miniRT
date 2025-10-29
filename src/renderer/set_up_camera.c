@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_up_camera.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:13:29 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/08 16:09:50 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:45:53 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_up_cam(t_mini *mini)
 		get_right_local_vector(mini, i);
 		get_up_local_vector(mini, i);
 		mini->sc.cam[i].h = 2 * tan
-			(((double)mini->sc.cam[i].fov / 2.0f) * ((double)M_PI / 180.0f));
+			(((double)mini->sc.cam[i].fov / 2.0) * ((double)M_PI / 180.0));
 		mini->sc.cam[i].w = mini->sc.cam[i].h * (
 				(double)WIDTH / (double)HEIGHT);
 		mini->sc.cam[i].up = vec_normalize(mini->sc.cam[i].up);

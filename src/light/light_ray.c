@@ -6,12 +6,11 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 22:42:42 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:59:00 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
 
 t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 {
@@ -54,7 +53,7 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 	}
 }
 
-t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t)
+t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t, int light_index)
 {
 	t_vec3		secondary_ray;
 	t_vec3		p_intersect;
@@ -62,8 +61,8 @@ t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t)
 
 	p_intersect = vec_add(ray.origin,
 			vec_scale(ray.dir, t));
-	secondary_ray = vec_substact(mini->sc.light[1].pos, p_intersect);
-	result = is_intersect(mini, vec_normalize(secondary_ray), p_intersect);
+	secondary_ray = vec_substact(mini->sc.light[light_index].pos, p_intersect);
+	result = is_intersect(mini, vec_normalize(secondary_ray), p_intersect, light_index);
 	return (result);
 }
 
@@ -74,31 +73,52 @@ t_boolean	is_hard_shadow(t_color c)
 	return (false);
 }
 
+t_color	mix_light(t_color colors[LIGHT_MAX], t_mini *mini)
+{
+	int		i;
+	t_color	color;
+	
+	i = 0;
+	color = colors[0];
+	while (i + 1 < mini->N_LIGHT && i + 1 < LIGHT_MAX)
+	{
+		color = color_add(color, colors[i + 1]);
+		i++;
+	}
+	return(color);
+}
+
 t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 {
-	t_color		diffuse_direct;
-	t_color		ambiant;
-	t_color		spec;
-	t_color		final;
-	t_normal	normal;
-	
-	normal = get_object_normals(mini, obj, ray);
-	if (obj.type == sp)
-		diffuse_direct = light_sp(mini, obj, ray, normal);
-	else if (obj.type == pl)
-		diffuse_direct = light_pl(mini, obj, ray);
-	else if (obj.type == cy)
-		diffuse_direct = light_cy(mini, obj, ray);
-	else 
-		diffuse_direct = light_tr(mini, obj, ray);
-	if (!is_hard_shadow(diffuse_direct))
-		spec = specular(mini, obj, ray, normal); 
-	else
-		spec = (t_color){0, 0, 0, 0};
-	ambiant = apply_ambiant(mini, obj.color);
-	final = mix_colors(diffuse_direct, ambiant);
-	final = mix_layer(final, spec);
-	ray->color = final;
-	final = reflection(mini, ray, obj, normal);
+	t_color			diffuse_direct;
+	t_color			ambiant;
+	t_color			spec;
+	t_color			colors[LIGHT_MAX];
+	t_color			final;
+	t_light_utils	var;
+			
+	var.i = 0;
+	var.normal = get_object_normals(mini, obj, ray);
+	while (var.i < mini->N_LIGHT && var.i < LIGHT_MAX)
+	{
+		if (obj.type == sp)
+			diffuse_direct = light_sp(mini, obj, ray, var);
+		else if (obj.type == pl)
+			diffuse_direct = light_pl(mini, obj, ray, var);
+		else if (obj.type == cy)
+			diffuse_direct = light_cy(mini, obj, ray, var);
+		else 
+			diffuse_direct = light_tr(mini, obj, ray, var);
+		if (!is_hard_shadow(diffuse_direct))
+			spec = specular(mini, obj, ray, var); 
+		else
+			spec = (t_color){0, 0, 0, 0};
+		ambiant = apply_ambiant(mini, diffuse_direct);
+		colors[var.i] = color_add(diffuse_direct, ambiant);
+		colors[var.i] = mix_layer(colors[var.i], spec);
+		var.i++;
+	}
+	ray->color = mix_light(colors, mini);
+	final = reflection(mini, ray, obj, var.normal);
 	return (final);
 }

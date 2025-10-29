@@ -10,6 +10,7 @@
 # define BLOCK_SIZE_MAX 3
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
+# define LIGHT_MAX 10
 # define BOUNCE_MAX 3
 # include <unistd.h>
 # include <semaphore.h>
@@ -260,6 +261,12 @@ typedef struct s_normal
 	
 }			t_normal;
 
+typedef struct s_light_utils
+{
+	t_normal	normal;
+	int			i;
+	
+}				t_light_utils;
 
 // DRAW BASIC
 
@@ -363,7 +370,7 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
-t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
+t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin, int index_light);
 void		set_normal_tr(t_mini *mini);
 
 
@@ -414,8 +421,9 @@ t_vec3	get_left_corner_viewport(t_mini mini);
 
 // SPECULAR
 
-t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t);
-t_color 	specular(t_mini *mini, t_objet obj, t_ray *ray, t_normal n);
+t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t, int light_index);
+t_color		specular(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+
 
 //THREAD
 
@@ -442,10 +450,10 @@ t_boolean	init(t_mini *mini, char **av);
 
 // LIGHT
 
-t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_normal normal);
-t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray);
-t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray);
-t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray);
+t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
 
 // BOUNDS
 

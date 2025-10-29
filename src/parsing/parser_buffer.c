@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 00:28:07 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 14:19:11 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:20:53 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void	parse_cam(t_mini *mini, char *buffer)
 
 void	parse_a(t_mini	*mini, char	*buffer)
 {
-	mini->sc.light[mini->N_LIGHT].id = mini->N_OBJ;
-	mini->sc.light[mini->N_LIGHT].type = A;
+	mini->sc.ambiant.id = mini->N_OBJ;
+	mini->sc.ambiant.type = A;
 	while (ft_isalpha(*buffer))
 		buffer++;
-	mini->sc.light[mini->N_LIGHT].ratio = __atoi_double(&buffer);
-	mini->sc.light[mini->N_LIGHT].color = get_color(&buffer);
+	mini->sc.ambiant.ratio = __atoi_double(&buffer);
+	mini->sc.ambiant.color = get_color(&buffer);
 	mini->n_a++;
-	mini->N_LIGHT++;
 }
 
 void	parse_l(t_mini	*mini, char	*buffer)

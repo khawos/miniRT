@@ -6,22 +6,11 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:22:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/25 20:22:26 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:21:35 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-t_light	get_ambiant(t_mini *mini)
-{
-	int	i;
-
-	i = -1;
-	while (i++ < mini->N_LIGHT)
-		if (mini->sc.light[i].type == A)
-			return (mini->sc.light[i]);
-	return ((t_light){0});
-}
 
 t_boolean	bvh_init(t_mini *mini)
 {
@@ -71,7 +60,6 @@ t_boolean	init(t_mini *mini, char **av)
 	}
 	else
 		mini->bvh = NULL;
-	mini->sc.ambiant = get_ambiant(mini);
 	if (!open_window(mini))
 		return (free_mini(mini), false);
 	return (true);

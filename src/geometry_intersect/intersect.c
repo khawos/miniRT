@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 20:48:42 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:35:05 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 	return (false);
 }
 
-t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin)
+t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin, int index_light)
 {
 	t_is_intersect	var;
 
 	var.i = -1;
 	var.tmp = 0;
-	var.intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[1].pos,
+	var.intersect_to_light = vec_get_norme(vec_substact(mini->sc.light[index_light].pos,
 				origin));
 	while (++var.i < mini->N_OBJ)
 	{

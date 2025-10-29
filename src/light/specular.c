@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 22:40:05 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/28 23:54:16 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,26 @@ typedef struct s_specular
 // 		var->normal = obj.normal;
 // }
 
-t_color	specular(t_mini *mini, t_objet obj, t_ray *ray, t_normal n)
+t_color	specular(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 {
 	t_specular	var;
 	t_color		light_color;
 	double		dot;
 	double		spec;
 
-	if (is_null_vector(n.texture))
-		var.normal = n.geometric;
+	if (is_null_vector(utils.normal.texture))
+		var.normal = utils.normal.geometric;
 	else
-		var.normal = n.texture;
+		var.normal = utils.normal.texture;
 	spec = 15;
 	if (obj.spec != -1)
 		spec = obj.spec;
 	var.up_world = mini->up_world;
-	var.intersect = vec_add(mini->sc.cam[0].pos, vec_scale(ray->dir, ray->t));
-	var.to_light = vec_normalize(vec_substact(mini->sc.light[1].pos,
+	var.intersect = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	var.to_light = vec_normalize(vec_substact(mini->sc.light[utils.i].pos,
 				var.intersect));
-	light_color = color_scalar(mini->sc.light[1].color,
-			mini->sc.light[1].ratio);
+	light_color = color_scalar(mini->sc.light[utils.i].color,
+			mini->sc.light[utils.i].ratio);
 	var.to_cam = vec_normalize(vec_substact(ray->origin,
 				var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
