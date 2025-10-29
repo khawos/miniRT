@@ -44,8 +44,10 @@ void	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 	color = multiple_ray(mini, &ray);
 	if (ray.t_min == -1)
 		return ;									// error kill ici
-	if (ray.t_min == RENDER_DISTANCE)
+	if (ray.t_current == RENDER_DISTANCE)
+	{
 		color = put_background(x, y);
+	}
 	color_int = color_shift(color);
 	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
 		return ;

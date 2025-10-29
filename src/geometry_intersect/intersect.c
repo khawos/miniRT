@@ -164,22 +164,24 @@ t_color	intersect_loop(t_mini *mini, t_ray *ray)
 t_color	mix_ray(t_color ray_color[SAMPLE_MAX])
 {
 	int	i;	
-	int	r;	
-	int	b;	
-	int	g;
+	//int	r;	
+	//int	b;	
+	//int	g;
+	//
+	//i = 0;
+	//r = 0;
+	//b = 0;
+	//g = 0;
+	t_color	color;
 	
-	i = 0;
-	r = 0;
-	b = 0;
-	g = 0;
+	color = ray_color[0];
 	while (i < SAMPLE_MAX)
 	{
-		r += ray_color[i].r;
-		g += ray_color[i].g;
-		b += ray_color[i].b;
+		color = color_add(color, ray_color[i]);
 		i++;
 	}
-	return ((t_color){(unsigned char)(r / SAMPLE_MAX), (unsigned char)(g / SAMPLE_MAX), (unsigned char)(b / SAMPLE_MAX)});
+//	return ((t_color){(unsigned char)(r / SAMPLE_MAX), (unsigned char)(g / SAMPLE_MAX), (unsigned char)(b / SAMPLE_MAX)});
+	return (color);
 }
 
 t_color	multiple_ray(t_mini *mini, t_ray *ray)

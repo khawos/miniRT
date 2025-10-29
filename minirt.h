@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1440
-# define WIDTH 2560
+# define HEIGHT 720
+# define WIDTH 1280
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
@@ -12,7 +12,7 @@
 # define DEEPTH	8
 # define LIGHT_MAX 10
 # define BOUNCE_MAX 10
-# define SAMPLE_MAX 1
+# define SAMPLE_MAX 5
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
