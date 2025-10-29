@@ -2,16 +2,17 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 1440
+# define WIDTH 2560
 # define M_PI       3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 3
+# define BLOCK_SIZE_MAX 20
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
-# define BOUNCE_MAX 3
+# define BOUNCE_MAX 10
+# define SAMPLE_MAX 1
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -66,6 +67,15 @@ typedef struct s_bounds
 	int		deepth;
 
 }		t_bounds;
+
+typedef struct s_offset_bounds
+{
+	double	delta_u_max;
+	double	delta_u_min;	
+	double	delta_v_max;
+	double	delta_v_min;
+
+}				t_delta_offset;
 
 typedef	struct s_bvh
 {
@@ -246,8 +256,10 @@ typedef struct	s_mini
 
 typedef	struct s_ray
 {
-	double		t;
-	t_vec3		dir;
+	double		t_min;
+	double		t_current;
+	t_vec3		*dir_tab;
+	t_vec3		current_dir;
 	t_vec3		origin;
 	t_color		color;
 	int			bounce;
@@ -437,6 +449,7 @@ unsigned long	chrono(void);
 
 // render 
 
+t_color	multiple_ray(t_mini *mini, t_ray *ray);
 int render_loop(t_mini *mini);
 
 // Cast utils
@@ -509,5 +522,14 @@ t_normal		get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 // reflection
 
-t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+t_color			 reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+
+// ray direction setup
+
+t_vec3			*ray_direction_allocation(void);
+t_vec3			*ray_offset(t_vec3	*ray_direction, t_delta_offset bounds, t_mini *mini);
+t_delta_offset	get_first_offset_ray_bounds(t_mini *mini, t_var_trace var);
+
+
+
 #endif

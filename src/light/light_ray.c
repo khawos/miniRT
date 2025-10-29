@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/29 13:48:45 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:33:11 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 	t_vec3		base_cy;
 	t_vec3		p;
 	
-	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
 	if (obj.type == sp)
 	{
 		normal = get_normal_sp_from_map(mini, obj, ray);
@@ -36,7 +36,7 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 		normal.texture = vec_create(0,0,0);
 		return (normal);
 	}
-	if (obj.type == cy && ray->t != intersect_cap(ray->origin, ray->dir, obj))
+	if (obj.type == cy && ray->t_current != intersect_cap(ray->origin, ray->current_dir, obj))
 	{
 		base_cy = vec_substact(obj.pos, vec_scale(obj.vec_dir, obj.height / 2));
 		normal.geometric = vec_normalize(vec_substact(p,
@@ -60,7 +60,7 @@ t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t, int light_index)
 	t_boolean	result;
 
 	p_intersect = vec_add(ray.origin,
-			vec_scale(ray.dir, t));
+			vec_scale(ray.current_dir, t));
 	secondary_ray = vec_substact(mini->sc.light[light_index].pos, p_intersect);
 	result = is_intersect(mini, vec_normalize(secondary_ray), p_intersect, light_index);
 	return (result);

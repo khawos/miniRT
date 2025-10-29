@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 14:17:57 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 18:04:05 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 	return (color_multiplie(ambiant, color));
 }
 
-void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
+void	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 {
 	t_color			color;
 	t_vec2			index;
@@ -38,13 +38,13 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	unsigned int	color_int;
 
 	ray.origin = mini->sc.cam[mini->cam_lock].pos;
-	ray.dir = ray_direction;
+	ray.dir_tab = ray_direction;
 	ray.bounce = 0;
-	ray.t == RENDER_DISTANCE;
-	color = intersect_loop(mini, &ray);
-	if (ray.t == -1)
-		return;									// error kill ici
-	if (ray.t == RENDER_DISTANCE)
+	ray.t_min == RENDER_DISTANCE;
+	color = multiple_ray(mini, &ray);
+	if (ray.t_min == -1)
+		return ;									// error kill ici
+	if (ray.t_min == RENDER_DISTANCE)
 		color = put_background(x, y);
 	color_int = color_shift(color);
 	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
@@ -59,20 +59,30 @@ void	put_pixel_block(t_mini *mini, t_vec3 ray_direction, int x, int y)
 	}
 }
 
-static void	render_line(t_mini *mini, t_var_trace *var, t_cam cam, t_vec3 ray_d)
+static void	render_line(t_mini *mini, t_var_trace *var, double step_u, t_vec3 ray_d)
 {
-	t_vec3	ray_dir;
-
+	t_vec3						*ray_dir;
+	t_delta_offset				bounds;
+	double						step_v;
+	t_cam						cam;
+	
+	cam = mini->sc.cam[mini->cam_lock];
+	bounds.delta_u_min = var->delta_u;
+	bounds.delta_u_max = var->delta_u + (step_u * 1);
 	var->j = 0;
-	var->delta_v = 0;
+	bounds.delta_v_min = 0;
+	step_v = (cam.w / (double)WIDTH);
 	while (var->j < WIDTH)
 	{
-		ray_dir = vec_normalize(vec_substact(
-					vec_add(ray_d, vec_scale(cam.right, var->delta_v)),
-					cam.pos));
+		bounds.delta_v_max = bounds.delta_v_min + (step_v * 1);
+		ray_dir = ray_direction_allocation();
+		if (!ray_dir)
+			return ;	// error kill here
+		ray_dir = ray_offset(ray_dir, bounds, mini);
 		put_pixel_block(mini, ray_dir, var->j, var->i);
 		var->j += mini->block_size;
-		var->delta_v += mini->block_size * (cam.w / (double)WIDTH);
+		bounds.delta_v_min += mini->block_size * step_v;
+		free(ray_dir);
 	}
 }
 
@@ -82,6 +92,7 @@ void	*cast(void *arg)
 	t_vec3		ray_direction;
 	t_cam		cam;
 	t_mini		*mini;
+	double		step_u;
 
 	mini = (t_mini *)arg;
 	cam = mini->sc.cam[mini->cam_lock];
@@ -89,15 +100,16 @@ void	*cast(void *arg)
 	var.max = mini->max;
 	var.delta_u = get_delta_u(cam, var.i);
 	var.block_size = mini->block_size;
+	step_u = (cam.h / (double)HEIGHT);
 	sem_post(mini->m_cast);
 	while (var.i <= var.max)
 	{
 		ray_direction = vec_substact(mini->left_corner,
 				vec_scale(cam.up, var.delta_u));
 		sem_wait(mini->s_img);
-		render_line(mini, &var, cam, ray_direction);
+		render_line(mini, &var, step_u, ray_direction);
 		var.i += mini->block_size;
-		var.delta_u += mini->block_size * (cam.h / (double)HEIGHT);
+		var.delta_u += mini->block_size * step_u;
 		sem_post(mini->s_img);
 	}
 	return (NULL);

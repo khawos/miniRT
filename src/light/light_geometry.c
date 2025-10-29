@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 01:36:12 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:32:41 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 		normal = utils.normal.geometric;
 	else
 		normal = utils.normal.texture;		
-	if (shadow_ray(mini, *ray, ray->t, utils.i))
+	if (shadow_ray(mini, *ray, ray->t_current, utils.i))
 		return ((t_color){0, 0, 0, 1});
-	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, obj.pos);
 	texture.color = get_color_from_map(obj, p, mini->up_world);
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
@@ -43,9 +43,9 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	t_vec3	to_light;
 	double	dot;
 
-	if (shadow_ray(mini, *ray, ray->t, utils.i))
+	if (shadow_ray(mini, *ray, ray->t_current, utils.i))
 		return ((t_color){0, 0, 0, 1});
-	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
 	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
 	return (color_scalar(color_multiplie(obj.color,
@@ -61,7 +61,7 @@ t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 
 	//if (shadow_ray(mini, ray_dir, t))
 	//	return ((t_color){0, 0, 0, 1});
-	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
 	dot = fabs(vec_dot(obj.normal, vec_normalize(to_light)));
 	return (color_scalar(color_multiplie(obj.color,
@@ -83,11 +83,11 @@ t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	t_vec3	base;
 	double	dot;
 
-	if (shadow_ray(mini, *ray, ray->t, utils.i))
+	if (shadow_ray(mini, *ray, ray->t_current, utils.i))
 		return ((t_color){0, 0, 0, 1});
-	p = vec_add(ray->origin, vec_scale(ray->dir, ray->t));
+	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
-	if (ray->t == intersect_cap(ray->origin, ray->dir, obj))
+	if (ray->t_current == intersect_cap(ray->origin, ray->current_dir, obj))
 		light_cy_util(&dot, &normal, obj, to_light);
 	else
 	{

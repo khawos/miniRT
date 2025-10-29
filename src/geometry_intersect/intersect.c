@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/29 00:35:05 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 18:57:08 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,16 @@ static double	handle_object(t_mini *mini, t_ray ray, int i, double t)
 	obj = mini->sc.objet[i];
 	tmp = 0;
 	if (obj.type == sp)
-		tmp = intersect_sp(ray.origin, ray.dir, obj);
+		tmp = intersect_sp(ray.origin, ray.current_dir, obj);
 	else if (obj.type == pl)
-		tmp = intersect_pl(ray.origin, ray.dir, obj);
+		tmp = intersect_pl(ray.origin, ray.current_dir, obj);
 	else if (obj.type == cy)
 	{
 		obj.vec_dir = vec_normalize(obj.vec_dir);
-		tmp = intersect_cy(ray.origin, ray.dir, obj);
+		tmp = intersect_cy(ray.origin, ray.current_dir, obj);
 		if (tmp > 0 && tmp < t)
 			return (tmp);
-		tmp = intersect_cap(ray.origin, ray.dir, obj);
+		tmp = intersect_cap(ray.origin, ray.current_dir, obj);
 		if (tmp > 0 && tmp < t)
 			return (tmp);
 	}
@@ -103,27 +103,27 @@ double	get_nearest_triangle(int *closest, t_ray *ray, t_mini *mini)
 
 	size = 0;
 	tr_index = NULL;
-	tr_index = search_tr_in_tree(mini->bvh, ray->origin, ray->dir, &size, tr_index);
+	tr_index = search_tr_in_tree(mini->bvh, ray->origin, ray->current_dir, &size, tr_index);
 	if (size == -1)
-		return (ray->t = -1, ray->t);
+		return (ray->t_current = -1, ray->t_current);
 	i = 0;
 	if (tr_index)
 	{
 		while (i < size)
 		{
 			tmp = intersect_tr(ray->origin,
-				ray->dir, mini->sc.objet_tr[tr_index[i]]);
+				ray->current_dir, mini->sc.objet_tr[tr_index[i]]);
 
-			if (tmp > 0 && tmp < ray->t)
+			if (tmp > 0 && tmp < ray->t_current)
 			{
-				ray->t = tmp;
+				ray->t_current = tmp;
 				*closest = tr_index[i];
 			}
 			i++;
 		}
 		free(tr_index);
 	}
-	return (ray->t);
+	return (ray->t_current);
 }
 
 t_color	intersect_loop(t_mini *mini, t_ray *ray)
@@ -134,29 +134,73 @@ t_color	intersect_loop(t_mini *mini, t_ray *ray)
 
 	closest = 0;
 	i = -1;
-	ray->t = RENDER_DISTANCE;
+	ray->t_current = RENDER_DISTANCE;
 	while (++i < mini->N_OBJ)
 	{
-		tmp = handle_object(mini, *ray, i, ray->t);
-		if (tmp < ray->t)
+		tmp = handle_object(mini, *ray, i, ray->t_current);
+		if (tmp < ray->t_current)
 		{
-			ray->t = tmp;
+			ray->t_current = tmp;
 			closest = i;
 		}
 	}
 	i = -1; 
 	if (mini->bvh)
 	{
-		tmp = ray->t;
-		ray->t = get_nearest_triangle(&closest, ray, mini);
-		if (ray->t == -1)
+		tmp = ray->t_current;
+		ray->t_current = get_nearest_triangle(&closest, ray, mini);
+		if (ray->t_current == -1)
 		 	return ((t_color){0, 0, 0, 0});
-		if (tmp > ray->t)
+		if (tmp > ray->t_current)
 			return (light_ray(mini, ray, mini->sc.objet_tr[closest]));
 		else
-			ray->t = tmp;
+			ray->t_current = tmp;
 	}
-	if (ray->t != RENDER_DISTANCE)
+	if (ray->t_current != RENDER_DISTANCE)
 		return (light_ray(mini, ray, mini->sc.objet[closest]));
 	return ((t_color){0, 0, 0, 0});
+}
+
+t_color	mix_ray(t_color ray_color[SAMPLE_MAX])
+{
+	int	i;	
+	int	r;	
+	int	b;	
+	int	g;
+	
+	i = 0;
+	r = 0;
+	b = 0;
+	g = 0;
+	while (i < SAMPLE_MAX)
+	{
+		r += ray_color[i].r;
+		g += ray_color[i].g;
+		b += ray_color[i].b;
+		i++;
+	}
+	return ((t_color){(unsigned char)(r / SAMPLE_MAX), (unsigned char)(g / SAMPLE_MAX), (unsigned char)(b / SAMPLE_MAX)});
+}
+
+t_color	multiple_ray(t_mini *mini, t_ray *ray)
+{
+	t_color	ray_color[SAMPLE_MAX];
+	int		i;
+
+	i = 0;
+	ray->current_dir = ray->dir_tab[0];
+	if (mini->block_size != 1)
+		return (intersect_loop(mini, ray));
+	else
+	{
+		while (i < SAMPLE_MAX)
+		{
+			ray->current_dir = ray->dir_tab[i];
+			ray_color[i] = intersect_loop(mini, ray);
+			if (ray->t_current < ray->t_min)
+				ray->t_min = ray->t_current;
+			i++;
+		}
+		return (mix_ray(ray_color));
+	}
 }

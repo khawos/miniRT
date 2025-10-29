@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:11:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/17 10:46:19 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 17:31:48 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	render_loop(t_mini *mini)
 	time = 0;
 	limit = 250;
 	time = chrono() - mini->last_input;
+	if(mini->block_size == 1)
+		return (0);
 	if (mini->block_size > 1 && time >= limit && mini->block_size > BLOCK_SIZE_MIN)
 	{
 		if (mini->block_size == 2)
@@ -64,5 +66,6 @@ int	render_loop(t_mini *mini)
 			mini->block_size -= 2;
 	}
 	run_thread(mini);
+	printf("[COMPLETED] Render at : %d\n", mini->block_size);
 	return (0);
 }
