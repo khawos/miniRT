@@ -1,27 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uv_mapping.c                                       :+:      :+:    :+:   */
+/*   thread_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/19 11:40:06 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 14:06:58 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/30 15:20:18 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/30 15:48:03 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec2	get_uv_sp(t_vec3 normal, t_vec2 size)
+void	kill_all_thread(pthread_t *thid, int n)
 {
-	t_vec2	texture;
-	double	phi;
-	double	theta;
-	double	y_ratio;
+	int	i;
 
-	phi = atan2(normal.z, normal.x);
-	theta = acos(normal.y);
-	texture.u = ((-phi + M_PI) / (2 * M_PI)) * (size.u - 1);
-	texture.v = (theta / M_PI) * (size.v - 1);
-	return (texture);
+	i = 0;
+	while (i < N_THREAD && thid)
+	{
+		if (i == n)
+			i++;
+		pthread_detach(thid[i]);
+		i++;
+	}
+}
+
+void	thread_create_failed(pthread_t *thid, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		pthread_detach(thid[i]);
+		i++;
+	}
+}
+
+void	error_in_thread(t_mini *mini)
+{
+	pthread_mutex_lock(mini->error);
+	mini->thread_crash = true;
+	pthread_mutex_unlock(mini->error);
 }

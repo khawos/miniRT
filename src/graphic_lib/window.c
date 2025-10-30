@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:24 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/17 12:04:11 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:48:18 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_boolean	open_window(t_mini *mini)
 
 int	close_window(t_mini *mini)
 {
+	kill_all_thread(mini->thid, -1);
 	mlx_destroy_image(mini->display.mlx, mini->display.img.img);
 	mlx_destroy_window(mini->display.mlx, mini->display.mlx_win);
 	mlx_destroy_display(mini->display.mlx);

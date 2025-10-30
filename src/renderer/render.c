@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:11:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/17 10:46:19 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:47:25 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,37 @@ static void	run_thread_utils(t_mini *mini, int *h)
 t_boolean	run_thread(t_mini *mini)
 {
 	int			h;
-	pthread_t	thid[N_THREAD];
+	pthread_t	error_monitor;
 	int			i;
 
+	mini->thid = malloc(sizeof(pthread_t) * N_THREAD);
+	if (!mini->thid )
+		return (false);
 	set_up_cam(mini);
 	run_thread_utils(mini, &h);
 	i = -1;
+	mini->break_ = false;
 	while (++i < N_THREAD)
 	{
 		sem_wait(mini->m_cast);
 		if (i != 0)
 			mini->min = mini->max;
 		mini->max = h + (h * i);
-		if (pthread_create(&thid[i], NULL, cast, mini) < 0)
-			return (false);									// ATTENTION FREE + KILL THREAD
+		if (pthread_create(&mini->thid [i], NULL, cast, mini) < 0)
+			return (thread_create_failed(mini->thid , i), false);
 	}
 	i = -1;
 	while (++i < N_THREAD)
-		pthread_join(thid[i], NULL);
+	{
+		pthread_join(mini->thid [i], NULL);
+		pthread_mutex_lock(mini->error);
+		if (mini->thread_crash)
+			return (kill_all_thread(mini->thid , i),
+				pthread_mutex_unlock(mini->error), false);
+		pthread_mutex_unlock(mini->error);
+	}
+	free(mini->thid);
+	mini->thid = NULL;
 	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
 		mini->display.img.img, 0, 0);
 	return (true);
@@ -65,6 +78,11 @@ int	render_loop(t_mini *mini)
 		else
 			mini->block_size -= 2;
 	}
-	run_thread(mini);
+	if (!run_thread(mini))
+	{
+		write(2, "Something goes wrong during rendering.\n", 40);
+		close_window(mini);
+	}
+	printf("[COMPLETED] Render at : %d\n", mini->block_size);
 	return (0);
 }

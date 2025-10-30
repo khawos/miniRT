@@ -2,15 +2,17 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1080
-# define M_PI       3.14159265358979323846
+# define HEIGHT 1440
+# define WIDTH 2560
+# define M_PI 3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 3
-# define BLOCK_SIZE_MIN 2
+# define BLOCK_SIZE_MAX 10
+# define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
+# define LIGHT_MAX 10
 # define BOUNCE_MAX 3
+# define SAMPLE_MAX 4
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -76,6 +78,15 @@ typedef struct s_bounds
 	int		deepth;
 
 }		t_bounds;
+
+typedef struct s_offset_bounds
+{
+	double	delta_u_max;
+	double	delta_u_min;	
+	double	delta_v_max;
+	double	delta_v_min;
+
+}				t_delta_offset;
 
 typedef	struct s_bvh
 {
@@ -253,6 +264,10 @@ typedef struct	s_mini
 	int		N_LIGHT;
 	int		block_size;
 	t_vec3	up_world;
+	pthread_mutex_t	*error;
+	pthread_t	*thid;
+	t_boolean		thread_crash;
+	t_boolean		break_;
 	unsigned long	last_input;
 	t_mouse	mouse;
 }				t_mini;
@@ -260,7 +275,8 @@ typedef struct	s_mini
 typedef	struct s_ray
 {
 	double		t;
-	t_vec3		dir;
+	t_vec3		*dir_tab;
+	t_vec3		current_dir;
 	t_vec3		origin;
 	t_color		color;
 	int			bounce;
@@ -274,6 +290,13 @@ typedef struct s_normal
 	
 }			t_normal;
 
+typedef struct s_light_utils
+{
+	t_normal	normal;
+	t_color		*light_colors;
+	int			i;
+	
+}				t_light_utils;
 
 // DRAW BASIC
 
@@ -377,7 +400,7 @@ double	intersect_cy(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_sp(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
-t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
+t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin, int index_light);
 void		set_normal_tr(t_mini *mini);
 
 
@@ -428,8 +451,9 @@ t_vec3	get_left_corner_viewport(t_mini mini);
 
 // SPECULAR
 
-t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t);
-t_color 	specular(t_mini *mini, t_objet obj, t_ray *ray, t_normal n);
+t_boolean	shadow_ray(t_mini *mini, t_ray ray, double t, int light_index);
+t_color		specular(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+
 
 //THREAD
 
@@ -443,6 +467,7 @@ unsigned long	chrono(void);
 
 // render 
 
+t_color	multiple_ray(t_mini *mini, t_ray *ray);
 int render_loop(t_mini *mini);
 
 // Cast utils
@@ -456,10 +481,10 @@ t_boolean	init(t_mini *mini, char **av);
 
 // LIGHT
 
-t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_normal normal);
-t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray);
-t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray);
-t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray);
+t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
+t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils);
 
 // BOUNDS
 
@@ -525,5 +550,22 @@ int		handle_key_press(int keycode, t_mini *mini);
 int		handle_key_release(int keycode, t_mini *mini);
 void	update_camera_vectors(t_cam *cam);
 int	handle_mouse_scroll(int button, int x, int y, t_mini *mini);
+t_color			 reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+
+// ray direction setup
+
+t_vec3			*ray_direction_allocation(void);
+t_vec3			*ray_offset(t_vec3	*ray_direction, t_delta_offset bounds, t_mini *mini);
+t_delta_offset	get_first_offset_ray_bounds(t_mini *mini, t_var_trace var);
+
+// THREAD UTILS
+
+void	kill_all_thread(pthread_t *thid, int n);
+void	thread_create_failed(pthread_t *thid, int n);
+void	error_in_thread(t_mini *mini);
+
+// NORMAL
+
+t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray);
 
 #endif

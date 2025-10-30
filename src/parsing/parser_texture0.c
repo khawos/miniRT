@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:47:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 16:52:01 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:07:33 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ unsigned int	**get_texture(char *file, t_t_map *map)
     texture = extract_texture(fd, map->size, tab_color);
 	if (!texture)
 		return (free_double_array(tab_color), NULL);
+	free_double_array(tab_color);
 	close(fd);
     return (texture);
 }

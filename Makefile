@@ -1,7 +1,7 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto #-g3 #-fsanitize=address #
-LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto  
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto 
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
@@ -14,6 +14,7 @@ SRC =	main.c \
 		renderer/cast.c \
 		renderer/render.c \
 		renderer/set_up_camera.c \
+		renderer/ray_direction_setup.c \
 		maths/M_math.c \
 		maths/M_math2.c \
 		maths/C_math0.c \
@@ -23,9 +24,11 @@ SRC =	main.c \
 		geometry_intersect/geometry1.c \
 		geometry_intersect/geometry2.c \
 		geometry_intersect/geometry3.c \
+		geometry_intersect/normal.c \
 		utils/horloge.c \
 		utils/cast_utils.c \
 		utils/free.c \
+		utils/thread_utils.c \
 		utils/utils.c \
 		utils/mini_initialisation.c \
 		utils/debug.c \
