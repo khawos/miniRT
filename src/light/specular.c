@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:02:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 16:33:25 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:38:41 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_color	specular(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	if (obj.spec != -1)
 		spec = obj.spec;
 	var.up_world = mini->up_world;
-	var.intersect = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
+	var.intersect = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	var.to_light = vec_normalize(vec_substact(mini->sc.light[utils.i].pos,
 				var.intersect));
 	light_color = color_scalar(mini->sc.light[utils.i].color,

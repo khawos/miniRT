@@ -1,6 +1,6 @@
 A  1 255,255,255
 
-C -400,0,50 1,0,0 80
+C -400,0,250 1,0,-0.2 80
 
 L 0,-450,150 1 125,0,0
 L 0,0,400 0.8 255,255,255
@@ -9,7 +9,7 @@ L 0,450,150 0.5 0,0,125
 
 sp 0,-600,50 200 150,150,150 spec=20 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm"
 
-sp 0,-300,50 200 255,0,0 spec=10 roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
+sp 0,-300,50 200 255,0,0 spec=10 normal="texture_file/brick_normal.xpm"
 
 sp 0,0,50 200 150,150,150 spec=20 albedo="texture_file/snow_03_diff_2k.xpm" normal="texture_file/snow_03_nor_dx_2k.xpm"
 

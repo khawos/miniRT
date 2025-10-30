@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/29 18:57:08 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:51:59 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ double	get_nearest_triangle(int *closest, t_ray *ray, t_mini *mini)
 	tr_index = NULL;
 	tr_index = search_tr_in_tree(mini->bvh, ray->origin, ray->current_dir, &size, tr_index);
 	if (size == -1)
-		return (ray->t_current = -1, ray->t_current);
+		return (ray->t = -1, ray->t);
 	i = 0;
 	if (tr_index)
 	{
@@ -114,16 +114,16 @@ double	get_nearest_triangle(int *closest, t_ray *ray, t_mini *mini)
 			tmp = intersect_tr(ray->origin,
 				ray->current_dir, mini->sc.objet_tr[tr_index[i]]);
 
-			if (tmp > 0 && tmp < ray->t_current)
+			if (tmp > 0 && tmp < ray->t)
 			{
-				ray->t_current = tmp;
+				ray->t = tmp;
 				*closest = tr_index[i];
 			}
 			i++;
 		}
 		free(tr_index);
 	}
-	return (ray->t_current);
+	return (ray->t);
 }
 
 t_color	intersect_loop(t_mini *mini, t_ray *ray)
@@ -131,78 +131,90 @@ t_color	intersect_loop(t_mini *mini, t_ray *ray)
 	int		i;
 	int		closest;
 	double	tmp;
+	t_color	final;
 
+	final = (t_color){0, 0, 0, 0};
 	closest = 0;
 	i = -1;
-	ray->t_current = RENDER_DISTANCE;
+	ray->t = RENDER_DISTANCE;
 	while (++i < mini->N_OBJ)
 	{
-		tmp = handle_object(mini, *ray, i, ray->t_current);
-		if (tmp < ray->t_current)
+		tmp = handle_object(mini, *ray, i, ray->t);
+		if (tmp < ray->t)
 		{
-			ray->t_current = tmp;
+			ray->t = tmp;
 			closest = i;
 		}
 	}
 	i = -1; 
 	if (mini->bvh)
 	{
-		tmp = ray->t_current;
-		ray->t_current = get_nearest_triangle(&closest, ray, mini);
-		if (ray->t_current == -1)
+		tmp = ray->t;
+		ray->t = get_nearest_triangle(&closest, ray, mini);
+		if (ray->t == -1)
 		 	return ((t_color){0, 0, 0, 0});
-		if (tmp > ray->t_current)
-			return (light_ray(mini, ray, mini->sc.objet_tr[closest]));
+		if (tmp > ray->t)
+		{
+			final = light_ray(mini, ray, mini->sc.objet_tr[closest]);
+			return (final);
+		}
 		else
-			ray->t_current = tmp;
+			ray->t = tmp;
 	}
-	if (ray->t_current != RENDER_DISTANCE)
-		return (light_ray(mini, ray, mini->sc.objet[closest]));
-	return ((t_color){0, 0, 0, 0});
+	if (ray->t != RENDER_DISTANCE)
+	{
+		final = light_ray(mini, ray, mini->sc.objet[closest]);
+		return (final);
+	}
+	return (final);
 }
 
-t_color	mix_ray(t_color ray_color[SAMPLE_MAX])
+t_color	mix_ray(t_color *ray_color)
 {
 	int	i;	
-	//int	r;	
-	//int	b;	
-	//int	g;
-	//
-	//i = 0;
-	//r = 0;
-	//b = 0;
-	//g = 0;
-	t_color	color;
+	int	r;	
+	int	b;	
+	int	g;
 	
-	color = ray_color[0];
+	i = 0;
+	r = 0;
+	b = 0;
+	g = 0;	
 	while (i < SAMPLE_MAX)
 	{
-		color = color_add(color, ray_color[i]);
+		r += ray_color[i].r;
+		g += ray_color[i].g;
+		b += ray_color[i].b;
 		i++;
 	}
-//	return ((t_color){(unsigned char)(r / SAMPLE_MAX), (unsigned char)(g / SAMPLE_MAX), (unsigned char)(b / SAMPLE_MAX)});
-	return (color);
+	return ((t_color){(unsigned char)(r / SAMPLE_MAX),
+				(unsigned char)(g / SAMPLE_MAX),
+					(unsigned char)(b / SAMPLE_MAX)});
 }
 
 t_color	multiple_ray(t_mini *mini, t_ray *ray)
 {
-	t_color	ray_color[SAMPLE_MAX];
+	t_color	*ray_color;
+	t_color	final;
 	int		i;
 
-	i = 0;
+	i = -1;
+	ray_color = malloc(sizeof(t_color) * SAMPLE_MAX);
+	if (!ray_color)
+		return (ray->t = -1, (t_color){0, 0, 0});
 	ray->current_dir = ray->dir_tab[0];
 	if (mini->block_size != 1)
-		return (intersect_loop(mini, ray));
+		return (free(ray_color), intersect_loop(mini, ray));
 	else
 	{
-		while (i < SAMPLE_MAX)
+		while (++i < SAMPLE_MAX)
 		{
 			ray->current_dir = ray->dir_tab[i];
 			ray_color[i] = intersect_loop(mini, ray);
-			if (ray->t_current < ray->t_min)
-				ray->t_min = ray->t_current;
-			i++;
+			if (ray->t == -1)
+				return (free(ray_color),(t_color){0, 0, 0});
 		}
-		return (mix_ray(ray_color));
+		final = mix_ray(ray_color);
+		return (free(ray_color), final);
 	}
 }

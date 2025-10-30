@@ -1,7 +1,7 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -g3 -fsanitize=address #  -O3 -flto  
-LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -g3 #-O3 -flto  
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto 
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
@@ -24,9 +24,11 @@ SRC =	main.c \
 		geometry_intersect/geometry1.c \
 		geometry_intersect/geometry2.c \
 		geometry_intersect/geometry3.c \
+		geometry_intersect/normal.c \
 		utils/horloge.c \
 		utils/cast_utils.c \
 		utils/free.c \
+		utils/thread_utils.c \
 		utils/utils.c \
 		utils/mini_initialisation.c \
 		utils/debug.c \

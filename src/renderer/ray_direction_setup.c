@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 15:23:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 17:59:02 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 13:11:13 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 double randfrom(double min, double max) 
 {
-    double range;
-    double div;
-
-    srand (time ( NULL));
-	range = (max - min); 
-	div = RAND_MAX * 1/range;
-	return (min + (rand() / div));
+	double result;
+	
+	result = convert_range(rand(), RAND_MAX, min, max);
+	return (result);
 }
 
 t_vec3	create_first_ray_dir(t_mini *mini, t_delta_offset bounds)
@@ -56,6 +53,11 @@ t_vec3	*ray_offset(t_vec3	*ray_direction, t_delta_offset bounds, t_mini *mini)
 	int	i;
 
 	i = 0;
+	if (mini->block_size != 1)
+	{
+		ray_direction[i] = create_first_ray_dir(mini, bounds);
+		return (ray_direction);
+	}
 	while (i < SAMPLE_MAX)
 	{
 		ray_direction[i] = create_first_ray_dir(mini, bounds);

@@ -2,17 +2,17 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1280
-# define M_PI       3.14159265358979323846
+# define HEIGHT 1440
+# define WIDTH 2560
+# define M_PI 3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 20
+# define BLOCK_SIZE_MAX 10
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
-# define BOUNCE_MAX 10
-# define SAMPLE_MAX 5
+# define BOUNCE_MAX 3
+# define SAMPLE_MAX 4
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -251,13 +251,16 @@ typedef struct	s_mini
 	int		N_LIGHT;
 	int		block_size;
 	t_vec3	up_world;
+	pthread_mutex_t	*error;
+	pthread_t	*thid;
+	t_boolean		thread_crash;
+	t_boolean		break_;
 	unsigned long	last_input;
 }				t_mini;
 
 typedef	struct s_ray
 {
-	double		t_min;
-	double		t_current;
+	double		t;
 	t_vec3		*dir_tab;
 	t_vec3		current_dir;
 	t_vec3		origin;
@@ -276,6 +279,7 @@ typedef struct s_normal
 typedef struct s_light_utils
 {
 	t_normal	normal;
+	t_color		*light_colors;
 	int			i;
 	
 }				t_light_utils;
@@ -530,6 +534,14 @@ t_vec3			*ray_direction_allocation(void);
 t_vec3			*ray_offset(t_vec3	*ray_direction, t_delta_offset bounds, t_mini *mini);
 t_delta_offset	get_first_offset_ray_bounds(t_mini *mini, t_var_trace var);
 
+// THREAD UTILS
 
+void	kill_all_thread(pthread_t *thid, int n);
+void	thread_create_failed(pthread_t *thid, int n);
+void	error_in_thread(t_mini *mini);
+
+// NORMAL
+
+t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray);
 
 #endif

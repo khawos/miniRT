@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 18:04:05 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:26:54 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_color	apply_ambiant(t_mini *mini, t_color color)
 	return (color_multiplie(ambiant, color));
 }
 
-void	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
+t_boolean	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 {
 	t_color			color;
 	t_vec2			index;
@@ -40,14 +40,11 @@ void	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 	ray.origin = mini->sc.cam[mini->cam_lock].pos;
 	ray.dir_tab = ray_direction;
 	ray.bounce = 0;
-	ray.t_min == RENDER_DISTANCE;
 	color = multiple_ray(mini, &ray);
-	if (ray.t_min == -1)
-		return ;									// error kill ici
-	if (ray.t_current == RENDER_DISTANCE)
-	{
+	if (ray.t == -1)
+		return (false);
+	if (ray.t == RENDER_DISTANCE)
 		color = put_background(x, y);
-	}
 	color_int = color_shift(color);
 	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
 		return ;
@@ -59,9 +56,10 @@ void	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 			my_mlx_pixel_put(mini, x + index.v, y + index.u, color_int);
 		index.u++;
 	}
+	return (true);
 }
 
-static void	render_line(t_mini *mini, t_var_trace *var, double step_u, t_vec3 ray_d)
+static t_boolean	render_line(t_mini *mini, t_var_trace *var, double step_u)
 {
 	t_vec3						*ray_dir;
 	t_delta_offset				bounds;
@@ -79,19 +77,20 @@ static void	render_line(t_mini *mini, t_var_trace *var, double step_u, t_vec3 ra
 		bounds.delta_v_max = bounds.delta_v_min + (step_v * 1);
 		ray_dir = ray_direction_allocation();
 		if (!ray_dir)
-			return ;	// error kill here
+			return (false);
 		ray_dir = ray_offset(ray_dir, bounds, mini);
-		put_pixel_block(mini, ray_dir, var->j, var->i);
+		if (!put_pixel_block(mini, ray_dir, var->j, var->i))
+			return (free(ray_dir), false);
 		var->j += mini->block_size;
 		bounds.delta_v_min += mini->block_size * step_v;
 		free(ray_dir);
 	}
+	return (true);
 }
 
 void	*cast(void *arg)
 {
 	t_var_trace	var;
-	t_vec3		ray_direction;
 	t_cam		cam;
 	t_mini		*mini;
 	double		step_u;
@@ -106,10 +105,9 @@ void	*cast(void *arg)
 	sem_post(mini->m_cast);
 	while (var.i <= var.max)
 	{
-		ray_direction = vec_substact(mini->left_corner,
-				vec_scale(cam.up, var.delta_u));
 		sem_wait(mini->s_img);
-		render_line(mini, &var, step_u, ray_direction);
+		if (!render_line(mini, &var, step_u))
+			return (error_in_thread(mini), NULL);
 		var.i += mini->block_size;
 		var.delta_u += mini->block_size * step_u;
 		sem_post(mini->s_img);

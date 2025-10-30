@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 16:38:28 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:38:41 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 	t_normal		normal;
 	t_var_texture	info;
 	
-	intersect = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t_current));
+	intersect = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	normal.geometric = vec_normalize(vec_substact(intersect, obj.pos));
 	if (obj.mat.normal.map)
 	{
