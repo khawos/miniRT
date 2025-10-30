@@ -33,17 +33,12 @@ int	main(int ac, char **av)
 	mlx_hook(mini.display.mlx_win, DestroyNotify,
 		StructureNotifyMask, &close_window, &mini);
 	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,
-		handle_key_input, (t_mini *)&mini);
-	// test------------------
+		handle_key_input, &mini);
 	mlx_hook(mini.display.mlx_win, ButtonPress, ButtonPressMask, handle_mouse_press, &mini);
 	mlx_hook(mini.display.mlx_win, ButtonRelease, ButtonReleaseMask, handle_mouse_release, &mini);
 	mlx_hook(mini.display.mlx_win, MotionNotify, PointerMotionMask, handle_mouse_move, &mini);
 	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask, handle_key_press, &mini);
 	mlx_hook(mini.display.mlx_win, KeyRelease, KeyReleaseMask, handle_key_release, &mini);
-	//mlx_hook(mini.display.mlx_win, ButtonPress, ButtonPressMask, handle_mouse_scroll, &mini);
-
-	// test------------------
-	//mlx_mouse_hook(mini.display.mlx_win, handle_mouse_input, (t_mini *)&mini);
 	mlx_loop_hook(mini.display.mlx, render_loop, &mini);
 	mlx_loop(mini.display.mlx);
 	sem_close(mini.m_cast);

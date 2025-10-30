@@ -19,6 +19,6 @@ t_color	reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal n)
 	ray_bounce.bounce = old_ray->bounce + 1;
 	ray_bounce.origin = p;
 	ray_bounce.dir = vec_substact(old_ray->dir, vec_scale(normal, 2 * vec_dot(old_ray->dir, normal)));
-	bounce_color = mix_colors_ratio(intersect_loop(mini, &ray_bounce), old_ray->color, 0.3);
+	bounce_color = mix_colors_ratio(intersect_loop(mini, &ray_bounce), old_ray->color, 0.5);
 	return (bounce_color);
 }
