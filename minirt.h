@@ -31,6 +31,17 @@
 # include <limits.h>
 
 
+typedef struct s_mouse
+{
+	int		x;
+	int		y;
+	int		prev_x;
+	int		prev_y;
+	int		mid_pressed;
+	int		shift_pressed;
+}	t_mouse;
+
+
 typedef struct s_vec2
 {
 	int u;
@@ -190,6 +201,8 @@ typedef struct	s_camera
 	int				fov;
 	double			h;
 	double			w;
+	double	yaw;
+	double	pitch;
 }				t_cam;
 
 typedef	struct	s_light
@@ -256,6 +269,7 @@ typedef struct	s_mini
 	t_boolean		thread_crash;
 	t_boolean		break_;
 	unsigned long	last_input;
+	t_mouse	mouse;
 }				t_mini;
 
 typedef	struct s_ray
@@ -526,6 +540,16 @@ t_normal		get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
 // reflection
 
+t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+
+// mouse controls
+int		handle_mouse_press(int button, int x, int y, t_mini *mini);
+int		handle_mouse_release(int button, int x, int y, t_mini *mini);
+int		handle_mouse_move(int x, int y, t_mini *mini);
+int		handle_key_press(int keycode, t_mini *mini);
+int		handle_key_release(int keycode, t_mini *mini);
+void	update_camera_vectors(t_cam *cam);
+int	handle_mouse_scroll(int button, int x, int y, t_mini *mini);
 t_color			 reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
 
 // ray direction setup
