@@ -29,15 +29,13 @@ int	handle_mouse_press(int button, int x, int y, t_mini *mini)
 	}
 	else if (button == 4)
 	{
-		if (mini->sc.cam[mini->cam_lock].fov * 0.85 >= 20)
-			mini->sc.cam[mini->cam_lock].fov *= 0.85;
+		mini->sc.cam[mini->cam_lock].pos = vec_add(mini->sc.cam[mini->cam_lock].pos, vec_scale(mini->sc.cam[mini->cam_lock].vec_dir, 5));
 		mini->last_input = chrono();
 		mini->block_size = BLOCK_SIZE_MAX;
 	}
 	else if (button == 5)
 	{
-		if (mini->sc.cam[mini->cam_lock].fov * 1.15 <= 180)
-			mini->sc.cam[mini->cam_lock].fov *= 1.15;
+		mini->sc.cam[mini->cam_lock].pos = vec_substact(mini->sc.cam[mini->cam_lock].pos, vec_scale(mini->sc.cam[mini->cam_lock].vec_dir, 5));
     	mini->last_input = chrono();
 		mini->block_size = BLOCK_SIZE_MAX;
 	}
