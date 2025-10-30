@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -g3 #-O3 -flto  
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto  
 LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto 
 OBJ_DIR = obj
 SRC_DIR = src
