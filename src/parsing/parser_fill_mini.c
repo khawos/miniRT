@@ -6,13 +6,13 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/17 11:09:02 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 23:14:31 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
+t_boolean	fill_mini_switch(t_mini *mini, char *buffer)
 {
 	if (!ft_strncmp(buffer, "C", 1))
 	{
@@ -24,7 +24,7 @@ t_boolean	fill_mini_switch(t_mini *mini, char *buffer, int i)
 	if (!ft_strncmp(buffer, "L", 1))
 		return (parse_l(mini, buffer), true);
 	if (!ft_strncmp(buffer, "sp", 2))
-		return (parse_sp(mini, buffer), true);
+		return (parse_sp(mini, buffer));
 	if (!ft_strncmp(buffer, "pl", 2))
 		return (parse_pl(mini, buffer), true);
 	if (!ft_strncmp(buffer, "cy", 2))
@@ -47,7 +47,7 @@ t_boolean	fill_mini_decrypt(t_mini *mini, char *buffer)
 		buffer++;
 	}
 	buffer -= i;
-	if (!fill_mini_switch(mini, buffer, i))
+	if (!fill_mini_switch(mini, buffer))
 		return (false);
 	return (true);
 }
@@ -60,12 +60,13 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		return (free_mini(mini), false);
+		return (false);
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
 		tmp = buffer;
-		fill_mini_decrypt(mini, buffer);
+		if (!fill_mini_decrypt(mini, buffer))
+			return(false);
 		free(tmp);
 		buffer = get_next_line(fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:35:47 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 15:10:54 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:15:52 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**new_tab_init(char **new_tab, char *new)
 {
 	new_tab[0] = ft_strdup(new);
 	if (!new_tab[0])
-		return (free_double_array_error(new_tab, 2), NULL);
+		return (free_double_array_error((void **)new_tab, 2), NULL);
 	new_tab[1] = NULL;
 	return (new_tab);
 }
@@ -45,21 +45,21 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	len = tab_len(tab);
 	new_tab = malloc(sizeof(char *) * (len + 2));
 	if (!new_tab)
-		return (free_double_array(tab), NULL);
+		return (free_double_array((void **)tab), NULL);
 	if (!tab)
 		return (new_tab_init(new_tab, new));
 	while (tab[i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new_tab[i])
-			return (free_double_array(tab),
-				free_double_array_error(new_tab, i), NULL);
+			return (free_double_array((void **)tab),
+				free_double_array_error((void **)new_tab, i), NULL);
 		i++;
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
-		return (free_double_array(tab),
-				free_double_array_error(new_tab, i), NULL);
+		return (free_double_array((void **)tab),
+				free_double_array_error((void **)new_tab, i), NULL);
 	new_tab[i + 1] = NULL;
-	return (free_double_array(tab), new_tab);
+	return (free_double_array((void **)tab), new_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 14:38:41 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 23:17:35 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	else
 		normal = utils.normal.texture;		
 	if (shadow_ray(mini, *ray, ray->t, utils.i))
-		return ((t_color){0, 0, 0, 1});
+		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, obj.pos);
-	texture.color = get_color_from_map(obj, p, mini->up_world);
+	texture.color = get_color_from_map(obj, p);
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
@@ -44,7 +44,7 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	double	dot;
 
 	if (shadow_ray(mini, *ray, ray->t, utils.i))
-		return ((t_color){0, 0, 0, 1});
+		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
 	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
@@ -84,7 +84,7 @@ t_color	light_cy(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	double	dot;
 
 	if (shadow_ray(mini, *ray, ray->t, utils.i))
-		return ((t_color){0, 0, 0, 1});
+		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
 	if (ray->t == intersect_cap(ray->origin, ray->current_dir, obj))

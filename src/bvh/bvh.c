@@ -82,9 +82,9 @@ void	*bvh_recurse(t_mini *mini, t_bvh *old, t_bvh *bvh)
 	return (NULL);
 }
 
-t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
+t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old)
 {
-	t_bvh       *bvh;
+	t_bvh	*bvh;
 	int			i;
 
 	i = 0;
@@ -95,7 +95,8 @@ t_bvh   *bvh_fill(t_mini *mini, int dir, t_bvh *old)
 	{
 		if (tr_is_in_bounds(mini->sc.objet_tr[old->idx_tr_hbv[i]], bvh->bounds))
 		{
-			bvh->idx_tr_hbv = in_view_realloc(bvh->idx_tr_hbv, old->idx_tr_hbv[i], bvh->n_obj);
+			bvh->idx_tr_hbv = in_view_realloc(bvh->idx_tr_hbv,
+									old->idx_tr_hbv[i], bvh->n_obj);
 			if (!bvh->idx_tr_hbv)
 				return (bvh_recursive_free(old));
 			bvh->n_obj++;;

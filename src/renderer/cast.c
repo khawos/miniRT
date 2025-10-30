@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 15:26:54 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:11:39 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_color	put_background(int x, int y)
 
 	(void)x;
 	y = convert_range(y, HEIGHT, 0, 255);
-	color = (t_color){y / 4, y / 5, y, 0};
+	color = (t_color){y / 4, y / 5, y};
 	return (color);
 }
 
@@ -46,8 +46,6 @@ t_boolean	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 	if (ray.t == RENDER_DISTANCE)
 		color = put_background(x, y);
 	color_int = color_shift(color);
-	if (x + mini->block_size - 1 >= WIDTH || y + mini->block_size - 1 >= HEIGHT)
-		return ;
 	index.u = 0;
 	while (index.u < mini->block_size)
 	{

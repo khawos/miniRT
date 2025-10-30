@@ -6,15 +6,15 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:47:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 13:07:33 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:22:50 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-char	**texture_map_alloc(int height, int width)
+unsigned int	**texture_map_alloc(int height, int width)
 {
-	int	**texture;
+	unsigned int	**texture;
 	int		i;
 
 	texture = malloc(sizeof(unsigned int *) * (height + 1));
@@ -25,7 +25,7 @@ char	**texture_map_alloc(int height, int width)
 	{
 		texture[i] = malloc(sizeof(unsigned int) * (width));
 		if (!texture[i])
-			return (free_double_array_error(texture, i), NULL);
+			return (free_double_array_error((void **)texture, i), NULL);
 		i++;
 	}
 	texture[i] = NULL;
@@ -64,7 +64,6 @@ unsigned int	**get_texture(char *file, t_t_map *map)
 	int 			fd;
 	unsigned int	**texture;
 	char			**tab_color;
-    char			*buffer;
 	
 	if (!file)
 		return (NULL);
@@ -72,7 +71,6 @@ unsigned int	**get_texture(char *file, t_t_map *map)
 	if (fd < 0)
 		return (printf("open failed\n"), NULL);
 	free(file);
-	buffer = get_next_line(fd);
 	map->size = get_texture_dimension(fd);
 	printf("get texture : ");
 	printVec2(map->size);

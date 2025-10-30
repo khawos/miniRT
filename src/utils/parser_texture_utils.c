@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:46:55 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/19 15:33:40 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:23:01 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_vec2	get_texture_dimension(int fd)
 	char	*buffer;
 	t_vec2	dimension;
 
+	buffer = get_next_line(fd);
+	free(buffer);
 	buffer = get_next_line(fd);
 	while (!is_digit_or_space_str(buffer))
 	{

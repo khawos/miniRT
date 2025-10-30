@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/30 15:51:59 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:12:19 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_color	intersect_loop(t_mini *mini, t_ray *ray)
 	double	tmp;
 	t_color	final;
 
-	final = (t_color){0, 0, 0, 0};
+	final = (t_color){0, 0, 0};
 	closest = 0;
 	i = -1;
 	ray->t = RENDER_DISTANCE;
@@ -152,7 +152,7 @@ t_color	intersect_loop(t_mini *mini, t_ray *ray)
 		tmp = ray->t;
 		ray->t = get_nearest_triangle(&closest, ray, mini);
 		if (ray->t == -1)
-		 	return ((t_color){0, 0, 0, 0});
+		 	return ((t_color){0, 0, 0});
 		if (tmp > ray->t)
 		{
 			final = light_ray(mini, ray, mini->sc.objet_tr[closest]);

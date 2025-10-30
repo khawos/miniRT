@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bounds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-14 09:39:48 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-14 09:39:48 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/14 09:39:48 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/10/30 21:31:39 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_boolean	is_in_bounds(t_bounds bounds, t_vec3 origin, t_vec3 dir)
 		return (false);
 	return (true);
 }
-
 
 int *search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view)
 {

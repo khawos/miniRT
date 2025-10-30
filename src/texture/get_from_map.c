@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 14:38:41 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 23:17:20 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
 	t_var_texture	info;
 	char			grey_scale;
 	double			roughness;
-	t_vec3			normal;
 
 	roughness = spec;
 	grey_scale = 0;
@@ -74,7 +73,7 @@ t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 	return (normal);
 }
 
-t_color	get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world)
+t_color	get_color_from_map(t_objet obj, t_vec3 p)
 {
 	t_vec3			n;
 	t_var_texture	info;

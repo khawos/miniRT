@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:22:30 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 12:39:00 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:16:34 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ unsigned int	ft_atoi_base(char *str, char *base)
 	base_length = ft_strlen(base);
 	if (!check_base(base))
 		return (0);
-	while ((str[i] >= 9 && str[i] <= 13 || str[i] == ' ' || str[i] == '#'))
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ' || str[i] == '#')
 		i++;
 	while (str[i] != '"')
 	{

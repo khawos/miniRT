@@ -6,13 +6,13 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 15:23:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 13:11:13 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:29:22 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-double randfrom(double min, double max) 
+double	randfrom(double min, double max)
 {
 	double result;
 	

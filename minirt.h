@@ -105,7 +105,6 @@ typedef struct	s_color
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-	t_boolean		hit;
 }				t_color;
 
 typedef struct s_var_texture{
@@ -341,7 +340,7 @@ void		parse_cam(t_mini *mini, char *buffer);
 
 t_boolean	fill_mini(t_mini *mini, char *file_name);
 void		parse_cy(t_mini *mini, char *buffer);
-void		parse_sp(t_mini *mini, char *buffer);
+t_boolean	parse_sp(t_mini *mini, char *buffer);
 void		parse_pl(t_mini *mini, char *buffer);
 void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
@@ -411,7 +410,7 @@ t_var_texture	find_ray_texture(t_objet obj, t_vec3 p);
 // INTERSEC
 
 t_color		intersect_loop(t_mini *mini, t_ray *ray);
-void		free_double_array(void **dest);
+void		free_double_array(char **dest);
 
 
 // PARSER
@@ -534,7 +533,7 @@ char			*get_texture_path(char *str);
 
 // GET FROM MAP
 
-t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 up_world);
+t_color			get_color_from_map(t_objet obj, t_vec3 p);
 t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
 t_normal		get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray);
 double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
@@ -543,13 +542,13 @@ double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_norma
 t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
 
 // mouse controls
-int		handle_mouse_press(int button, int x, int y, t_mini *mini);
-int		handle_mouse_release(int button, int x, int y, t_mini *mini);
-int		handle_mouse_move(int x, int y, t_mini *mini);
-int		handle_key_press(int keycode, t_mini *mini);
-int		handle_key_release(int keycode, t_mini *mini);
-void	update_camera_vectors(t_cam *cam);
-int	handle_mouse_scroll(int button, int x, int y, t_mini *mini);
+int				handle_mouse_press(int button, int x, int y, t_mini *mini);
+int				handle_mouse_release(int button, int x, int y, t_mini *mini);
+int				handle_mouse_move(int x, int y, t_mini *mini);
+int				handle_key_press(int keycode, t_mini *mini);
+int				handle_key_release(int keycode, t_mini *mini);
+void			update_camera_vectors(t_cam *cam);
+int				handle_mouse_scroll(int button, int x, int y, t_mini *mini);
 t_color			 reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
 
 // ray direction setup
@@ -567,5 +566,12 @@ void	error_in_thread(t_mini *mini);
 // NORMAL
 
 t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray);
+
+unsigned int	search_color(char *buffer, char **tab_color);
+unsigned int	ft_atoi_base(char *str, char *base);
+
+
+void	get_up_local_vector(t_mini *mini, int i);
+void	get_right_local_vector(t_mini *mini, int i);
 
 #endif

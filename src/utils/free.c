@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 13:00:19 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:18:12 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	free_map(t_objet obj)
 	{
 		while (++i < obj.mat.albedo.size.v)
 			free(obj.mat.albedo.map[i]);
-		printf("albedo : %p\n", obj.mat.albedo.map);
 		free(obj.mat.albedo.map);
 	}
 	i = -1;
@@ -29,7 +28,6 @@ void	free_map(t_objet obj)
 	{
 		while (++i < obj.mat.normal.size.v)
 			free(obj.mat.normal.map[i]);
-		printf("normal : %p\n", obj.mat.normal.map);
 		free(obj.mat.normal.map);
 	}
 	i = -1;
@@ -37,7 +35,6 @@ void	free_map(t_objet obj)
 	{
 		while (++i < obj.mat.roughness.size.v)
 			free(obj.mat.roughness.map[i]);
-		printf("roughness : %p\n", obj.mat.roughness.map);
 		free(obj.mat.roughness.map);
 	}
 }
@@ -71,7 +68,7 @@ void	free_mini(t_mini *mini)
 	free(mini->sc.light);
 }
 
-void	free_double_array(void **dest)
+void	free_double_array(char **dest)
 {
 	int	i;
 

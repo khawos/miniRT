@@ -67,22 +67,19 @@ int	handle_mouse_move(int x, int y, t_mini *mini)
 
 	if (mini->mouse.shift_pressed)
 	{
-		double	yaw = dx * -0.002;   // horizontale
-		double	pitch = dy * -0.002; // verticale
+		double	yaw = dx * -0.002;
+		double	pitch = dy * -0.002;
 		t_vec3	up_world = (t_vec3){0, 0, 1};
 
-		// Rotation horizontale autour de l'axe global Z (yaw)
 		cam->vec_dir = vec_rotate(cam->vec_dir, up_world, -yaw);
 		get_right_local_vector(mini, mini->cam_lock);
 		get_up_local_vector(mini, mini->cam_lock);
-
-		// Rotation verticale autour de l'axe local "right" (pitch)
 		cam->vec_dir = vec_rotate(cam->vec_dir, cam->right, -pitch);
 		cam->vec_dir = vec_normalize(cam->vec_dir);
 		get_right_local_vector(mini, mini->cam_lock);
 		get_up_local_vector(mini, mini->cam_lock);
 	}
-	else //possiblement usless
+	else
 	{
 		cam->pos = vec_add(cam->pos, vec_scale(cam->right, dx * 0.1));
 		cam->pos = vec_add(cam->pos, vec_scale(cam->up, -dy * 0.1));

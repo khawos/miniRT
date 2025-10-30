@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/28 10:56:30 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:52:27 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (!init(&mini, av))
 		return (1);
+//	printAllObject(&mini);
 	sem_unlink("/cast_init");
 	sem_unlink("/image");
 	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);

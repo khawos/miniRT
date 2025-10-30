@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:11:00 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/30 15:38:03 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:09:28 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,6 @@ t_color	mix_light(t_color colors[LIGHT_MAX], t_mini *mini)
 	return(color);
 }
 
-t_color	*compute_light_color(t_mini *mini, t_ray *ray, t_objet obj, t_light_utils *var)
-{
-	t_color			ambiant;
-	t_color			spec;
-	t_color			diffuse_direct;
-	
-	if (obj.type == sp)
-		diffuse_direct = light_sp(mini, obj, ray, *var);
-	else if (obj.type == pl)
-		diffuse_direct = light_pl(mini, obj, ray, *var);
-	else if (obj.type == cy)
-		diffuse_direct = light_cy(mini, obj, ray, *var);
-	else 
-		diffuse_direct = light_tr(mini, obj, ray, *var);
-	if (!is_hard_shadow(diffuse_direct))
-		spec = specular(mini, obj, ray, *var); 
-	else
-		spec = (t_color){0, 0, 0, 0};
-	ambiant = apply_ambiant(mini, diffuse_direct);
-	var->light_colors[var->i] = color_add(diffuse_direct, ambiant);
-	var->light_colors[var->i] = mix_layer(var->light_colors[var->i], spec);
-	return (var->light_colors);
-}
-
 t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 {
 	t_color			final;
@@ -86,7 +62,6 @@ t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 	var.normal = get_object_normals(mini, obj, ray);
 	while (var.i < mini->N_LIGHT && var.i < LIGHT_MAX)
 	{
-		//var.light_colors = compute_light_color(mini, ray, obj ,&var);
 		if (obj.type == sp)
 			diffuse_direct = light_sp(mini, obj, ray, var);
 		else if (obj.type == pl)
@@ -98,7 +73,7 @@ t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 		if (!is_hard_shadow(diffuse_direct))
 			spec = specular(mini, obj, ray, var); 
 		else
-			spec = (t_color){0, 0, 0, 0};
+			spec = (t_color){0, 0, 0};
 		ambiant = apply_ambiant(mini, diffuse_direct);
 		var.light_colors[var.i] = color_add(diffuse_direct, ambiant);
 		var.light_colors[var.i] = mix_layer(var.light_colors[var.i], spec);

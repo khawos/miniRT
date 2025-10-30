@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:31:49 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/17 11:09:10 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 23:14:14 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_boolean	parser(t_mini *mini, char **av)
 	//	return (false);
 	if (!count_line(mini, av[1]))
 		return (false);
-	fill_mini(mini, av[1]);
+	if (!fill_mini(mini, av[1]))
+		return (free_mini(mini), false);
 	return (true);
 }
 

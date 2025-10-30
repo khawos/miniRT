@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:53:54 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:53:55 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:18:45 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_boolean	check_object_type(char *line)
 			|| ft_strncmp(type, "cy", 2) != 0
 			|| ft_strncmp(type, "tr", 2) != 0
 			|| ft_strncmp(type, "sp", 2) != 0))
-		return (write(2, "error: '", 19), write(2, type, ft_strlen(type)),
+		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);
 	if (!basic_line_checks(line, type))
 		return (free(type), false);

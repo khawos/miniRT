@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 00:28:07 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/29 00:20:53 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/10/30 23:19:41 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parse_l(t_mini	*mini, char	*buffer)
 	mini->N_LIGHT++;
 }
 
-void	parse_sp(t_mini *mini, char *buffer)
+t_boolean	parse_sp(t_mini *mini, char *buffer)
 {
 	mini->sc.objet[mini->N_OBJ].id = mini->N_OBJ;
 	mini->sc.objet[mini->N_OBJ].type = sp;
@@ -61,10 +61,11 @@ void	parse_sp(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
-	if (!get_material(&mini->sc.objet[mini->N_OBJ], buffer));
-	//printColorMap(mini->sc.objet[mini->N_OBJ].mat.albedo, mini->sc.objet[mini->N_OBJ].mat.texture_dimnesion);
+	if (get_material(&mini->sc.objet[mini->N_OBJ], buffer) == 0)
+		return (false);
 	mini->n_sp++;
 	mini->N_OBJ++;
+	return (true);
 }
 
 void	parse_pl(t_mini *mini, char *buffer)
