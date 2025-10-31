@@ -45,21 +45,21 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	len = tab_len(tab);
 	new_tab = malloc(sizeof(char *) * (len + 2));
 	if (!new_tab)
-		return (free_double_array((void **)tab), NULL);
+		return (free_double_array(tab), NULL);
 	if (!tab)
 		return (new_tab_init(new_tab, new));
 	while (tab[i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new_tab[i])
-			return (free_double_array((void **)tab),
+			return (free_double_array(tab),
 				free_double_array_error((void **)new_tab, i), NULL);
 		i++;
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
-		return (free_double_array((void **)tab),
+		return (free_double_array(tab),
 				free_double_array_error((void **)new_tab, i), NULL);
 	new_tab[i + 1] = NULL;
-	return (free_double_array((void **)tab), new_tab);
+	return (free_double_array(tab), new_tab);
 }

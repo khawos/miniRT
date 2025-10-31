@@ -94,6 +94,6 @@ int	render_loop(t_mini *mini)
 		write(2, "Something goes wrong during rendering.\n", 40);
 		close_window(mini);
 	}
-	//ft_printf("[COMPLETED] Render at : %d\n", mini->block_size);
+//	ft_printf("[COMPLETED] Render at : %d\n", mini->block_size);
 	return (0);
 }

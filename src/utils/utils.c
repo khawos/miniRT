@@ -93,3 +93,4 @@ double	__atoi_double(char **str)
 	}
 	return ((var.integer_part + var.float_part) * var.neg);
 }
+

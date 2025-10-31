@@ -106,4 +106,3 @@ t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old)
 	bvh_recurse(mini, old, bvh);
 	return (bvh); 
 }
-
