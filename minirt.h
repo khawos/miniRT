@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 720
-# define WIDTH 1280
+# define HEIGHT 1080
+# define WIDTH 1920
 # define M_PI 3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
@@ -11,7 +11,7 @@
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
-# define BOUNCE_MAX 1
+# define BOUNCE_MAX 10
 # define SAMPLE_MAX 4
 # include <unistd.h>
 # include <semaphore.h>
@@ -181,6 +181,7 @@ typedef struct	s_objet
 	double			height;
 	unsigned char	id;
 	double			spec;
+	double			roughness_default;
 	t_vec3			p0;
 	t_vec3			p1;
 	t_vec3			p2;
@@ -294,6 +295,10 @@ typedef struct s_light_utils
 	t_normal	normal;
 	t_color		*light_colors;
 	int			i;
+	t_color			ambiant;
+	t_color			spec;
+	t_color			diffuse_direct;	
+	t_color			final;
 	
 }				t_light_utils;
 
@@ -384,6 +389,7 @@ t_vec3		vec_div(t_vec3 i, double n);
 
 // COLOR MATH
 
+t_color	mix_ray(t_color *ray_color);
 t_color	apply_ambiant(t_mini *mini, t_color color);
 t_color color_multiplie(t_color i, t_color j);
 t_color	color_substract(t_color i, t_color j);
@@ -401,6 +407,8 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 double  intersect_cap(t_vec3 origin, t_vec3 ray_direction, t_objet object);
 t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin, int index_light);
 void		set_normal_tr(t_mini *mini);
+double	get_nearest_triangle(int *closest, t_ray *ray, t_mini *mini);
+double	handle_object(t_mini *mini, t_ray ray, int i, double t);
 
 
 // LIGHT_RAY
@@ -510,8 +518,7 @@ t_vec3		try_min_bound(t_objet obj, t_vec3 max);
 t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old);
 int		*in_view_realloc(int *old, int add, int nb);
 void	bvh_free(t_bvh *bvh);
-int		*search_tr_in_tree(t_bvh *bvh, t_vec3 origin, t_vec3 ray_direction, int *size, int *tr_in_view);
-
+int	*search_tr_in_tree(t_bvh *bvh, t_ray ray, int *size, int *tr_in_view);
 
 // GET_UV
 
@@ -530,6 +537,7 @@ char			*go_to_pixel_info(int fd);
 char			**get_color_tab(int fd);
 t_boolean		get_material(t_objet *obj, char *buffer);
 char			*get_texture_path(char *str);
+double			get_roughness_default(char *buffer);
 
 // GET FROM MAP
 
@@ -550,6 +558,7 @@ int				handle_key_release(int keycode, t_mini *mini);
 void			update_camera_vectors(t_cam *cam);
 int				handle_mouse_scroll(int button, int x, int y, t_mini *mini);
 t_color			 reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
+t_vec3			vec_rotate(t_vec3 v, t_vec3 axis, double angle);
 
 // ray direction setup
 

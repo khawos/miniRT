@@ -36,10 +36,10 @@ t_vec3	transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world)
 	return (vec_normalize(normal_world));
 }
 
-double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
+double	get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal)
 {
 	t_var_texture	info;
-	char			grey_scale;
+	int				grey_scale;
 	double			roughness;
 
 	roughness = spec;
@@ -48,7 +48,7 @@ double	get_roughness_from_map(t_objet obj, double spec,t_vec3 geometric_normal)
 	{
 		info.uv = get_uv_sp(geometric_normal, obj.mat.roughness.size);
 		grey_scale = obj.mat.roughness.map[info.uv.v][info.uv.u] & 0x000000FF;
-		roughness = convert_range(grey_scale, 255, 100, 1);
+		roughness = convert_range(grey_scale, 255, 0, 1);
 		return (roughness);
 	}
 	else

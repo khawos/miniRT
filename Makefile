@@ -19,7 +19,9 @@ SRC =	main.c \
 		maths/M_math2.c \
 		maths/C_math0.c \
 		maths/C_math1.c \
-		geometry_intersect/intersect.c \
+		intersect/intersect.c \
+		intersect/loop.c \
+		intersect/get_triangle_array.c \
 		geometry_intersect/geometry0.c \
 		geometry_intersect/geometry1.c \
 		geometry_intersect/geometry2.c \
@@ -55,7 +57,8 @@ SRC =	main.c \
 		texture/uv_mapping.c \
 		texture/get_from_map.c \
 		refraction_reflection/reflection.c \
-		graphic_lib/mouse_controls.c
+		graphic_lib/mouse_controls.c \
+		graphic_lib/mouse_controls_bis.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))

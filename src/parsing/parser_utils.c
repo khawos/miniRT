@@ -45,10 +45,29 @@ double	get_spec(char *buffer)
 	str = ft_strnstr(buffer, "spec=", ft_strlen(buffer));
 	if (str)
 	{
-		while(ft_isalpha(*str))
+		while (ft_isalpha(*str))
 			str++;
 		str++;
 		spec = atoi_double(str);
 	}
+	return (spec);
+}
+
+double	get_roughness_default(char *buffer)
+{
+	char	*str;
+	double	spec;
+
+	spec = -1;
+	str = ft_strnstr(buffer, "roughness_default", ft_strlen(buffer));
+	if (str)
+	{
+		while (ft_isalpha(*str) || *str == '_')
+			str++;
+		str++;
+		spec = atoi_double(str);
+	}
+	else
+		return (0);
 	return (spec);
 }

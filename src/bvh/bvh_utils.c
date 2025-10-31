@@ -39,7 +39,7 @@ int	*in_view_realloc(int *old, int add, int nb)
 	if (!new)
 		return (free(old), NULL);
 	i = 0;
-	while(i < nb)
+	while (i < nb)
 	{
 		new[i] = old[i];
 		i++;

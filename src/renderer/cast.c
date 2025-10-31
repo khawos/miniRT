@@ -41,7 +41,6 @@ t_boolean	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 	ray.dir_tab = ray_direction;
 	ray.bounce = 0;
 	color = multiple_ray(mini, &ray);
-	printf("ray->t : %f\n", ray.t);
 	if (ray.t == -1)
 		return (false);
 	if (ray.t == RENDER_DISTANCE)

@@ -53,6 +53,7 @@ void	init_mini_stack(t_mini *mini)
 	mini->last_input = chrono();
 	mini->block_size = BLOCK_SIZE_MAX;
 	mini->thread_crash = false;
+	mini->mouse.mid_pressed = 0;
 }
 
 t_boolean	init(t_mini *mini, char **av)

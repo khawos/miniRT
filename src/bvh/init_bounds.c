@@ -14,10 +14,10 @@
 
 t_bounds	found_first_bound(t_mini *mini)
 {
-	t_objet obj;
+	t_objet	obj;
 	t_vec3	max;
 	t_vec3	min;
-	int	i;
+	int		i;
 
 	i = 0;
 	max = vec_create(-RENDER_DISTANCE, -RENDER_DISTANCE, -RENDER_DISTANCE);
@@ -32,60 +32,66 @@ t_bounds	found_first_bound(t_mini *mini)
 	return ((t_bounds){max, min, 0});
 }
 
-t_bounds find_bounds_x(t_bounds old_bounds, int direction, t_var_bounds var)
+t_bounds	find_bounds_x(t_bounds old_bounds, int direction, t_var_bounds var)
 {
-	t_bounds 	new_bounds;
+	t_bounds	new_bounds;
 
 	if (direction == 0)
 	{
 		new_bounds.min = old_bounds.min;
-		new_bounds.max = (t_vec3){var.mid_x, old_bounds.max.y, old_bounds.max.z};
+		new_bounds.max = (t_vec3){var.mid_x, old_bounds.max.y,
+			old_bounds.max.z};
 	}
 	else
 	{
-		new_bounds.min = (t_vec3){var.mid_x, old_bounds.min.y, old_bounds.min.z};
+		new_bounds.min = (t_vec3){var.mid_x, old_bounds.min.y,
+			old_bounds.min.z};
 		new_bounds.max = old_bounds.max;
 	}
 	return (new_bounds);
 }
 
-t_bounds find_bounds_y(t_bounds old_bounds, int direction, t_var_bounds var)
+t_bounds	find_bounds_y(t_bounds old_bounds, int direction, t_var_bounds var)
 {
-	t_bounds 		new_bounds;
+	t_bounds	new_bounds;
 
 	if (direction == 0)
 	{
 		new_bounds.min = old_bounds.min;
-		new_bounds.max = (t_vec3){old_bounds.max.x, var.mid_y, old_bounds.max.z};
+		new_bounds.max = (t_vec3){old_bounds.max.x, var.mid_y,
+			old_bounds.max.z};
 	}
 	else
 	{
-		new_bounds.min = (t_vec3){old_bounds.min.x, var.mid_y, old_bounds.min.z};
+		new_bounds.min = (t_vec3){old_bounds.min.x, var.mid_y,
+			old_bounds.min.z};
 		new_bounds.max = old_bounds.max;
 	}
 	return (new_bounds);
 }
 
-t_bounds find_bounds_z(t_bounds old_bounds, int direction, t_var_bounds var)
+t_bounds	find_bounds_z(t_bounds old_bounds, int direction, t_var_bounds var)
 {
-	t_bounds 	new_bounds;
+	t_bounds	new_bounds;
 
 	if (direction == 0)
 	{
 		new_bounds.min = old_bounds.min;
-		new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y, var.mid_z};
+		new_bounds.max = (t_vec3){old_bounds.max.x, old_bounds.max.y,
+			var.mid_z};
 	}
 	else
 	{
-		new_bounds.min = (t_vec3){old_bounds.min.x, old_bounds.min.y, var.mid_z};
+		new_bounds.min = (t_vec3){old_bounds.min.x, old_bounds.min.y,
+			var.mid_z};
 		new_bounds.max = old_bounds.max;
 	}
 	return (new_bounds);
 }
 
-t_bounds find_bounds(t_bounds old_bounds, int direction)
+t_bounds	find_bounds(t_bounds old_bounds, int direction)
 {
-	t_bounds 		new_bounds;
+	t_bounds		new_bounds;
 	t_var_bounds	var;
 
 	find_bounds_utils(&var, old_bounds);
@@ -96,5 +102,5 @@ t_bounds find_bounds(t_bounds old_bounds, int direction)
 	else
 		new_bounds = find_bounds_z(old_bounds, direction, var);
 	new_bounds.deepth = old_bounds.deepth + 1;
-	return new_bounds;
+	return (new_bounds);
 }

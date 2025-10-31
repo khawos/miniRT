@@ -43,10 +43,9 @@ t_color	specular(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 				var.intersect));
 	light_color = color_scalar(mini->sc.light[utils.i].color,
 			mini->sc.light[utils.i].ratio);
-	var.to_cam = vec_normalize(vec_substact(ray->origin,
-				var.intersect));
+	var.to_cam = vec_normalize(vec_substact(ray->origin, var.intersect));
 	var.halfway = vec_normalize(vec_add(var.to_light, var.to_cam));
 	dot = vec_dot(var.normal, var.halfway);
-	var.specular = color_scalar(light_color, pow(fmax(dot, 0), get_roughness_from_map(obj, spec, vec_normalize(vec_substact(var.intersect, obj.pos)))));
+	var.specular = color_scalar(light_color, pow(fmax(dot, 0), spec));
 	return (var.specular);
 }

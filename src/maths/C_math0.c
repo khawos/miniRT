@@ -22,7 +22,7 @@ t_color	color_substract(t_color i, t_color j)
 	return (result);
 }
 
-unsigned char min(int a, int b)
+unsigned char	min(int a, int b)
 {
 	if (a < b)
 		return (a);

@@ -2,7 +2,7 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   bvh.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+  z   */
+/*                                                    +:+ +:+         +:+  z  */
 /*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025-10-11 16:20:41 by jbayonne          #+#    #+#             */
@@ -38,13 +38,13 @@ void	*bvh_recursive_free(t_bvh *bvh)
 	return (NULL);
 }
 
-t_bvh *bvh_alloc(t_bvh *old, int dir, t_mini *mini)
+t_bvh	*bvh_alloc(t_bvh *old, int dir, t_mini *mini)
 {
-	t_bvh *bvh;
+	t_bvh	*bvh;
 
 	bvh = malloc(sizeof(t_bvh));
 	if (!bvh)
-		return (NULL);	
+		return (NULL);
 	if (0 == old->bounds.deepth)
 	{
 		bvh->bounds = found_first_bound(mini);
@@ -85,7 +85,7 @@ void	*bvh_recurse(t_mini *mini, t_bvh *old, t_bvh *bvh)
 t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old)
 {
 	t_bvh	*bvh;
-	int			i;
+	int		i;
 
 	i = 0;
 	bvh = bvh_alloc(old, dir, mini);
@@ -96,13 +96,13 @@ t_bvh	*bvh_fill(t_mini *mini, int dir, t_bvh *old)
 		if (tr_is_in_bounds(mini->sc.objet_tr[old->idx_tr_hbv[i]], bvh->bounds))
 		{
 			bvh->idx_tr_hbv = in_view_realloc(bvh->idx_tr_hbv,
-									old->idx_tr_hbv[i], bvh->n_obj);
+					old->idx_tr_hbv[i], bvh->n_obj);
 			if (!bvh->idx_tr_hbv)
 				return (bvh_recursive_free(old));
-			bvh->n_obj++;;
+			bvh->n_obj++;
 		}
 		i++;
 	}
 	bvh_recurse(mini, old, bvh);
-	return (bvh); 
+	return (bvh);
 }

@@ -64,4 +64,3 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 	t = vec_dot(vec_substact(object.pos, origin), object.vec_dir) / dot;
 	return (t);
 }
-

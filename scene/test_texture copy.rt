@@ -1,12 +1,12 @@
 
 
-sp 0,-600,50 200 150,150,150 spec=20 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm"
+sp 0,-600,50 200 150,150,150 spec=20 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm" 
 
 sp 0,-300,50 200 255,0,0 spec=10 roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
 
 sp 0,0,50 200 150,150,150 spec=20 albedo="texture_file/snow_03_diff_2k.xpm" normal="texture_file/snow_03_nor_dx_2k.xpm"
 
-sp 0,300,50 200 150,150,150 spec=60 albedo="texture_file/aerial_rocks_04_diff_2k1761649439.xpm" normal="texture_file/aerial_rocks_04_nor_dx_2k1761649440.xpm"
+sp 0,300,50 200 150,150,150 spec=60 albedo="texture_file/aerial_rocks_04_diff_2k1761649439.xpm" normal="texture_file/aerial_rocks_04_nor_dx_2k1761649440.xpm" roughness="texture_file/aerial_rocks_02_rough_2k1761659904.xpm"
 
 sp 0,600,50 200 150,150,150 spec=10 albedo="texture_file/wooden_gate_diff_2k.xpm" normal="texture_file/wooden_gate_nor_dx_2k.xpm" roughness="texture_file/wooden_gate_rough_2k.xpm"
 

@@ -92,12 +92,9 @@ void	parse_cy(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].vec_dir.z = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].height = __atoi_double(&buffer);
-	mini->sc.objet[mini->N_OBJ].color.r = __atoi_double(&buffer);
-	buffer++;
-	mini->sc.objet[mini->N_OBJ].color.g = __atoi_double(&buffer);
-	buffer++;
-	mini->sc.objet[mini->N_OBJ].color.b = __atoi_double(&buffer);
+	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
+	mini->sc.objet[mini->N_OBJ].roughness_default = get_roughness_default(buffer);
 	mini->n_cy++;
 	mini->N_OBJ++;
 }
