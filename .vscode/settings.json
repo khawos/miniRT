@@ -6,7 +6,6 @@
 		"limits.h": "c",
 		"float.h": "c",
 		"initializer_list": "c",
-		"mlx.h": "c",
-		"semaphore.h": "c"
+		"mlx.h": "c"
 	}
 }
