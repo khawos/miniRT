@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-31 13:08:17 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-10-31 13:08:17 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/10/31 13:08:17 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/11/01 14:48:59 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ static t_color	get_diffuse(t_mini *mini, t_ray *ray, t_objet obj,
 	if (obj.type == sp)
 		diffuse_direct = light_sp(mini, obj, ray, var);
 	else if (obj.type == pl)
+	{
 		diffuse_direct = light_pl(mini, obj, ray, var);
+	}
 	else if (obj.type == cy)
 		diffuse_direct = light_cy(mini, obj, ray, var);
 	else

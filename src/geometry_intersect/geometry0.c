@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   geometry.c                                         :+:      :+:    :+:   */
+/*   geometry0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/08 16:35:23 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/01 17:00:31 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ double	intersect_pl(t_vec3 origin, t_vec3 ray_direction, t_objet object)
 	object.vec_dir = vec_normalize(object.vec_dir);
 	if (dot == 0)
 		return (0);
+
 	t = vec_dot(vec_substact(object.pos, origin), object.vec_dir) / dot;
 	return (t);
 }

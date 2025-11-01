@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_mini.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 23:14:31 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:38:45 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_boolean	fill_mini(t_mini *mini, char *file_name)
 	{
 		tmp = buffer;
 		if (!fill_mini_decrypt(mini, buffer))
-			return(false);
+			return (false);
 		free(tmp);
 		buffer = get_next_line(fd);
 	}
@@ -94,7 +94,8 @@ void	parse_cy(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].height = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
-	mini->sc.objet[mini->N_OBJ].roughness_default = get_roughness_default(buffer);
+	mini->sc.objet[mini->N_OBJ]
+		.roughness_default = get_roughness_default(buffer);
 	mini->n_cy++;
 	mini->N_OBJ++;
 }

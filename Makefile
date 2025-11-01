@@ -19,6 +19,7 @@ SRC =	main.c \
 		maths/M_math2.c \
 		maths/C_math0.c \
 		maths/C_math1.c \
+		maths/C_math3.c \
 		intersect/intersect.c \
 		intersect/loop.c \
 		intersect/get_triangle_array.c \
@@ -46,9 +47,11 @@ SRC =	main.c \
 		parsing/parser_texture0.c \
 		parsing/parser_texture1.c \
 		parsing/parser_buffer.c \
+		parsing/parser_buffer2.c \
 		parsing/parser_get_material.c \
 		parsing/parser_fill_mini.c \
 		parsing/parser_utils.c \
+		parsing/parser_utils2.c \
 		bvh/bounds_utils.c \
 		bvh/init_bounds.c \
 		bvh/search_bounds.c \
