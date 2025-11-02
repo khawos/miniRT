@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:31:49 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/02 13:50:30 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:14:45 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ t_boolean	parser(t_mini *mini, char **av)
 {
 	if (!check_rt(av[1]))
 		return (write(2, "Error\nMiniRT:Wrong file name.\n", 31), false);
-	//if (!checker(av[1]))
-	//	return (false);
+	if (!checker(av[1]))
+		return (false);
 	if (!count_line(mini, av[1]))
 		return (false);
 	if (!fill_mini(mini, av[1]))
 		return (free_mini(mini), false);
+	(void)mini;
 	return (true);
 }
 

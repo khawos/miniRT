@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:53:54 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/30 22:18:45 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:15:23 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@ static char	*get_first_word(char *line)
 	return (type);
 }
 
-static t_boolean	basic_line_checks(char *line, char *type)
-{
-	if (!alpha_problem(line))
-		return (false);
-	if (!nb_data_problem(line, type))
-		return (write(2, "error : too much data on one line", 34), false);
-	return (true);
-}	
-
 static t_boolean	check_object_type(char *line)
 {
 	char	*type;
@@ -55,17 +46,15 @@ static t_boolean	check_object_type(char *line)
 	if (ft_strlen(type) > 2)
 		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);
-	if (!(ft_strncmp(type, "A", 1) != 0
-			|| ft_strncmp(type, "C", 1) != 0
-			|| ft_strncmp(type, "L", 1) != 0
-			|| ft_strncmp(type, "pl", 2) != 0
-			|| ft_strncmp(type, "cy", 2) != 0
-			|| ft_strncmp(type, "tr", 2) != 0
-			|| ft_strncmp(type, "sp", 2) != 0))
+	if ((ft_strncmp(type, "A", 1) != 0
+			&& ft_strncmp(type, "C", 1) != 0
+			&& ft_strncmp(type, "L", 1) != 0
+			&& ft_strncmp(type, "pl", 2) != 0
+			&& ft_strncmp(type, "cy", 2) != 0
+			&& ft_strncmp(type, "tr", 2) != 0
+			&& ft_strncmp(type, "sp", 2) != 0))
 		return (write(2, "error: '", 9), write(2, type, ft_strlen(type)),
 			write(2, "' : identifier\n", 16), free(type), false);
-	if (!basic_line_checks(line, type))
-		return (free(type), false);
 	if (!args_type_checker(type, line))
 		return (free(type), false);
 	return (free(type), true);
@@ -82,6 +71,12 @@ t_boolean	checker(char *file)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
+		if ((*buffer >= 9 && *buffer <= 13))
+		{
+			free(buffer);
+			buffer = get_next_line(fd);
+			continue ;
+		}
 		if (!check_object_type(buffer))
 			return (free(buffer), false);
 		free(buffer);

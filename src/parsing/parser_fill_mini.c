@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:26:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 10:38:45 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:13:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_boolean	fill_mini_decrypt(t_mini *mini, char *buffer)
 	int	i;
 
 	i = 0;
-	if (*buffer == '\n')
+	if ((*buffer >= 9 && *buffer <= 13))
 		return (true);
 	while (ft_isalpha(*buffer))
 	{

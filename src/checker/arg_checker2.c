@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:00:56 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/02 13:49:13 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:50:35 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static	t_boolean	args_checker_cy_helper(char **words)
 {
 	if (!is_a_strictly_positive_number(words[4]))
 		return (write(2,
-				"Error: Wrong cylender height\n", 30),
+				"Error: Wrong cylinder height\n", 30),
 			free_double_array(words), false);
 	if (!is_a_rgb_value(words[5]))
 		return (write(2,
@@ -77,10 +77,6 @@ t_boolean	args_checker_cy(char *line)
 	words = ft_split(line, ' ');
 	if (!words)
 		return (false);
-	if (6 != count_double_array(words))
-		return (write(2,
-				"Error: Wrong cylinder number of arguments\n", 43),
-			free_double_array(words), false);
 	if (!is_a_xyz_value(words[1]))
 		return (write(2,
 				"Error: Wrong coordinates\n", 26),

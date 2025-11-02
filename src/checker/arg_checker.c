@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 10:54:33 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:46:51 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:45:58 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ t_boolean	args_checker_sp(char *line)
 	words = ft_split(line, ' ');
 	if (!words)
 		return (false);
-	if (4 != count_double_array(words))
-		return (write(2,
-				"Error: Wrong sphere number of arguments\n", 41),
-			free_double_array(words), false);
 	if (!is_a_xyz_value(words[1]))
 		return (write(2,
 				"Error: Wrong sphere coordinates\n", 33),
@@ -95,10 +91,6 @@ t_boolean	args_checker_pl(char *line)
 	words = ft_split(line, ' ');
 	if (!words)
 		return (false);
-	if (4 != count_double_array(words))
-		return (write(2,
-				"Error: Wrong plane number of arguments\n", 40),
-			free_double_array(words), false);
 	if (!is_a_xyz_value(words[1]))
 		return (write(2,
 				"Error: Wrong plane coordinates\n", 32),
