@@ -1,6 +1,6 @@
 NAME = minirt
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -Iinclude -Iminilibx-linux -g3 -fsanitize=address
 LFLAGS = -Imlx_linus -lXext -lX11 -lm -lz -lbsd
 OBJ_DIR = obj
 SRC_DIR = src
@@ -15,6 +15,7 @@ SRC =	main.c \
 		graphic_lib/basic_draw.c \
 		cast.c \
 		light_ray.c \
+		light_ray_geometry.c \
 		set_up_camera.c \
 		maths/M_math.c \
 		maths/M_math2.c \

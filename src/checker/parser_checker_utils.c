@@ -24,7 +24,7 @@ t_boolean	is_a_xyz_value(char	*word)
 	while (words[i])
 	{
 		if (!(atoi_double(words[i]) >= INT_MIN
-				&& atoi_double(words[i]) <= INT_MAX)) // A CHANGER pour les doubles
+				&& atoi_double(words[i]) <= INT_MAX))
 			return (free_double_array(words), false);
 		i++;
 	}

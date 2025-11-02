@@ -264,6 +264,9 @@ t_boolean is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin);
 // LIGHT_RAY
 
 t_color	light_ray(t_mini *mini, t_vec3 ray_dir, double t, t_objet obj);
+t_color	light_cy(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_pl(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
+t_color	light_sp(t_mini *mini, t_objet obj, t_vec3 ray_dir, double t);
 
 // CAST
 
