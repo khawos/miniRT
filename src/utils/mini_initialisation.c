@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_initialisation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:22:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 15:47:33 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:29:47 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_boolean	bvh_init(t_mini *mini)
 	if (!head)
 		return (false);
 	head->bounds.deepth = 0;
-	head->idx_tr_hbv = malloc(sizeof(int)* mini->n_tr);
+	head->idx_tr_hbv = malloc(sizeof(int) * mini->n_tr);
 	if (!head->idx_tr_hbv)
 		return (false);
 	head->n_obj = mini->n_tr;
@@ -72,7 +72,7 @@ t_boolean	init(t_mini *mini, char **av)
 		return (free_mini(mini), false);
 	mini->error = malloc(sizeof(pthread_mutex_t));
 	if (!mini->error)
-		return(close_window(mini), false);
+		return (close_window(mini), false);
 	if (pthread_mutex_init(mini->error, NULL) < 0)
 		return (close_window(mini), false);
 	return (true);

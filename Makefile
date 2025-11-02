@@ -34,7 +34,6 @@ SRC =	main.c \
 		utils/thread_utils.c \
 		utils/utils.c \
 		utils/mini_initialisation.c \
-		utils/debug.c \
 		utils/realloc_tab.c \
 		utils/parser_texture_utils.c \
 		utils/atoi_base.c \

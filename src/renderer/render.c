@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:11:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 16:01:02 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:25 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	render_loop(t_mini *mini)
 	time = chrono() - mini->last_input;
 	if (mini->block_size == 1)
 		return (0);
-	if (mini->block_size > 1 && time >= limit && mini->block_size > BLOCK_SIZE_MIN)
+	if (mini->block_size > 1 && time >= limit
+		&& mini->block_size > BLOCK_SIZE_MIN)
 	{
 		if (mini->block_size == 2)
 				mini->block_size--;
@@ -94,6 +95,5 @@ int	render_loop(t_mini *mini)
 		write(2, "Something goes wrong during rendering.\n", 40);
 		close_window(mini);
 	}
-//	ft_printf("[COMPLETED] Render at : %d\n", mini->block_size);
 	return (0);
 }

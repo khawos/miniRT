@@ -6,17 +6,16 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/01 16:20:35 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 12:58:31 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int wtf_bool;
- 
 int	main(int ac, char **av)
 {
 	t_mini	mini;
+
 	if (ac != 2)
 		return (1);
 	if (!init(&mini, av))

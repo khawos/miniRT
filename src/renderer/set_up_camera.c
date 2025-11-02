@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_up_camera.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:13:29 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 21:18:24 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:16:54 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	get_right_local_vector(t_mini *mini, int i)
 	t_vec3	dir;
 	t_vec3	right;
 
-
 	up_world = (t_vec3){0, 0, 1};
 	dir = mini->sc.cam[i].vec_dir;
 	if (vec_dot(up_world, mini->sc.cam[i].vec_dir) == 1)
@@ -34,7 +33,6 @@ void	get_right_local_vector(t_mini *mini, int i)
 	mini->up_world = up_world;
 	right = vec_cross(dir, up_world);
 	right = vec_safe_normalize(right);
-
 	mini->sc.cam[i].right = right;
 }
 
@@ -55,8 +53,10 @@ void	set_up_cam(t_mini *mini)
 	{
 		get_right_local_vector(mini, i);
 		get_up_local_vector(mini, i);
-		mini->sc.cam[i].h = 2 * tan(((double)mini->sc.cam[i].fov / 2.0) * (M_PI / 180.0));
-		mini->sc.cam[i].w = mini->sc.cam[i].h * ((double)WIDTH / (double)HEIGHT);
+		mini->sc.cam[i].h = 2 * tan(((double)mini->sc.cam[i].fov / 2.0)
+				* (M_PI / 180.0));
+		mini->sc.cam[i].w = mini->sc.cam[i].h
+			* ((double)WIDTH / (double)HEIGHT);
 		i++;
 	}
 }

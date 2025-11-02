@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/01 16:44:26 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:19:48 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef struct s_is_intersect
 	double		intersect_to_light;
 	t_objet		objet;
 }				t_is_intersect;
-
 
 t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 {
@@ -42,7 +41,12 @@ t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 			if (var.tmp < var.intersect_to_light)
 				return (true);
 	}
-	else if (pl == var.objet.type)
+	return (false);
+}
+
+t_boolean	is_intersect_bis2(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
+{
+	if (pl == var.objet.type)
 	{
 		var.tmp = intersect_pl(origin, ray_dir, var.objet);
 		if (var.tmp > 0.1)
@@ -74,7 +78,8 @@ t_boolean	is_intersect(t_mini *mini, t_vec3 ray_direction, t_vec3 origin,
 				if (var.tmp < var.intersect_to_light)
 					return (true);
 		}
-		if (is_intersect_bis(ray_direction, origin, var))
+		if (is_intersect_bis(ray_direction, origin, var)
+			&& is_intersect_bis2(ray_direction, origin, var))
 			return (true);
 	}
 	return (false);

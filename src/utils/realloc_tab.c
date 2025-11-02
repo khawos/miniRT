@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   realloc_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:35:47 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 22:15:52 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:31:49 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,23 @@ char	**realloc_add_to_tab(char **tab, char *new)
 
 	if (!new)
 		return (tab);
-	i = 0;
+	i = -1;
 	len = tab_len(tab);
 	new_tab = malloc(sizeof(char *) * (len + 2));
 	if (!new_tab)
 		return (free_double_array(tab), NULL);
 	if (!tab)
 		return (new_tab_init(new_tab, new));
-	while (tab[i])
+	while (tab[++i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new_tab[i])
 			return (free_double_array(tab),
 				free_double_array_error((void **)new_tab, i), NULL);
-		i++;
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
 		return (free_double_array(tab),
-				free_double_array_error((void **)new_tab, i), NULL);
-	new_tab[i + 1] = NULL;
-	return (free_double_array(tab), new_tab);
+			free_double_array_error((void **)new_tab, i), NULL);
+	return (new_tab[i + 1] = NULL, free_double_array(tab), new_tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 08:39:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 22:42:09 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:52:03 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,3 @@ double	__atoi_double(char **str)
 	}
 	return ((var.integer_part + var.float_part) * var.neg);
 }
-

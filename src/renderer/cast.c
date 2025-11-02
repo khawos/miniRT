@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:22:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 15:55:18 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:14:30 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_boolean	put_pixel_block(t_mini *mini, t_vec3 *ray_direction, int x, int y)
 	ray.dir_tab = ray_direction;
 	ray.bounce = 0;
 	color = multiple_ray(mini, &ray);
-	//color = color_scalar(color_scalar((t_color){255,0,0}, convert_range(ray.t, RENDER_DISTANCE, 0, 1)), 20);
 	if (ray.t == -1)
 		return (false);
 	if (ray.t == RENDER_DISTANCE)

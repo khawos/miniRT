@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_texture_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:46:55 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 22:23:01 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:58:13 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_vec2	get_texture_dimension(int fd)
 {
 	char	*buffer;
 	t_vec2	dimension;
+	char	*tmp;
 
 	buffer = get_next_line(fd);
 	free(buffer);
@@ -41,16 +42,18 @@ t_vec2	get_texture_dimension(int fd)
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
+	tmp = buffer;
 	buffer++;
 	dimension.u = __atoi_double(&buffer);
 	dimension.v = __atoi_double(&buffer);
+	free(tmp);
 	return (dimension);
 }	
 
 char	*go_to_pixel_info(int fd)
 {
 	char	*buffer;
-	
+
 	buffer = get_next_line(fd);
 	while (!is_on_xpm_pixel_info(buffer))
 	{

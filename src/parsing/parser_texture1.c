@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:07:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 10:41:47 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:55:46 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ char	**get_color_tab(int fd)
 	while (!is_on_xpm_pixel_info(buffer))
 	{
 		tab = realloc_add_to_tab(tab, buffer);
+		free(buffer);
 		if (!tab)
 			return (free(buffer), NULL);
 		buffer = get_next_line(fd);
 	}
+	free(buffer);
 	return (tab);
 }
 

@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:28:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 17:03:39 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:12:51 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_normal	get_normal_object_bis(t_objet obj, t_ray *ray)
 	}
 	return (normal);
 }
-
-
 
 t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 {

@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:31:49 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/01 10:33:04 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:50:30 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	count_elements(char *buffer, int n_array[4])
 		(n_array[3])++;
 }
 
-// n[0]:n_cam n[1]:n_obj n[2]:n_light n[3]: n_tr NE PAS ENLEVE LE COM
 t_boolean	count_line(t_mini *mini, char *file)
 {
 	char			*buffer;

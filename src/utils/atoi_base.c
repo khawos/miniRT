@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atoi_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:22:30 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 22:16:34 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:28:56 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	base_index(char c, char *base)
 
 unsigned int	ft_atoi_base(char *str, char *base)
 {
-	int	base_length;
-	int	i;
-	unsigned int res;
+	int				base_length;
+	int				i;
+	unsigned int	res;
 
 	i = 0;
 	res = 0;

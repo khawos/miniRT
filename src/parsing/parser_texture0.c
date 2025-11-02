@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:47:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 10:41:33 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:33:45 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ unsigned int	**get_texture(char *file, t_t_map *map)
 		return (printf("failed to open %s\n", file), NULL);
 	free(file);
 	map->size = get_texture_dimension(fd);
-	printf("get texture : ");
-	printVec2(map->size);
 	tab_color = get_color_tab(fd);
 	if (!tab_color)
 		return (NULL);

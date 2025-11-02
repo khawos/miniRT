@@ -6,7 +6,7 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/01 16:56:39 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:27:48 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	t_vec3	to_light;
 	double	dot;
 	t_vec3	normal;
-	
+
 	if (is_null_vector(utils.normal.texture))
 		normal = utils.normal.geometric;
 	else
