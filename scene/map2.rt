@@ -20,7 +20,7 @@ cy 150,50,40    0.3,1,0.3   30 40    255,255,255 roughness_default=0
 
 sp 0,50,0 5 255,255,255 roughness_default=0
 
-pl 0,0,-50       0,0,1   255,255,255 roughness_default=0
+pl 0,0,-50       0,0,1   255,255,255 roughness_default=0.22 albedo="texture_file/sand_02_diff_2k_1.xpm" normal="texture_file/sand_02_nor_dx_2k_1.xpm"
 pl -50,30,100       0,0,-1   150,0,0  roughness_default=0.3
 pl 500,0,0       -1,0,0   150,0,0  roughness_default=0
 pl -500,0,0       1,0,0   150,0,0  roughness_default=0

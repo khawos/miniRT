@@ -41,7 +41,7 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 	t_normal	normal;
 
 	if (obj.type == sp)
-		normal = get_normal_sp_from_map(mini, obj, ray);
+		normal = get_normal_from_map(mini, obj, ray);
 	if (obj.type == tr)
 	{
 		normal.geometric = obj.normal;
@@ -49,8 +49,7 @@ t_normal	get_object_normals(t_mini *mini, t_objet obj, t_ray *ray)
 	}
 	if (obj.type == pl)
 	{
-		normal.geometric = vec_normalize(obj.vec_dir);
-		normal.texture = vec_create(222, 0, 0);
+		normal = get_normal_from_map(mini, obj, ray);
 	}
 	if (obj.type == cy)
 		normal = get_normal_object_bis(obj, ray);

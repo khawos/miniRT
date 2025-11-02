@@ -28,7 +28,7 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, obj.pos);
-	texture.color = get_color_from_map(obj, p);
+	texture.color = get_color_from_map(obj, p, normal);
 	dot = vec_dot(vec_normalize(normal), vec_normalize(to_light));
 	if (dot < 0)
 		dot = 0;
@@ -43,6 +43,7 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	t_vec3	to_light;
 	double	dot;
 	t_vec3	normal;
+	t_color	color;
 
 	if (is_null_vector(utils.normal.texture))
 		normal = utils.normal.geometric;
@@ -51,9 +52,10 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	if (shadow_ray(mini, *ray, ray->t, utils.i))
 		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
+	color = get_color_from_map(obj, p, normal);
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
 	dot = fabs(vec_dot(normal, vec_normalize(to_light)));
-	return (color_scalar(color_multiplie(obj.color,
+	return (color_scalar(color_multiplie(color,
 				color_scalar(mini->sc.light[utils.i].color,
 					mini->sc.light[utils.i].ratio)), dot));
 }

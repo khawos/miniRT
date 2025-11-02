@@ -37,7 +37,7 @@ t_vec3	transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world)
 }
 
 double	get_roughness_from_map(t_objet obj, double spec,
-	t_vec3 geometric_normal)
+	t_vec3 geometric_normal, t_vec3 p)
 {
 	t_var_texture	info;
 	int				grey_scale;
@@ -45,16 +45,16 @@ double	get_roughness_from_map(t_objet obj, double spec,
 
 	roughness = spec;
 	grey_scale = 0;
-	if (obj.type == sp && obj.mat.roughness.map)
+	if (obj.mat.roughness.map)
 	{
-		info.uv = get_uv_sp(geometric_normal, obj.mat.roughness.size);
+		info.uv = get_uv(geometric_normal, obj.mat.albedo.size, p, obj);
 		grey_scale = obj.mat.roughness.map[info.uv.v][info.uv.u] & 0x000000FF;
 		roughness = convert_range(grey_scale, 255, 0, 1);
 	}
 	return (roughness);
 }
 
-t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
+t_normal	get_normal_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 {
 	t_vec3			intersect;
 	t_normal		normal;
@@ -64,7 +64,12 @@ t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 	normal.geometric = vec_normalize(vec_substact(intersect, obj.pos));
 	if (obj.mat.normal.map)
 	{
-		info.uv = get_uv_sp(normal.geometric, obj.mat.normal.size);
+		info.uv = get_uv(normal.geometric, obj.mat.normal.size, intersect, obj);
+		if (obj.type == pl)
+		{
+			printVec2(obj.mat.albedo.size);
+			printVec2(info.uv);
+		}
 		normal.texture = transform_normal_from_map(obj.mat.normal.map[info.uv.v]
 			[info.uv.u], normal.geometric, mini->up_world);
 	}
@@ -73,7 +78,7 @@ t_normal	get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray)
 	return (normal);
 }
 
-t_color	get_color_from_map(t_objet obj, t_vec3 p)
+t_color	get_color_from_map(t_objet obj, t_vec3 p, t_vec3 normal)
 {
 	t_vec3			n;
 	t_var_texture	info;
@@ -81,7 +86,12 @@ t_color	get_color_from_map(t_objet obj, t_vec3 p)
 	n = vec_normalize(vec_substact(p, obj.pos));
 	if (obj.mat.albedo.map)
 	{	
-		info.uv = get_uv_sp(n, obj.mat.albedo.size);
+		info.uv = get_uv(normal, obj.mat.albedo.size, p, obj);
+		if (obj.type == pl)
+		{
+			printVec2(obj.mat.albedo.size);
+			printVec2(info.uv);
+		}
 		info.color = color_shift_revert(obj.mat.albedo.map[info.uv.v]
 			[info.uv.u]);
 	}

@@ -350,7 +350,7 @@ void		parse_tr(t_mini *mini, char *buffer);
 t_boolean	fill_mini(t_mini *mini, char *file_name);
 void		parse_cy(t_mini *mini, char *buffer);
 t_boolean	parse_sp(t_mini *mini, char *buffer);
-void		parse_pl(t_mini *mini, char *buffer);
+t_boolean	parse_pl(t_mini *mini, char *buffer);
 void		parse_a(t_mini *mini, char *buffer);
 void		parse_l(t_mini *mini, char *buffer);
 void		parse_cam(t_mini *mini, char *buffer);
@@ -529,7 +529,8 @@ int	*search_tr_in_tree(t_bvh *bvh, t_ray ray, int *size, int *tr_in_view);
 // GET_UV
 
 t_vec2	get_uv_sp(t_vec3 p, t_vec2 size);
-
+t_vec2	get_uv_pl(t_vec3 normal, t_vec2 size, t_vec3 p);
+t_vec2	get_uv(t_vec3 normal, t_vec2 size, t_vec3 p, t_objet obj);
 // PARSER TXT
 
 unsigned int	**get_texture(char *file, t_t_map *map);
@@ -547,10 +548,10 @@ double			get_roughness_default(char *buffer);
 
 // GET FROM MAP
 
-t_color			get_color_from_map(t_objet obj, t_vec3 p);
+t_color			get_color_from_map(t_objet obj, t_vec3 p, t_vec3 normal);
 t_vec3			transform_normal_from_map(unsigned int color, t_vec3 n, t_vec3 up_world);
-t_normal		get_normal_sp_from_map(t_mini *mini, t_objet obj, t_ray *ray);
-double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal);
+t_normal		get_normal_from_map(t_mini *mini, t_objet obj, t_ray *ray);
+double			get_roughness_from_map(t_objet obj, double spec, t_vec3 geometric_normal, t_vec3 p);
 // reflection
 
 t_color reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal normal);
