@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:11:16 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 22:11:50 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:01:02 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_boolean	run_thread_utils(t_mini *mini, int *h)
 {
 	mini->thid = malloc(sizeof(pthread_t) * N_THREAD);
-	if (!mini->thid )
+	if (!mini->thid)
 		return (false);
 	set_up_cam(mini);
 	mini->sc.cam[mini->cam_lock].vec_dir = vec_normalize(
@@ -37,7 +37,7 @@ t_boolean	wait_for_thread(t_mini *mini)
 		pthread_join(mini->thid [i], NULL);
 		pthread_mutex_lock(mini->error);
 		if (mini->thread_crash)
-			return (kill_all_thread(mini->thid , i),
+			return (kill_all_thread(mini->thid, i),
 				pthread_mutex_unlock(mini->error), false);
 		pthread_mutex_unlock(mini->error);
 		i++;
@@ -60,11 +60,11 @@ t_boolean	run_thread(t_mini *mini)
 			mini->min = mini->max;
 		mini->max = h + (h * i);
 		if (pthread_create(&mini->thid [i], NULL, cast, mini) < 0)
-			return (thread_create_failed(mini->thid , i), free(mini->thid),
-					false);
+			return (thread_create_failed(mini->thid, i), free(mini->thid),
+				false);
 	}
 	if (!wait_for_thread(mini))
-		return(free(mini->thid), false);
+		return (free(mini->thid), false);
 	free(mini->thid);
 	mini->thid = NULL;
 	mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
@@ -85,7 +85,7 @@ int	render_loop(t_mini *mini)
 	if (mini->block_size > 1 && time >= limit && mini->block_size > BLOCK_SIZE_MIN)
 	{
 		if (mini->block_size == 2)
-			mini->block_size--;
+				mini->block_size--;
 		else
 			mini->block_size -= 2;
 	}
@@ -94,6 +94,6 @@ int	render_loop(t_mini *mini)
 		write(2, "Something goes wrong during rendering.\n", 40);
 		close_window(mini);
 	}
-	ft_printf("[COMPLETED] Render at : %d\n", mini->block_size);
+//	ft_printf("[COMPLETED] Render at : %d\n", mini->block_size);
 	return (0);
 }

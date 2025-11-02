@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_direction_setup.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 15:23:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 21:29:22 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:44:56 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 double	randfrom(double min, double max)
 {
-	double result;
-	
+	double	result;
+
 	result = convert_range(rand(), RAND_MAX, min, max);
 	return (result);
 }
@@ -33,8 +33,8 @@ t_vec3	create_first_ray_dir(t_mini *mini, t_delta_offset bounds)
 	cam = mini->sc.cam[mini->cam_lock];
 	u_axe = vec_substact(mini->left_corner, vec_scale(cam.up, delta_u));
 	ray_dir = vec_normalize(vec_substact(
-		vec_add(u_axe, vec_scale(cam.right, delta_v)),
-		cam.pos));
+				vec_add(u_axe, vec_scale(cam.right, delta_v)),
+				cam.pos));
 	return (ray_dir);
 }
 

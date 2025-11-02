@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_geometry.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:56:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 23:17:35 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:56:39 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,17 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 	t_vec3	p;
 	t_vec3	to_light;
 	double	dot;
-
+	t_vec3	normal;
+	
+	if (is_null_vector(utils.normal.texture))
+		normal = utils.normal.geometric;
+	else
+		normal = utils.normal.texture;
 	if (shadow_ray(mini, *ray, ray->t, utils.i))
 		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
-	dot = fabs(vec_dot(obj.vec_dir, vec_normalize(to_light)));
+	dot = fabs(vec_dot(normal, vec_normalize(to_light)));
 	return (color_scalar(color_multiplie(obj.color,
 				color_scalar(mini->sc.light[utils.i].color,
 					mini->sc.light[utils.i].ratio)), dot));

@@ -2,8 +2,8 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 720
+# define WIDTH 1080
 # define M_PI 3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
@@ -12,7 +12,8 @@
 # define DEEPTH	8
 # define LIGHT_MAX 10
 # define BOUNCE_MAX 10
-# define SAMPLE_MAX 4
+# define SAMPLE_MAX 1
+# define DOUBLE_MAX (DBL_MAX)
 # include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
@@ -29,6 +30,7 @@
 # include <X11/keysym.h>
 # include <float.h>
 # include <limits.h>
+
 
 
 typedef struct s_mouse
@@ -315,6 +317,7 @@ t_boolean	open_window(t_mini *mini);
 int			close_window(t_mini *mini);
 int			handle_key_input(int keysym, t_mini *mini);
 int			handle_mouse_input(int keysym, int x, int y, t_mini *mini);
+void		toggle_hook(t_mini mini);
 
 // UTILS
 
@@ -340,6 +343,7 @@ double		get_spec(char *buffer);
 // PARSE BUFFER
 
 void		parse_cam(t_mini *mini, char *buffer);
+void		parse_tr(t_mini *mini, char *buffer);
 
 // PARSE FILL MINI
 
@@ -386,6 +390,7 @@ t_vec3		vec_scale(t_vec3 i, double n);
 void		vec_add_ptr(t_vec3 *result, t_vec3 add);
 void		vec_sub_ptr(t_vec3 *result, t_vec3 sub);
 t_vec3		vec_div(t_vec3 i, double n);
+t_vec3	vec_invert(t_vec3 vec);
 
 // COLOR MATH
 
@@ -432,6 +437,7 @@ t_boolean	count_line(t_mini *mini, char *file);
 
 // PARSER CHECKER UTILS
 
+t_boolean	alloc_mini_healper(t_mini *mini, int n_array[4]);
 int			count_double_array(char **str);
 t_boolean	is_a_rgb_value(char *word);
 t_boolean	is_a_ratio(char	*word);

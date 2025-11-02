@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
-/*   Updated: 2025/10/30 22:12:19 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:44:26 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_is_intersect
 	double		intersect_to_light;
 	t_objet		objet;
 }				t_is_intersect;
+
 
 t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 {
@@ -41,6 +42,15 @@ t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
 			if (var.tmp < var.intersect_to_light)
 				return (true);
 	}
+	else if (pl == var.objet.type)
+	{
+		var.tmp = intersect_pl(origin, ray_dir, var.objet);
+		if (var.tmp > 0.1)
+		{
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+		}
+	}	
 	return (false);
 }
 

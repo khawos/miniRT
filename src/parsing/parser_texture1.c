@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_texture1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:07:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/28 12:25:44 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:41:47 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**get_color_tab(int fd)
 	{
 		tab = realloc_add_to_tab(tab, buffer);
 		if (!tab)
-			return(free(buffer), NULL);
+			return (free(buffer), NULL);
 		buffer = get_next_line(fd);
 	}
 	return (tab);

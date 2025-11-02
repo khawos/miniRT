@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 00:28:07 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 23:19:41 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:38:13 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ t_boolean	parse_sp(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].diameter = __atoi_double(&buffer);
 	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
-	mini->sc.objet[mini->N_OBJ].roughness_default = get_roughness_default(buffer);
+	mini->sc.objet[mini->N_OBJ]
+		.roughness_default = get_roughness_default(buffer);
 	if (get_material(&mini->sc.objet[mini->N_OBJ], buffer) == 0)
 		return (false);
 	mini->n_sp++;
@@ -79,22 +80,8 @@ void	parse_pl(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->N_OBJ].vec_dir = get_point(&buffer);
 	mini->sc.objet[mini->N_OBJ].color = get_color(&buffer);
 	mini->sc.objet[mini->N_OBJ].spec = get_spec(buffer);
-	mini->sc.objet[mini->N_OBJ].roughness_default = get_roughness_default(buffer);
+	mini->sc.objet[mini->N_OBJ]
+		.roughness_default = get_roughness_default(buffer);
 	mini->n_pl++;
 	mini->N_OBJ++;
-}
-
-void	parse_tr(t_mini *mini, char *buffer)
-{
-	mini->sc.objet_tr[mini->n_tr].id = mini->n_tr;
-	mini->sc.objet_tr[mini->n_tr].type = tr;
-	while (ft_isalpha(*buffer))
-		buffer++;
-	mini->sc.objet_tr[mini->n_tr].p0 = get_point(&buffer);
-	mini->sc.objet_tr[mini->n_tr].p1 = get_point(&buffer);
-	mini->sc.objet_tr[mini->n_tr].p2 = get_point(&buffer);
-	mini->sc.objet_tr[mini->n_tr].color = get_color(&buffer);
-	mini->sc.objet_tr[mini->n_tr].spec = get_spec(buffer);
-	mini->sc.objet_tr[mini->n_tr].roughness_default = get_roughness_default(buffer);
-	mini->n_tr++;
 }
