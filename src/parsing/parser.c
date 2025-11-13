@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:31:49 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/02 15:14:45 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:52:57 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ t_boolean	count_line(t_mini *mini, char *file)
 	if (!alloc_mini(mini, n_array))
 		return (false);
 	close(fd);
+	printf("allocared\n");
 	return (true);
 }

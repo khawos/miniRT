@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 10:54:33 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/02 14:45:58 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:16:54 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_boolean	args_checker_sp(char *line)
 				"Error: Wrong sphere diameter\n", 30),
 			free_double_array(words), false);
 	if (!is_a_rgb_value(words[3]))
-		return (write(2,
+		return (printf("%s\n", words[3]), write(2,
 				"Error: Wrong sphere RGB value\n", 31),
 			free_double_array(words), false);
 	return (free_double_array(words), true);
