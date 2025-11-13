@@ -6,41 +6,11 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:37 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:10:24 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 12:58:31 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-
-t_light	get_ambiant(t_mini *mini)
-{
-	int	i;
-
-	i = -1;
-	while (i++ < mini->N_LIGHT)
-		if (mini->sc.light[i].type == A)
-			return (mini->sc.light[i]);
-	return ((t_light){0});
-}
-
-t_boolean	init(t_mini *mini, char **av)
-{
-	mini->n_a = 0;
-	mini->n_l = 0;
-	mini->n_cam = 0;
-	mini->n_pl = 0;
-	mini->n_sp = 0;
-	mini->n_cy = 0;
-	mini->N_OBJ = 0;
-	mini->N_LIGHT = 0;
-	mini->cam_lock = 0;
-	if (!parser(mini, av))
-		return (false);
-	mini->sc.ambiant = get_ambiant(mini);
-	if (!open_window(mini))
-		return (false);
-	return (true);
-}
+#include "minirt.h"
 
 int	main(int ac, char **av)
 {
@@ -50,17 +20,20 @@ int	main(int ac, char **av)
 		return (1);
 	if (!init(&mini, av))
 		return (1);
+	sem_unlink("/cast_init");
+	sem_unlink("/image");
+	mini.m_cast = sem_open("/cast_init", O_CREAT | O_EXCL, 0644, 1);
+	mini.s_img = sem_open("/image", O_CREAT | O_EXCL, 0644, 24);
+	set_up_cam(&mini);
 	mini.sc.cam[mini.cam_lock].vec_dir = vec_normalize(
 			mini.sc.cam[mini.cam_lock].vec_dir);
-	set_up_cam(&mini);
-	cast(&mini);
-	mlx_hook(mini.display.mlx_win, DestroyNotify,
-		StructureNotifyMask, &close_window, &mini);
-	mlx_put_image_to_window(mini.display.mlx, mini.display.mlx_win,
-		mini.display.img.img, 0, 0);
-	printf("Render finish\n");
-	mlx_hook(mini.display.mlx_win, KeyPress, KeyPressMask,
-		handle_key_input, (t_mini *)&mini);
-	mlx_loop(mini.display.mlx);
+	set_normal_tr(&mini);
+	if (!run_thread(&mini))
+		return (-1);
+	toggle_hook(mini);
+	sem_close(mini.m_cast);
+	sem_close(mini.s_img);
+	sem_unlink("/image");
+	sem_unlink("/cast_init");
 	return (0);
 }

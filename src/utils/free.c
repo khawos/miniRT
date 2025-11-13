@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/02 23:35:09 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/11/12 13:13:23 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+void	free_map(t_objet obj)
+{
+	int	i;
+
+	i = -1;
+	if (obj.mat.albedo.map)
+	{
+		while (++i < obj.mat.albedo.size.v)
+			free(obj.mat.albedo.map[i]);
+		free(obj.mat.albedo.map);
+	}
+	i = -1;
+	if (obj.mat.normal.map)
+	{
+		while (++i < obj.mat.normal.size.v)
+			free(obj.mat.normal.map[i]);
+		free(obj.mat.normal.map);
+	}
+	i = -1;
+	if (obj.mat.roughness.map)
+	{
+		while (++i < obj.mat.roughness.size.v)
+			free(obj.mat.roughness.map[i]);
+		free(obj.mat.roughness.map);
+	}
+}
+
+void	free_mini(t_mini *mini)
+{
+	int	i;
+
+	i = -1;
+	if (mini->n_tr != 0)
+		free(mini->sc.objet_tr);
+	if (mini->error)
+		pthread_mutex_destroy(mini->error);
+	free(mini->error);
+	while (++i < mini->sc.nb_cam)
+		free(mini->sc.cam[i].name);
+	free(mini->sc.cam);
+	i = -1;
+	while (++i < mini->sc.nb_objet)
+	{
+		free(mini->sc.objet[i].name);
+		if (mini->sc.objet[i].type == sp)
+			free_map(mini->sc.objet[i]);
+	}
+	free(mini->sc.objet);
+	i = -1;
+	while (++i < mini->sc.nb_light)
+		free(mini->sc.light[i].name);
+	free(mini->sc.light);
+}
+
+void	free_double_array(char **dest)
+{
+	int	i;
+
+	i = 0;
+	while (dest[i])
+		free(dest[i++]);
+	free(dest);
+}
+
+void	free_double_array_error(void **array, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+	array = NULL;
+}

@@ -44,6 +44,7 @@ FILES = ft_isdigit.c \
 		ft_convert_hex.c \
 		ft_printf.c \
 		ft_putnbr.c \
+		ft_dynamic.c \
 		print0.c \
 		print1.c \
 		printf_is_valid.c \

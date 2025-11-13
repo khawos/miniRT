@@ -6,25 +6,27 @@
 /*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 10:41:03 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/09/25 14:56:49 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:42:28 by amedenec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_boolean	is_a_xyz_value(char	*word)
 {
 	char	**words;
 	int		i;
 
-	i = 0;
+	if (2 != count_coma(word))
+		return (false);
 	words = ft_split(word, ',');
 	if (!words)
 		return (false);
+	i = 0;
 	while (words[i])
 	{
-		if (!(atoi_double(words[i]) >= INT_MIN
-				&& atoi_double(words[i]) <= INT_MAX))
+		if (!(atoi_double(words[i]) >= -DOUBLE_MAX
+				&& atoi_double(words[i]) <= DOUBLE_MAX))
 			return (free_double_array(words), false);
 		i++;
 	}
@@ -37,6 +39,8 @@ t_boolean	is_a_xyz_normalize_value(char *word)
 	int		i;
 
 	i = 0;
+	if (2 != count_coma(word))
+		return (false);
 	words = ft_split(word, ',');
 	if (!words)
 		return (false);
@@ -62,6 +66,8 @@ t_boolean	is_a_rgb_value(char *word)
 	int		i;
 
 	i = 0;
+	if (2 != count_coma(word))
+		return (false);
 	words = ft_split(word, ',');
 	if (!words)
 		return (false);

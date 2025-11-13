@@ -32,14 +32,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (*s1_u - *s2_u);
 }
-
-/*
-int main(void)
-{
-	const char		*s1 = "Salut les gens";
-	const char		*s2 = "Salut\n les gens";
-	size_t			n = 1;
-
-	printf("ft_strncmp : %d", ft_strncmp(s1, s2, n));
-	printf("   strncmp : %d", strncmp(s1, s2, n));
-}*/

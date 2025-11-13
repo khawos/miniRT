@@ -31,11 +31,6 @@ char	ft_convert_hex(int nb)
 
 int	ft_hex_len(unsigned int n, int i)
 {
-	if (n < 0)
-	{
-		n *= -1;
-		i++;
-	}
 	if (n)
 	{	
 		i = ft_hex_len(n / 16, i + 1);
@@ -48,11 +43,6 @@ void	ft_fill_hex_up(unsigned int n)
 	int		c;
 
 	c = 0;
-	if (n < 0)
-	{
-		n *= -1;
-		write(1, "-", 1);
-	}
 	if (n < 16)
 	{
 		c = ft_convert_hex(n);
@@ -71,11 +61,6 @@ void	ft_fill_hex(unsigned int n)
 	int		c;
 
 	c = 0;
-	if (n < 0)
-	{
-		n *= -1;
-		write(1, "-", 1);
-	}
 	if (n < 16)
 	{
 		c = ft_convert_hex(n);

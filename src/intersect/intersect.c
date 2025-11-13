@@ -1,0 +1,134 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersect.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 14:13:38 by amedenec          #+#    #+#             */
+/*   Updated: 2025/11/12 16:21:15 by amedenec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+typedef struct s_hit_ctx
+{
+	t_mini	*mini;
+	t_ray	ray;
+	int		i;
+	double	t;
+}	t_hit_ctx;
+
+typedef struct s_is_intersect
+{
+	double		tmp;
+	int			i;
+	double		intersect_to_light;
+	t_objet		objet;
+}				t_is_intersect;
+
+static double	handle_cylinder(t_hit_ctx *ctx, t_objet obj)
+{
+	double	tmp_cy;
+	double	tmp_cap;
+
+	tmp_cap = intersect_cap(ctx->ray.origin, ctx->ray.current_dir, obj);
+	tmp_cy = intersect_cy(ctx->ray.origin, ctx->ray.current_dir, obj);
+	if (tmp_cap == -1 && tmp_cy != -1)
+		return (tmp_cy);
+	if (tmp_cap != -1 && tmp_cy == -1)
+		return (tmp_cap);
+	if (tmp_cy < tmp_cap && tmp_cy != -1)
+		return (tmp_cy);
+	if (tmp_cy > tmp_cap && tmp_cap != -1)
+		return (tmp_cap);
+	return (-1);
+}
+
+t_boolean	is_intersect_bis(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
+{
+	if (cy == var.objet.type)
+	{
+		var.objet.vec_dir = vec_normalize(var.objet.vec_dir);
+		var.tmp = intersect_cy(origin, ray_dir, var.objet);
+		if (var.tmp > -0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+		var.tmp = intersect_cap(origin, ray_dir, var.objet);
+		if (var.tmp > 0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+	}
+	else if (tr == var.objet.type)
+	{
+		var.tmp = intersect_tr(origin, ray_dir, var.objet);
+		if (var.tmp > 0.0000000001)
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+	}
+	return (false);
+}
+
+t_boolean	is_intersect_bis2(t_vec3 ray_dir, t_vec3 origin, t_is_intersect var)
+{
+	if (pl == var.objet.type)
+	{
+		var.tmp = intersect_pl(origin, ray_dir, var.objet);
+		if (var.tmp > 0.1)
+		{
+			if (var.tmp < var.intersect_to_light)
+				return (true);
+		}
+	}	
+	return (false);
+}
+
+t_boolean	is_intersect(t_mini *mini, t_ray ray)
+{
+	t_is_intersect	var;
+
+	var.i = -1;
+	var.tmp = 0;
+	var.intersect_to_light = vec_get_norme(ray.current_dir);
+	ray.current_dir = vec_normalize(ray.current_dir);
+	while (++var.i < mini->n_obj)
+	{
+		var.objet = mini->sc.objet[var.i];
+		if (sp == var.objet.type)
+		{
+			var.tmp = intersect_sp(ray.origin, ray.current_dir, var.objet);
+			if (var.tmp > -0.0000000001)
+				if (var.tmp < var.intersect_to_light)
+					return (true);
+		}
+		if (is_intersect_bis(ray.current_dir, ray.origin, var))
+			return (true);
+		if (is_intersect_bis2(ray.current_dir, ray.origin, var))
+			return (true);
+	}
+	return (false);
+}
+
+double	handle_object(t_mini *mini, t_ray ray, int i, double t)
+{
+	t_hit_ctx	ctx;
+	t_objet		obj;
+	double		tmp;
+
+	ctx.mini = mini;
+	ctx.ray = ray;
+	ctx.i = i;
+	ctx.t = t;
+	obj = mini->sc.objet[i];
+	tmp = 0;
+	if (obj.type == sp)
+		tmp = intersect_sp(ray.origin, ray.current_dir, obj);
+	else if (obj.type == pl)
+		tmp = intersect_pl(ray.origin, ray.current_dir, obj);
+	else if (obj.type == cy)
+		tmp = handle_cylinder(&ctx, obj);
+	if (tmp > 0 && tmp < t)
+		return (tmp);
+	return (t);
+}

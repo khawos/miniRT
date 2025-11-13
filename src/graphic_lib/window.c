@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:40:24 by amedenec          #+#    #+#             */
-/*   Updated: 2025/09/25 14:38:28 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:48:18 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_boolean	open_window_2(t_mini *mini)
 {
@@ -39,7 +39,7 @@ t_boolean	open_window(t_mini *mini)
 	if (!mini->display.mlx)
 		return (false);
 	mini->display.mlx_win = mlx_new_window(mini->display.mlx,
-			WIDTH, HEIGHT, "miniRT");
+			WIDTH, HEIGHT, "minirt");
 	if (!mini->display.mlx_win)
 		return (mlx_destroy_display(mini->display.mlx),
 			free(mini->display.mlx), false);
@@ -49,37 +49,17 @@ t_boolean	open_window(t_mini *mini)
 
 int	close_window(t_mini *mini)
 {
+	kill_all_thread(mini->thid, -1);
 	mlx_destroy_image(mini->display.mlx, mini->display.img.img);
 	mlx_destroy_window(mini->display.mlx, mini->display.mlx_win);
 	mlx_destroy_display(mini->display.mlx);
 	free(mini->display.mlx);
+	if (mini->bvh)
+	{
+		bvh_free(mini->bvh);
+		bvh_free(mini->tmp);
+	}
 	free_mini(mini);
 	exit(0);
 	return (0);
-}
-
-int	handle_key_input(int keysym, t_mini *mini)
-{
-	t_cam	*cam;
-
-	cam = &mini->sc.cam[mini->cam_lock];
-	if (keysym == 0xff1b)
-		close_window(mini);
-	if (keysym == 0xff53)
-	{
-		cam->pos.x += 10;
-		cast(mini);
-		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-			mini->display.img.img, 0, 0);
-		printf("Render finish\n");
-	}
-	if (keysym == 0xff51)
-	{
-		cam->pos.x -= 10;
-		mlx_put_image_to_window(mini->display.mlx, mini->display.mlx_win,
-			mini->display.img.img, 0, 0);
-		printf("Render finish\n");
-		cast(mini);
-	}
-	return (keysym);
 }

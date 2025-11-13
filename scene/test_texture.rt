@@ -1,0 +1,20 @@
+A 0.3 255,255,255
+
+C -400,0,250 1,0,-0.2 50
+
+L 0,0,200 0.6 255,255,255
+
+
+sp 0,-600,50 200 150,150,150 spec=20 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm" roughness="texture_file/old_linoleum_flooring_01_rough_2k.xpm"
+
+sp 0,-300,50 200 255,0,0 spec=10 normal="texture_file/brick_normal.xpm" 
+
+sp 0,0,50 200 150,150,150 spec=20 albedo="texture_file/snow_03_diff_2k.xpm" normal="texture_file/snow_03_nor_dx_2k.xpm"
+
+sp 400,0,50 200 150,150,150 spec=20 albedo="texture_file/vertopal.com_old_linoleum_flooring_01_diff_2k.xpm" normal="texture_file/old_linoleum_flooring_01_rough_2k.xpm"
+
+sp 0,300,50 200 150,150,150 spec=60 albedo="texture_file/aerial_rocks_04_diff_2k1761649439.xpm" normal="texture_file/aerial_rocks_04_nor_dx_2k1761649440.xpm"
+
+sp 0,600,50 200 150,150,150 spec=10 albedo="texture_file/wooden_gate_diff_2k.xpm" 
+
+pl 0,0,-50       0,0,1   255,255,255 spec="100"
