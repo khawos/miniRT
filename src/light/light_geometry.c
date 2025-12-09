@@ -49,7 +49,7 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, obj.pos);
-	texture.color = get_color_from_map(obj, p);
+	texture.color = get_color_from_map(obj, p, utils.normal.geometric);
 	dot = get_dot(obj, ray, to_light, normal);
 	return (color_scalar(color_multiplie(texture.color,
 				color_scalar(mini->sc.light[utils.i].color,
@@ -58,10 +58,11 @@ t_color	light_sp(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 
 t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 {
-	t_vec3	p;
-	t_vec3	to_light;
-	double	dot;
-	t_vec3	normal;
+	t_vec3			p;
+	t_vec3			to_light;
+	double			dot;
+	t_var_texture	texture;
+	t_vec3			normal;
 
 	if (is_null_vector(utils.normal.texture))
 		normal = utils.normal.geometric;
@@ -71,11 +72,33 @@ t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 		return ((t_color){0, 0, 0});
 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
+	texture.color = get_color_from_map(obj, p, utils.normal.geometric);
 	dot = fabs(vec_dot(normal, vec_normalize(to_light)));
-	return (color_scalar(color_multiplie(obj.color,
+	return (color_scalar(color_multiplie(texture.color,
 				color_scalar(mini->sc.light[utils.i].color,
 					mini->sc.light[utils.i].ratio)), dot));
 }
+
+// t_color	light_pl(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
+// {
+// 	t_vec3	p;
+// 	t_vec3	to_light;
+// 	double	dot;
+// 	t_vec3	normal;
+
+// 	if (is_null_vector(utils.normal.texture))
+// 		normal = utils.normal.geometric;
+// 	else
+// 		normal = utils.normal.texture;
+// 	if (shadow_ray(mini, *ray, ray->t, utils.i))
+// 		return ((t_color){0, 0, 0});
+// 	p = vec_add(ray->origin, vec_scale(ray->current_dir, ray->t));
+// 	to_light = vec_substact(mini->sc.light[utils.i].pos, p);
+// 	dot = fabs(vec_dot(normal, vec_normalize(to_light)));
+// 	return (color_scalar(color_multiplie(obj.color,
+// 				color_scalar(mini->sc.light[utils.i].color,
+// 					mini->sc.light[utils.i].ratio)), dot));
+// }
 
 t_color	light_tr(t_mini *mini, t_objet obj, t_ray *ray, t_light_utils utils)
 {

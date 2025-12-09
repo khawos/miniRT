@@ -19,7 +19,11 @@ t_color	reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal n)
 	t_ray	ray_bounce;
 	double	roughness;
 
-	roughness = get_roughness_from_map(obj, obj.roughness_default, n.geometric);
+	ray_bounce.origin = vec_add(old_ray->origin, vec_scale(old_ray->current_dir,
+				old_ray->t));
+	ray_bounce.origin = vec_add(ray_bounce.origin, vec_scale(
+				vec_invert(old_ray->current_dir), 1.0001));
+	roughness = get_roughness_from_map(obj, obj.roughness_default, n.geometric, ray_bounce.origin);
 	if (!roughness)
 		return (old_ray->color);
 	normal = n.texture;
@@ -27,10 +31,6 @@ t_color	reflection(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal n)
 		normal = n.geometric;
 	if (old_ray->bounce >= BOUNCE_MAX)
 		return (old_ray->color);
-	ray_bounce.origin = vec_add(old_ray->origin, vec_scale(old_ray->current_dir,
-				old_ray->t));
-	ray_bounce.origin = vec_add(ray_bounce.origin, vec_scale(
-				vec_invert(old_ray->current_dir), 1.0001));
 	ray_bounce.bounce = old_ray->bounce + 1;
 	ray_bounce.current_dir = vec_normalize(vec_substact(old_ray->current_dir,
 				vec_scale(normal, 2 * vec_dot(old_ray->current_dir, normal))));

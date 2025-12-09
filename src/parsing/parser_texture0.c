@@ -32,7 +32,7 @@ unsigned int	**texture_map_alloc(int height, int width)
 	return (texture);
 }
 
-unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color)
+unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color, unsigned int nb_char_to_compare)
 {
 	unsigned int		**texture;
 	char				*buffer;
@@ -51,8 +51,8 @@ unsigned int	**extract_texture(int fd, t_vec2 dimension, char **tab_color)
 		buffer = buffer + 1;
 		while (++var.u < dimension.u)
 		{
-			texture[var.v][var.u] = search_color(buffer, tab_color);
-			buffer = buffer + 2;
+			texture[var.v][var.u] = search_color(buffer, tab_color, nb_char_to_compare);
+			buffer = buffer + nb_char_to_compare;
 		}
 		free(tmp);
 	}
@@ -64,6 +64,7 @@ unsigned int	**get_texture(char *file, t_t_map *map)
 	int				fd;
 	unsigned int	**texture;
 	char			**tab_color;
+	unsigned int	nb_char_to_compare;
 
 	if (!file)
 		return (NULL);
@@ -71,11 +72,12 @@ unsigned int	**get_texture(char *file, t_t_map *map)
 	if (fd < 0)
 		return (ft_printf("failed to open %s\n", file), free(file), NULL);
 	free(file);
-	map->size = get_texture_dimension(fd);
+	map->size = get_texture_dimension(fd, &nb_char_to_compare);
+	printf("nb : %u\n", nb_char_to_compare);
 	tab_color = get_color_tab(fd);
 	if (!tab_color)
 		return (clear_gnl(fd), NULL);
-	texture = extract_texture(fd, map->size, tab_color);
+	texture = extract_texture(fd, map->size, tab_color, nb_char_to_compare);
 	if (!texture)
 		return (clear_gnl(fd), free_double_array(tab_color), NULL);
 	free_double_array(tab_color);

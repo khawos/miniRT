@@ -96,6 +96,5 @@ t_boolean	count_line(t_mini *mini, char *file)
 	if (!alloc_mini(mini, n_array))
 		return (false);
 	close(fd);
-	printf("allocared\n");
 	return (true);
 }

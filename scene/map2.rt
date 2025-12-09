@@ -1,4 +1,4 @@
-A 0.2 255,255,255
+A 0.0 250,120,90
 
 
 
@@ -6,44 +6,13 @@ A 0.2 255,255,255
 
 
 
-C -200,110,40 1,0,-0.2 70
-L -50,30,80 1 100,120,155
-L -50,10,80 1 100,120,0
-L -30,10,70 1 180,120,200
+C -200,110,40 1,0,-0.2 80
+L -50,30,80 0.8 217,152,43
+
+pl 0,0,-50       0,0,1   255,255,255 albedo="texture_file/brown_mud_leaves_01_diff_2k.xpm" normal="texture_file/brown_mud_leaves_01_nor_dx_2k.xpm"
+pl 500,0,0       -1,0,0   150,0,0  albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
+pl -500,0,0       1,0,0   150,0,0  albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
+pl 0,-500,0       0,1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
+pl 0,500,0       0,-1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
 
 
-
-cy 0,-10,20  0.3,0,-0.1 10 20    255,25,255 roughness_default=0.
-cy -35,-10,20   0.3,1,0.2 30 20    255,25,255 roughness_default=0
-
-cy 35,00,30     0,0,1   30 200  55,255,255 roughness_default=0
-cy 150,50,40    0.3,1,0.3   30 40    255,255,255 roughness_default=0
-
-sp 0,50,0 5 255,255,255 roughness_default=0
-
-pl 0,0,-50       0,0,1   255,255,255 roughness_default=0 spec=200
-pl -50,30,100       0,0,-1   150,0,0  roughness_default=0.3
-pl 500,0,0       -1,0,0   150,0,0  roughness_default=1
-pl -500,0,0       1,0,0   150,0,0  roughness_default=0.8
-pl 0,-500,0       0,1,0   150,0,0 roughness_default=0.3
-pl 0,500,0       0,-1,0   150,0,0 roughness_default=0.7
-
-
-sp 0,-100,0 80 150,150,150 spec=20 albedo="texture_file/earth_color.xpm" normal="texture_file/brick_normal.xpm"
-sp 0,100,0        35 255,10,5  roughness_default=1 spec=200
-sp 0,0,100         15 5,255,0 roughness_default=1 spec=200
-sp 10,170,0        35 5,10,255  roughness_default=1 spec=200
-sp 200,150,0        30 30,10,255 roughness_default=1 spec=200
-sp 200,150,70        30 30,10,255 roughness_default=1
-sp 200,150,-70        30 30,10,255 roughness_default=1 spec=200
-sp 0,100,20        30.8 130,43,255 roughness_default=1 spec=200
-sp -70,130,0        30 121,42,155 roughness_default=1 spec=200
-sp 70,130,0        30 121,42,155 roughness_default=1
-sp 35,130,0        30 121,42,155 roughness_default=1 spec=200
-sp 80,110,0        30 121,42,150 roughness_default=1 spec=200
-sp -80,110,0        30 121,42,150 roughness_default=1
-sp -90,90,0        30 121,42,145 roughness_default=1 spec=200
-sp 90,90,0        30 121,42,145 roughness_default=0
-sp -100,70,0        30 121,42,130 roughness_default=0
-sp 100,70,0        30 121,42,130 roughness_default=0
-sp 250,70,0        30 121,42,130 roughness_default=0

@@ -28,7 +28,7 @@ t_boolean	is_on_xpm_pixel_info(char *str)
 	return (false);
 }
 
-t_vec2	get_texture_dimension(int fd)
+t_vec2	get_texture_dimension(int fd, unsigned int *nb)
 {
 	char	*buffer;
 	t_vec2	dimension;
@@ -46,6 +46,8 @@ t_vec2	get_texture_dimension(int fd)
 	buffer++;
 	dimension.u = __atoi_double(&buffer);
 	dimension.v = __atoi_double(&buffer);
+	__atoi_double(&buffer);
+	*nb = __atoi_double(&buffer);
 	free(tmp);
 	return (dimension);
 }	

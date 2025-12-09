@@ -26,7 +26,7 @@ t_boolean	fill_mini_switch(t_mini *mini, char *buffer)
 	if (!ft_strncmp(buffer, "sp", 2))
 		return (parse_sp(mini, buffer));
 	if (!ft_strncmp(buffer, "pl", 2))
-		return (parse_pl(mini, buffer), true);
+		return (parse_pl(mini, buffer));
 	if (!ft_strncmp(buffer, "cy", 2))
 		return (parse_cy(mini, buffer), true);
 	if (!ft_strncmp(buffer, "tr", 2))

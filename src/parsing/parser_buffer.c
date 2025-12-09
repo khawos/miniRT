@@ -70,7 +70,7 @@ t_boolean	parse_sp(t_mini *mini, char *buffer)
 	return (true);
 }
 
-void	parse_pl(t_mini *mini, char *buffer)
+t_boolean	parse_pl(t_mini *mini, char *buffer)
 {
 	mini->sc.objet[mini->n_obj].id = mini->n_obj;
 	mini->sc.objet[mini->n_obj].type = pl;
@@ -82,6 +82,9 @@ void	parse_pl(t_mini *mini, char *buffer)
 	mini->sc.objet[mini->n_obj].spec = get_spec(buffer);
 	mini->sc.objet[mini->n_obj]
 		.roughness_default = get_roughness_default(buffer);
+	if (get_material(&mini->sc.objet[mini->n_obj], buffer) == 0)
+		return (false);
 	mini->n_pl++;
 	mini->n_obj++;
+	return (true);
 }

@@ -1,6 +1,6 @@
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Iinclude -O3f   b ./
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 SRC_DIR = src
 SRC_DIR_B = src_b
 OBJ_DIR = obj

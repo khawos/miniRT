@@ -88,7 +88,7 @@ t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 		v.i++;
 	}
 	color_obj = get_color_from_map(obj,
-			vec_add(ray->origin, vec_scale(ray->current_dir, ray->t)));
+			vec_add(ray->origin, vec_scale(ray->current_dir, ray->t)), v.normal.geometric);
 	v.ambiant = color_multiplie(v.ambiant, color_obj);
 	ray->color = color_add(v.ambiant, mix_light(v.light_colors, mini));
 	free(v.light_colors);

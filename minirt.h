@@ -13,17 +13,17 @@
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 1440
+# define WIDTH 2560
 # define M_PI 3.14159265358979323846
 # define RENDER_DISTANCE 10000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 9
+# define BLOCK_SIZE_MAX 15
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
 # define BOUNCE_MAX 4
-# define SAMPLE_MAX 2
+# define SAMPLE_MAX 5
 # define DOUBLE_MAX (DBL_MAX)
 # include <unistd.h>
 # include <semaphore.h>
@@ -343,7 +343,7 @@ void				parse_tr(t_mini *mini, char *buffer);
 t_boolean			fill_mini(t_mini *mini, char *file_name);
 void				parse_cy(t_mini *mini, char *buffer);
 t_boolean			parse_sp(t_mini *mini, char *buffer);
-void				parse_pl(t_mini *mini, char *buffer);
+t_boolean			parse_pl(t_mini *mini, char *buffer);
 void				parse_a(t_mini *mini, char *buffer);
 void				parse_l(t_mini *mini, char *buffer);
 void				parse_cam(t_mini *mini, char *buffer);
@@ -518,6 +518,8 @@ int					*search_tr_in_tree(t_bvh *bvh, t_ray ray, int *size,
 // GET_UV
 
 t_vec2				get_uv_sp(t_vec3 p, t_vec2 size);
+t_vec2				get_uv_pl(t_vec3 normal, t_vec2 size, t_vec3 p);
+
 
 // PARSER TXT
 
@@ -527,7 +529,7 @@ t_boolean			is_on_xpm_pixel_info(char *str);
 char				**realloc_add_to_tab(char **tab, char *new);
 t_boolean			is_digit_or_space_str(char *str);
 t_boolean			is_on_xpm_pixel_info(char *str);
-t_vec2				get_texture_dimension(int fd);
+t_vec2				get_texture_dimension(int fd, unsigned int * nb);
 char				*go_to_pixel_info(int fd);
 char				**get_color_tab(int fd);
 t_boolean			get_material(t_objet *obj, char *buffer);
@@ -536,13 +538,15 @@ double				get_roughness_default(char *buffer);
 
 // GET FROM MAP
 
-t_color				get_color_from_map(t_objet obj, t_vec3 p);
+t_color				get_color_from_map(t_objet obj, t_vec3 p, t_vec3 n);;
 t_vec3				transform_normal_from_map(unsigned int color,
 						t_vec3 n, t_vec3 up_world);
 t_normal			get_normal_sp_from_map(t_mini *mini, t_objet obj,
 						t_ray *ray);
+t_normal			get_normal_pl_from_map(t_mini *mini, t_objet obj,
+						t_ray *ray);
 double				get_roughness_from_map(t_objet obj, double spec,
-						t_vec3 geometric_normal);
+						t_vec3 geometric_normal, t_vec3 p);
 // reflection
 
 t_color				reflection(t_mini *mini, t_ray *old_ray, t_objet obj,
@@ -578,7 +582,7 @@ void				error_in_thread(t_mini *mini);
 
 t_normal			get_object_normals(t_mini *mini, t_objet obj, t_ray *ray);
 
-unsigned int		search_color(char *buffer, char **tab_color);
+unsigned int		search_color(char *buffer, char **tab_color, unsigned int nb);
 unsigned int		ft_atoi_base(char *str, char *base);
 
 void				get_up_local_vector(t_mini *mini, int i);

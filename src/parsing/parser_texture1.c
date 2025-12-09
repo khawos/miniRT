@@ -47,7 +47,7 @@ char	**get_color_tab(int fd)
 	return (tab);
 }
 
-unsigned int	search_color(char *buffer, char **tab_color)
+unsigned int	search_color(char *buffer, char **tab_color, unsigned int nb)
 {
 	int				i;
 	unsigned int	color;
@@ -55,9 +55,9 @@ unsigned int	search_color(char *buffer, char **tab_color)
 	i = 0;
 	while (tab_color[i])
 	{
-		if (ft_strncmp(buffer, tab_color[i] + 1, 2) == 0)
+		if (ft_strncmp(buffer, tab_color[i] + 1, nb) == 0)
 		{
-			color = ft_atoi_base(tab_color[i] + 7, "0123456789ABCDEF");
+			color = ft_atoi_base(tab_color[i] + 5 + nb, "0123456789ABCDEF");
 			return (color);
 		}
 		i++;

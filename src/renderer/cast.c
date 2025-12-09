@@ -17,8 +17,8 @@ t_color	put_background(int x, int y)
 	t_color	color;
 
 	(void)x;
-	y = convert_range(y, HEIGHT, 0, 255);
-	color = (t_color){y / 4, y / 5, y};
+	y = convert_range(y, HEIGHT, 255, 0);
+	color = (t_color){y / 3, y / 3, y};
 	return (color);
 }
 
