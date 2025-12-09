@@ -1,7 +1,7 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -Iminilibx-linux -O3 -flto
-LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -flto
+CFLAGS = -Iminilibx-linux -Iinclude -O3 -flto
+LFLAGS = -lXext -lX11 -lm -lz -lbsd -lpthread -lrt -Wall -Wextra -Wpedantic  -flto
 OBJ_DIR = obj
 SRC_DIR = src
 SRC =	main.c \
