@@ -1,4 +1,4 @@
-A 0.0 250,120,90
+A 0.3 150,150,150
 
 
 
@@ -7,12 +7,15 @@ A 0.0 250,120,90
 
 
 C -200,110,40 1,0,-0.2 80
-L -50,30,80 0.8 217,152,43
+L -0,0,0 0.8 217,152,43
+L -0,0,200 0.8 168,79,0
 
-pl 0,0,-50       0,0,1   255,255,255 albedo="texture_file/brown_mud_leaves_01_diff_2k.xpm" normal="texture_file/brown_mud_leaves_01_nor_dx_2k.xpm"
-pl 500,0,0       -1,0,0   150,0,0  albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
-pl -500,0,0       1,0,0   150,0,0  albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
-pl 0,-500,0       0,1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
-pl 0,500,0       0,-1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" roughness="texture_file/mossy_brick_rough_2k.xpm"
+sp 0,50,0 200 255,255,255 roughness_default=1
+
+
+pl 0,0,-50       0,0,1   255,255,255 albedo="texture_file/cobble_diffuse.xpm" normal="texture_file/cobble_normal.xpm" roughness="texture_file/Cobble_roughmess.xpm" spec=5
+
+pl 0,-1000,0       0,1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm"  roughness="texture_file/mossy_brick_rough_2k.xpm" spec=5
+pl 0,1000,0       0,-1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm"  roughness="texture_file/mossy_brick_rough_2k.xpm" spec=5
 
 

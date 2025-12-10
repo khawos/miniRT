@@ -17,14 +17,13 @@ cy 300,70,30     0,0,1   30 400  125,55,15 roughness_default=0 spec=20
 cy -150,-200,30     0,0,1   60 400  132,55,255 roughness_default=0.3
 
 
-sp 0,50,0 5 255,255,255 roughness_default=0
-
-pl 0,0,-50       0,0,1       255,255,255 roughness_default=0.05 spec=1000
-pl -50,30,200       0,0,-1   150,0,0  roughness_default=0.3
+pl 0,0,-50       0,0,1       255,255,255 roughness_default=0.05 albedo="texture_file/snow_03_diff_2k.xpm" normal="texture_file/snow_03_nor_dx_2k.xpm"
+sp 0,100,0        35 255,10,5 spec=1000
+pl -50,30,300       0,0,-1   150,0,0  roughness_default=0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" spec=5
 pl 500,0,0       -1,0,0      150,0,0  roughness_default=1
 pl -500,0,0       1,0,0      150,0,0  roughness_default=0.8
-pl 0,-500,0       0,1,0      150,0,0 roughness_default=0.3
-pl 0,500,0       0,-1,0      150,0,0 roughness_default=0.7
+pl 0,-1000,0       0,1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" spec=5
+pl 0,1000,0       0,-1,0   150,0,0 albedo="texture_file/mossy_brick_diff_2k.xpm" normal="texture_file/mossy_brick_nor_dx_2k.xpm" spec=5
 
 
 sp 0,-100,-10      80           150,150,150

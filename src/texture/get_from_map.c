@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_from_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:15:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/11/12 15:52:54 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:25:35 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ double	get_roughness_from_map(t_objet obj, double spec,
 	{
 		info.uv = get_uv_pl(geometric_normal, obj.mat.roughness.size, p);
 		grey_scale = obj.mat.roughness.map[info.uv.v][info.uv.u] & 0x000000FF;
-		roughness = convert_range(grey_scale, 255, 0, 1);
+		roughness = convert_range(grey_scale, 255, 1, 0);
 	}
 	return (roughness);
 }

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amedenec <amedenec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 16:06:01 by amedenec          #+#    #+#             */
-/*   Updated: 2025/11/12 16:35:04 by amedenec         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:02:26 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define HEIGHT 1440
-# define WIDTH 2560
+# define HEIGHT 1080
+# define WIDTH 1920
 # define M_PI 3.14159265358979323846
-# define RENDER_DISTANCE 10000
+# define RENDER_DISTANCE 5000
 # define N_THREAD 24
-# define BLOCK_SIZE_MAX 15
+# define BLOCK_SIZE_MAX 8
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
-# define BOUNCE_MAX 4
+# define BOUNCE_MAX 3
 # define SAMPLE_MAX 5
 # define DOUBLE_MAX (DBL_MAX)
 # include <unistd.h>

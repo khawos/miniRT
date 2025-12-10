@@ -6,7 +6,7 @@
 /*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 11:40:06 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/10/30 23:16:31 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:04:39 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_vec2  get_uv_pl(t_vec3 normal, t_vec2 size, t_vec3 p)
 
     // 3. TILING (La répétition)
     // Disons qu'on veut que la texture se répète toutes les 10 unités (scale)
-    double scale = 900; 
+    double scale = 300; 
     
     // Le modulo permet de garder u et v entre 0 et 1 (coordonnées UV standard)
     // L'astuce mathématique ici gère les nombres négatifs correctement

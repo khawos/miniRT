@@ -1,4 +1,4 @@
-A 1 255,255,255
+A 0.3 255,255,255
 
 
 
@@ -19,8 +19,7 @@ cy 150,50,40    0.3,1,0.3   30 40    255,255,255 spec=100
 
 sp 0,50,0 5 255,255,255
 
-pl 0,0,-50       0,0,1   255,255,255 spec=10
-
+pl 0,0,-50       0,0,1   255,255,255 spec=10 albedo="texture_file/wooden_gate_diff_2k.xpm" normal="texture_file/wooden_gate_nor_dx_2k.xpm"
 sp 0,100,0        35 255,10,5
 sp 0,0,100         15 5,255,255 spec=7
 sp 10,170,0        35 5,10,255 spec=55
