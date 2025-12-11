@@ -22,7 +22,7 @@
 # define BLOCK_SIZE_MIN 1
 # define DEEPTH	8
 # define LIGHT_MAX 10
-# define BOUNCE_MAX 3
+# define BOUNCE_MAX 20
 # define SAMPLE_MAX 5
 # define DOUBLE_MAX (DBL_MAX)
 # include <unistd.h>
@@ -300,6 +300,8 @@ typedef struct s_light_utils
 	t_color			final;
 }				t_light_utils;
 
+
+t_color				refract_or_reflect(t_mini *mini, t_ray *old_ray, t_objet obj, t_normal n);
 // DRAW BASIC
 int					my_mlx_pixel_put(t_mini *mini, t_var_trace var,
 						t_vec2 index, unsigned int color);
@@ -422,6 +424,7 @@ t_boolean			count_line(t_mini *mini, char *file);
 
 // PARSER CHECKER UTILS
 
+t_color 			refraction(t_ray *old_ray, t_mini *mini, t_objet obj, t_vec3 normal);
 t_boolean			alloc_mini_healper(t_mini *mini, int n_array[4]);
 int					count_double_array(char **str);
 t_boolean			is_a_rgb_value(char *word);

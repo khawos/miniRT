@@ -12,6 +12,19 @@
 
 #include "minirt.h"
 
+double	get_ior(char * buffer)
+{
+	char	*str;
+	
+	str = ft_strnstr(buffer, "ior=", ft_strlen(buffer));
+	if (str)
+	{
+		str += 5;
+		return ( atoi_double( str ));
+	}
+	return (0);
+}
+
 t_boolean	get_albedo(t_objet *obj, char *buffer)
 {
 	char	*str;

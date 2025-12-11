@@ -92,7 +92,9 @@ t_color	light_ray(t_mini *mini, t_ray *ray, t_objet obj)
 	v.ambiant = color_multiplie(v.ambiant, color_obj);
 	ray->color = color_add(v.ambiant, mix_light(v.light_colors, mini));
 	free(v.light_colors);
-	v.final = reflection(mini, ray, obj, v.normal);
+	//v.final = reflection(mini, ray, obj, v.normal); // refract_or_reflect
+	//v.final = refraction(ray, mini, obj, v.normal.geometric);
+	v.final = refract_or_reflect(mini, ray, obj, v.normal);
 	if (ray->t == -1)
 		return ((t_color){0, 0, 0});
 	return (v.final);

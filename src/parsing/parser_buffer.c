@@ -65,6 +65,7 @@ t_boolean	parse_sp(t_mini *mini, char *buffer)
 		.roughness_default = get_roughness_default(buffer);
 	if (get_material(&mini->sc.objet[mini->n_obj], buffer) == 0)
 		return (false);
+	mini->sc.objet[mini->n_obj].mat.ior = get_ior(buffer);
 	mini->n_sp++;
 	mini->n_obj++;
 	return (true);
